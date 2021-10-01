@@ -22,31 +22,28 @@ void MovementSystem::update(float dt)
 			accelerating = true;
 		}
 
-		if (glm::length2(m->accelerationDirection) > 1.0f) {
-			m->accelerationDirection = normalizedAccelerationDirection;
-		}
-
 		glm::vec3 oldVelocity = m->velocity;
-		m->velocity += m->accelerationDirection * (m->acceleration * dt);
+		m->velocity += normalizedAccelerationDirection * (m->acceleration * dt);
 
-		// Apply drag
-		if (glm::length2(m->velocity) > 0.0001f) {
-			glm::vec3 normalizedVel = glm::normalize(m->velocity);
-			m->velocity -= normalizedVel * (1.0f - glm::dot(normalizedVel, normalizedAccelerationDirection)) * m->drag * dt;
+		// Gravity
+		m->velocity += m->constantAcceleration * dt;
+
+		// Try to maintain the wanted velocity
+		for (unsigned int i = 0; i < 3; i++) {
+			if (m->wantedVelocity[i] != 0.0f) {
+				// There is a wanted velocity in this axis, accelerate towards it
+				m->velocity[i] += (m->wantedVelocity[i] - m->velocity[i]) * 2.0f * dt;
+			}
 		}
 
-		// Limit velocity to max speed
-		if (glm::length(m->velocity) > m->maxSpeed) {
-			m->velocity = glm::normalize(m->velocity) * m->maxSpeed;
+		if (m->jumpRequested && m->jumpAllowed) {
+			m->velocity.y += m->jumpPower;
+			m->jumpAllowed = false;
 		}
-
-		// Stop movement if velocity is small enough
-		if (!accelerating && glm::length2(m->velocity) < 0.01f) {
-			m->velocity = { 0.0f, 0.0f, 0.0f };
-		}
-
+		
 		p->position += (oldVelocity + m->velocity) * 0.5f * dt; // This works for any update rate
 
 		m->accelerationDirection = { 0.0f, 0.0f, 0.0f };
+		m->jumpRequested = false;
 	}
 }

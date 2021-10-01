@@ -95,6 +95,12 @@ void CollisionSystem::collideWithMap(Entity *e) {
 						glm::vec3 normalizedIntersectionAxis = {glm::normalize(tempIntersectionAxis), 0.0f};
 						m->velocity -= normalizedIntersectionAxis * glm::dot(normalizedIntersectionAxis, m->velocity);
 
+						// Allow jumping if standing on ground pointing upwards
+						if (normalizedIntersectionAxis.y > 0.6f) {
+							m->jumpAllowed = true;
+						}
+
+
 						// Update shape
 						c->shape.setTransformMatrix(p->calculateMatrix());
 					}

@@ -28,6 +28,7 @@ void InputSystem::update(float /*dt*/){
 		//movementInput
 		glm::vec3 direction(0.0f);
 		if (input->keys[GLFW_KEY_W] == GLFW_PRESS) {
+			movement->jumpRequested = true;
 			direction.y += 1.0f;
 		}
 		if (input->keys[GLFW_KEY_S] == GLFW_PRESS) {

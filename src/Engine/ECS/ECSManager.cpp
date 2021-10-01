@@ -168,7 +168,10 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 	playerEntity.makePlayable();
 	// Add components to player
 	addComponent(playerEntity, new PositionComponent(x, y));
-	addComponent(playerEntity, new MovementComponent());
+	MovementComponent* movComp = new MovementComponent();
+	movComp->constantAcceleration = glm::vec3(0.0f, -9.82f, 0.0f);
+	movComp->wantedVelocity = glm::vec3(4.0f, 0.0f, 0.0f);
+	addComponent(playerEntity, movComp);
 	addComponent(playerEntity, new InputComponent(window));
 	addComponent(playerEntity, new CollisionComponent());
 	HealthComponent* healthComp = new HealthComponent();
