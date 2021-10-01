@@ -8,7 +8,9 @@
 #include "Components/GraphicsComponent.hpp"
 #include "Components/WeaponComponent.hpp"
 #include "Components/SeeingComponent.hpp"
+#include "Components/CameraFocusComponent.hpp"
 #include "Rendering.hpp"
+
 
 
 std::vector<Entity*> ECSManager::m_entities;
@@ -21,7 +23,8 @@ ECSManager::ECSManager()
 		{"HEALTH", std::make_shared<HealthSystem>(HealthSystem(this))},
 		{"GRAPHICS", std::make_shared<GraphicsSystem>(GraphicsSystem(this))},
 		{"WEAPON", std::make_shared<WeaponSystem>(WeaponSystem(this))},
-		{"SEEING", std::make_shared<SeeingSystem>(SeeingSystem(this))}},
+		{"SEEING", std::make_shared<SeeingSystem>(SeeingSystem(this))},
+		{"CAMERAFOCUS", std::make_shared<CameraSystem>(CameraSystem(this))}},
 		m_addEntities(), m_addComponents(), m_removeEntities(), m_removeComponents()
 {
 	m_startingPositions.push_back(glm::vec2(2, 2));
@@ -45,6 +48,7 @@ void ECSManager::update(float dt)
 	m_systems["HEALTH"]->update(dt);
 	m_systems["GRAPHICS"]->update(dt);
 	m_systems["WEAPON"]->update(dt);
+	m_systems["CAMERAFOCUS"]->update(dt);
 
 	//for all entities, remove/add components
 	//remove/add entities from systems
@@ -178,5 +182,6 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 	graphComp->quad->setCurrentSprite(0.0f, 0.0f);
 	addComponent(playerEntity, graphComp);
 	addComponent(playerEntity, new WeaponComponent());
+	addComponent(playerEntity, new CameraFocusComponent());
 	return playerEntity.getID();
 }

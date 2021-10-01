@@ -7,6 +7,7 @@
 #include "Systems/GraphicsSystem.hpp"
 #include "Systems/WeaponSystem.hpp"
 #include "Systems/SeeingSystem.hpp"
+#include "Systems/CameraSystem.hpp"
 
 #include <map>
 #include <string>
