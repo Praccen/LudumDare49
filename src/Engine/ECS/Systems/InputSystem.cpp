@@ -42,16 +42,16 @@ void InputSystem::update(float /*dt*/){
 		}
 		if (input->keys[GLFW_KEY_SPACE] == GLFW_PRESS) {
 			// m_manager->removeComponent(*e, ComponentTypeEnum::COLLISION);
-			WeaponComponent* weaponComp = static_cast<WeaponComponent*>(e->getComponent(ComponentTypeEnum::WEAPON));
-			if (weaponComp) {
-				weaponComp->fire = true;
-			}
+			// WeaponComponent* weaponComp = static_cast<WeaponComponent*>(e->getComponent(ComponentTypeEnum::WEAPON));
+			// if (weaponComp) {
+			// 	weaponComp->fire = true;
+			// }
 		}
 		movement->accelerationDirection.x = direction.x;
 		movement->accelerationDirection.y = direction.y;
 
 		PositionComponent* p = static_cast<PositionComponent*>(e->getComponent(ComponentTypeEnum::POSITION));
-		if (p) {
+		if (p && input->rotateTowardsMouse) {
 			glm::vec2 temp = glm::inverse(Rendering::getInstance().getCamera()->getViewMatrix()) * 
 				glm::vec4((input->mouseX / input->winWidth) * 2.0f - 1.0f, ((input->winHeight - input->mouseY) / input->winHeight) * 2.0f - 1.0f, 0.0f, 1.0f);
 			p->rotation = ::atan2f(temp.x - p->position.x , p->position.y - temp.y);
