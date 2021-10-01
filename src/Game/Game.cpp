@@ -8,10 +8,7 @@
 #include "Engine/ECS/Entity.hpp"
 #include "Engine/MapLoader/MapLoader.hpp"
 
-#include "Engine/ECS/Components/SeeingComponent.hpp"
-
 Game::Game(GLFWwindow* window):
-	m_botLoader(window),
 	m_ECSManager(&ECSManager::getInstance())
 {
 	Rendering::getInstance().getQuadManager()->getTexture().loadFromFile("resources/Textures/instanced.png");
@@ -28,16 +25,9 @@ Game::Game(GLFWwindow* window):
 	Rendering::getInstance().getCamera()->setPosition(0.5f * (float)Rendering::getInstance().getMapLoader()->getWidth(), 
 		0.5f * (float)Rendering::getInstance().getMapLoader()->getHeight());
 	
-	//m_ECSManager->createPlayerEntity(7.f, 4.f, window);
+	m_ECSManager->createPlayerEntity(7.f, 4.f, window);
 	}	
 
 void Game::update(float dt) {
 	m_ECSManager->update(dt);
-	for(BotLoader::botInstance* b : m_botLoader.m_bots) {
-		Entity* e = m_ECSManager->getEntity(b->m_id);
-		if (e) {
-			SeeingComponent* seeingComp = static_cast<SeeingComponent*>(e->getComponent(ComponentTypeEnum::SEEING));
-			b->bot->update(dt, &seeingComp->visualEntities);
-		}
-	}
 }

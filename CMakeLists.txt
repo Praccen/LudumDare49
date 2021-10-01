@@ -13,7 +13,6 @@ file(GLOB_RECURSE GAME_FILES
 	${CMAKE_SOURCE_DIR}/src/Game/*.hpp)
 # Add external libs
 add_subdirectory(exts)
-add_subdirectory(Bot_dev)
 add_subdirectory(src/Engine)
 add_subdirectory(src/Game)
 
@@ -33,7 +32,7 @@ add_dependencies(${PROJECT_NAME} Engine Game)
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${CMAKE_SOURCE_DIR}/resources"
-        $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources DEPENDS myBot)
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources)
 
 # Tell MSVC to run debug binary from folder with debug binary
 if (MSVC)
