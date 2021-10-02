@@ -37,7 +37,7 @@ void MovementSystem::update(float dt)
 		}
 
 		if (m->jumpRequested && m->jumpAllowed) {
-			m->velocity.y += m->jumpPower;
+			m->velocity.y = m->jumpPower;
 			m->jumpAllowed = false;
 		}
 		

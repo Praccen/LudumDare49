@@ -1,13 +1,13 @@
 #include "Rendering.hpp"
 
 #include <iostream>
-#include <glad/glad.h>
 #include <time.h>
+
+#include "ECS/ECSManager.hpp"
 
 Rendering::Rendering():
 	m_quadManager(m_instancedShaderProgram),
-	m_lowPolyLiquid(m_simpleShaderProgram),
-    m_mapLoader(m_simpleShaderProgram, "resources/Maps/simple.map") {
+	m_lowPolyLiquid(m_simpleShaderProgram) {
     initGL();
 
 }
@@ -21,22 +21,19 @@ InstancedQuadManager* Rendering::getQuadManager() {
 }
 
 Camera* Rendering::getCamera() {
+
 	return &m_camera;
 }
 
-MapLoader* Rendering::getMapLoader() {
-    return &m_mapLoader;
-}
-
-void Rendering::update(float /*dt*/) {
+void Rendering::update(float dt) {
 	// Updates to texture matrices for animations etc goes here for example
+    ECSManager::getInstance().updateRenderingSystems(dt);
 }
 
 void Rendering::draw() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     m_simpleShaderProgram.use();
 	m_camera.bindViewMatrix(m_simpleShaderProgram.getUniformLocation("viewMatrix"));
-    m_mapLoader.draw();
     m_instancedShaderProgram.use();
 	m_camera.bindViewMatrix(m_instancedShaderProgram.getUniformLocation("viewMatrix"));
 	m_quadManager.draw();

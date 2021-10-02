@@ -3,9 +3,9 @@
 SpriteMap::SpriteMap(std::vector<glm::mat4>* matrices, unsigned int matrixIndex):
 	m_matrices(matrices),
 	m_matrixIndex(matrixIndex),
-	m_nrOfSprites(1.0f),
+	m_nrOfSprites(10.0f, 2.0f),
 	m_currentSprite(0.0f) {
-
+		updateTextureMatrix();
 }
 
 SpriteMap::~SpriteMap() {
