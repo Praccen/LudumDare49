@@ -70,7 +70,7 @@ void InstancedQuadManager::draw() {
     bindVAO();
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_instanceVBO);
-	glBufferData(GL_ARRAY_BUFFER, m_quadData.size() * sizeof(InstanceData), m_quadData.data(), GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, m_quadData.size() * sizeof(InstanceData), &m_quadData[0], GL_DYNAMIC_DRAW);
 
     for (size_t i = 0; i < m_textures.size(); i++) {
 	    m_textures[i]->bind();

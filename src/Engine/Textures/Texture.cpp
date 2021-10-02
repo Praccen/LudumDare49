@@ -40,7 +40,6 @@ unsigned int Texture::getHeight() {
 void Texture::setTextureData(unsigned char* data, unsigned int width, unsigned int height) {
 	m_width = width;
 	m_height = height;
-	glActiveTexture(GL_TEXTURE0 + m_textureIndex);
     glBindTexture(GL_TEXTURE_2D, m_texture);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     glBindTexture(GL_TEXTURE_2D, 0);
