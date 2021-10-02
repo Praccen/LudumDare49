@@ -45,8 +45,8 @@ void CollisionSystem::update(float /*dt*/) {
 			//if playerEntity has reached the limits of the screen
 			if (e->isPlayable()) {
 				//limit to the right is set to the right limit
-				if (p->position.x > Rendering::getInstance().getCamera()->getPosition().x + 5.0f) {
-					p->position.x = Rendering::getInstance().getCamera()->getPosition().x + 5.0f;
+				if (p->position.x > Rendering::getInstance().getCamera()->getPosition().x + 10.0f) {
+					p->position.x = Rendering::getInstance().getCamera()->getPosition().x + 10.0f;
 					//uppdatera inte position
 					continue;
 				}
