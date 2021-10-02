@@ -67,6 +67,7 @@ bool Window::run() {
     Game game(window);
 
     while (!glfwWindowShouldClose(window)) {
+        //gameLoop(game);
         switch (game.gameState)
         {
         case GameState::Menu:
@@ -91,11 +92,11 @@ bool Window::run() {
 
     glfwDestroyWindow(window);
     glfwTerminate();
+
+    return true;
 }
 
 bool Window::menuLoop(Game& game) {
-    // input
-    // -----
     glfwPollEvents();
     processInput(window);
 
@@ -118,13 +119,19 @@ bool Window::menuLoop(Game& game) {
     // Rendering
     ImGui::Render();
 
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    glfwSwapBuffers(window);
+
+
+    return true;
+
 }
 
 bool Window::gameLoop(Game& game) {
 	currentTime = glfwGetTime();
 	previousTime = currentTime;
 
-    Game game(window);
+    //Game game(window);
     // input
     // -----
     glfwPollEvents();

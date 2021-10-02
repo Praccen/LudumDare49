@@ -3,6 +3,7 @@
 static unsigned int SCR_WIDTH = 800;
 static unsigned int SCR_HEIGHT = 800;
 
+class Game;
 class Window {
 public:
     Window() = default;
