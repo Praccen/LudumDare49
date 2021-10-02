@@ -16,11 +16,8 @@ private:
 
     void createNewTile(float x, float y);
 
-    struct tile {
-        float x, y;
-    };
     unsigned int m_numTiles{30};
-    std::array<Entity*, 30> tiles;
-    Rendering* render;
+    Rendering* m_render;
+    float lastTileY{1.0f};
     
 };

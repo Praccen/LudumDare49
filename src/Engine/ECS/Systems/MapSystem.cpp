@@ -9,7 +9,7 @@
 MapSystem::MapSystem(ECSManager *ECSManager) : System(ECSManager, ComponentTypeEnum::MAPTILE) {}
 
 void MapSystem::initialize() {
-    render =  &Rendering::getInstance();
+    m_render =  &Rendering::getInstance();
     for(unsigned int i = 0; i < m_numTiles; ++i) {
         createNewTile(static_cast<float>(i), 1.0f);
     }
@@ -20,10 +20,11 @@ void MapSystem::update(float dt) {
     for(auto& e : m_entities) {
 		PositionComponent *p = static_cast<PositionComponent *>(e->getComponent(ComponentTypeEnum::POSITION));
 		MovementComponent *m = static_cast<MovementComponent *>(e->getComponent(ComponentTypeEnum::MOVEMENT));
-        float camX = render->getCamera()->getPosition().x;
+        float camX = m_render->getCamera()->getPosition().x;
         if((camX - p->position.x) > 14.f) {
             p->position.x = static_cast<float>(m_numTiles);
-            p->position.y = 1.0f;
+            p->position.y = lastTileY+0.1f;
+            lastTileY = p->position.y;
             m->constantAcceleration.y = 0.0f;
             m->velocity.y = 0.0f;
             m_numTiles++;
