@@ -10,11 +10,13 @@ InstancedShaderProgram::InstancedShaderProgram() :
 	// Change if uniforms change in shaders, the map's values are set to match layout(location = x) in shaders.
 	m_uniformBindings["viewMatrix"] = 0;
 	m_uniformBindings["texture0"] = 1;
+	m_uniformBindings["texture1"] = 2;
 
 	use(); // Start using the shader
 
 	// Set texture0 uniform to be texture unit 0
 	glUniform1i(m_uniformBindings["texture0"], 0);
+	glUniform1i(m_uniformBindings["texture1"], 1);
 }
 
 InstancedShaderProgram::~InstancedShaderProgram() {
@@ -32,20 +34,28 @@ void InstancedShaderProgram::setupVertexAttributePointers() {
 
 void InstancedShaderProgram::setupInstancedVertexAttributePointers() {
 	unsigned int totalFloats = 4 * 4 * 2; // Mat4 * 2
+	unsigned int totalInts = 1;
+
+	size_t stride = totalFloats * sizeof(float) + totalInts * sizeof(int);
 
 	// Model Matrix
 	for (unsigned int i = 0; i < 4; i++) {
-		glVertexAttribPointer(2 + i, 4, GL_FLOAT, GL_FALSE, totalFloats * sizeof(float), (void*) (4 * i * sizeof(float)));
+		glVertexAttribPointer(2 + i, 4, GL_FLOAT, GL_FALSE, stride, (void*) (4 * i * sizeof(float)));
 		glEnableVertexAttribArray(2 + i);
 		glVertexAttribDivisor(2 + i, 1);
 	}
 
 	// Texture Matrix
 	for (unsigned int i = 0; i < 4; i++) {
-		glVertexAttribPointer(6 + i, 4, GL_FLOAT, GL_FALSE, totalFloats * sizeof(float), (void*) ((16 + 4 * i) * sizeof(float)));
+		glVertexAttribPointer(6 + i, 4, GL_FLOAT, GL_FALSE, stride, (void*) ((16 + 4 * i) * sizeof(float)));
 		glEnableVertexAttribArray(6 + i);
 		glVertexAttribDivisor(6 + i, 1);
 	}
+
+	// Texture index
+	glVertexAttribPointer(10, 1, GL_INT, GL_FALSE, stride, (void*) (totalFloats * sizeof(float)));
+	glEnableVertexAttribArray(10);
+	glVertexAttribDivisor(10, 1);
 }
 
 unsigned int InstancedShaderProgram::getUniformLocation(std::string uniformName) {

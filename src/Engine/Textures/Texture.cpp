@@ -65,6 +65,6 @@ void Texture::bind() {
 void Texture::loadFromFile(std::string path) {
 	int width, height, channels;
 
-	unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+	unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, STBI_rgb_alpha);
 	setTextureData(data, width, height);
 }

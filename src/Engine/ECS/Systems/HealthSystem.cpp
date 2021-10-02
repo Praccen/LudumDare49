@@ -52,7 +52,7 @@ void HealthSystem::update(float dt) {
             PositionComponent *p = static_cast<PositionComponent *>(e->getComponent(ComponentTypeEnum::POSITION));
             if (healthComp->healthVisualizerQuad && p) {
                 healthComp->healthVisualizerQuad->setCurrentSprite(
-                    Rendering::getInstance().getQuadManager()->getTexture().getWidth() - 2.0f + (float)(healthComp->maxHealth - healthComp->health) / (float)std::max(healthComp->maxHealth, 1),
+                    Rendering::getInstance().getQuadManager()->getTexture(0).getWidth() - 2.0f + (float)(healthComp->maxHealth - healthComp->health) / (float)std::max(healthComp->maxHealth, 1),
                     healthComp->healthVisualizerQuad->getCurrentSprite().y);
                 
                 glm::mat4 &modelMatrix = healthComp->healthVisualizerQuad->getModelMatrix();
