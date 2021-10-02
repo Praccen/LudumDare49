@@ -2,7 +2,6 @@
 
 #include "Camera.hpp"
 #include "Objects/Quad.hpp"
-#include "MapLoader/MapLoader.hpp"
 #include "ShaderPrograms/SimpleShaderProgram.hpp"
 #include "ShaderPrograms/InstancedShaderProgram.hpp"
 #include "Objects/InstancedQuadManager.hpp"
@@ -23,7 +22,6 @@ public:
 	Quad* getNewQuad();
     InstancedQuadManager* getQuadManager();
 	Camera* getCamera();
-    MapLoader* getMapLoader();
 
 	void update(float dt);
     void draw();
@@ -38,6 +36,5 @@ private:
     SimpleShaderProgram m_simpleShaderProgram;
     LowPolyLiquid m_lowPolyLiquid;
 
-    MapLoader m_mapLoader;
     void initGL();
 };

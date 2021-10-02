@@ -9,6 +9,7 @@
 #include "Components/WeaponComponent.hpp"
 #include "Components/SeeingComponent.hpp"
 #include "Components/CameraFocusComponent.hpp"
+#include "Systems/MapSystem.hpp"
 #include "Rendering.hpp"
 
 
@@ -24,9 +25,11 @@ ECSManager::ECSManager()
 		{"GRAPHICS", std::make_shared<GraphicsSystem>(GraphicsSystem(this))},
 		{"WEAPON", std::make_shared<WeaponSystem>(WeaponSystem(this))},
 		{"SEEING", std::make_shared<SeeingSystem>(SeeingSystem(this))},
-		{"CAMERAFOCUS", std::make_shared<CameraSystem>(CameraSystem(this))}},
+		{"CAMERAFOCUS", std::make_shared<CameraSystem>(CameraSystem(this))},
+		{"MAP", std::make_shared<MapSystem>(MapSystem(this))}},
 		m_addEntities(), m_addComponents(), m_removeEntities(), m_removeComponents()
 {
+	m_systems["MAP"]->initialize();
 	m_startingPositions.push_back(glm::vec2(2, 2));
 	m_startingPositions.push_back(glm::vec2(28, 2));
 	m_startingPositions.push_back(glm::vec2(2, 28));
@@ -49,6 +52,7 @@ void ECSManager::update(float dt)
 	m_systems["GRAPHICS"]->update(dt);
 	m_systems["WEAPON"]->update(dt);
 	m_systems["CAMERAFOCUS"]->update(dt);
+	m_systems["MAP"]->update(dt);
 
 	//for all entities, remove/add components
 	//remove/add entities from systems
@@ -173,7 +177,9 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 	movComp->wantedVelocity = glm::vec3(4.0f, 0.0f, 0.0f);
 	addComponent(playerEntity, movComp);
 	addComponent(playerEntity, new InputComponent(window));
-	addComponent(playerEntity, new CollisionComponent());
+	CollisionComponent* cCo = new CollisionComponent();
+	cCo->effectMovement = false;
+	addComponent(playerEntity, cCo);
 	HealthComponent* healthComp = new HealthComponent();
 	healthComp->healthVisualizerQuad = Rendering::getInstance().getNewQuad();
 	healthComp->healthVisualizerQuad->setNrOfSprites(2, 4);
