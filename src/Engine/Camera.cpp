@@ -7,7 +7,8 @@ Camera::Camera():
     m_matrixNeedsUpdate(false),
     m_position{0.0f, 0.0f},
     m_zoom(1.0f),
-    m_rotation(0.0f) {
+    m_rotation(0.0f),
+    m_ratio(1.0f) {
 
 }
 
@@ -35,10 +36,15 @@ void Camera::setRotation(float rotation) {
     m_matrixNeedsUpdate = true;
 }
 
+void Camera::setAspectRatio(float ratio) {
+    m_ratio = ratio;
+    m_matrixNeedsUpdate = true;
+}
+
 void Camera::bindViewMatrix(unsigned int uniformLocation) {
     if (m_matrixNeedsUpdate) {
         m_viewMatrix = glm::mat4(1.0f);
-        m_viewMatrix = glm::scale(m_viewMatrix, glm::vec3(m_zoom, m_zoom, 1.0f));
+        m_viewMatrix = glm::scale(m_viewMatrix, glm::vec3(m_zoom, m_zoom * m_ratio, 1.0f));
         m_viewMatrix = glm::rotate(m_viewMatrix, m_rotation, glm::vec3(0.0f, 0.0f, 1.0f));
         m_viewMatrix = glm::translate(m_viewMatrix, glm::vec3(-m_position[0], -m_position[1], 0.0f));
         m_matrixNeedsUpdate = false;

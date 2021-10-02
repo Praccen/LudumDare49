@@ -149,7 +149,9 @@ void framebuffer_size_callback(GLFWwindow* /*window*/, int width, int height)
 {
    SCR_WIDTH = width;
    SCR_HEIGHT = height;
+
    glViewport(0, 0, width, height);
+   Rendering::getInstance().getCamera()->setAspectRatio((float)width / (float)height);
 }
 
 void Window::renderImgui() {

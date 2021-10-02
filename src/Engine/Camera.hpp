@@ -15,6 +15,7 @@ public:
 
     glm::vec2& getPosition() { return m_position; };
 
+    void setAspectRatio(float ratio);
     void bindViewMatrix(unsigned int uniformLocation);
 private:
     glm::mat4 m_viewMatrix;
@@ -23,4 +24,5 @@ private:
     glm::vec2 m_position;
     float m_zoom;
     float m_rotation;
+    float m_ratio;
 };
