@@ -9,6 +9,12 @@
 
 class ShaderProgram;
 
+struct InstanceData {
+    glm::mat4 modelMatrix = glm::mat4(1.0f);
+    glm::mat4 textureMatrix = glm::mat4(1.0f);
+    int textureIndex = 0;
+};
+
 class InstancedQuadManager : protected GraphicsObject {
 public:
 	InstancedQuadManager(ShaderProgram &shaderProgram);
@@ -17,18 +23,18 @@ public:
     Quad* getNewQuad();
 	std::vector<Quad*>& getQuads();
 
-    Texture& getTexture();
+    Texture& getTexture(unsigned int textureId);
 
     void returnQuad(Quad* quadToReturn);
     void draw();
 private:
 	unsigned int m_instanceVBO;
 
-    std::vector<glm::mat4> m_quadMatrices;
-    std::vector<unsigned int> m_availableMatrices;
+    std::vector<InstanceData> m_quadData;
+    std::vector<unsigned int> m_availableQuads;
 	std::vector<Quad*> m_quads;
 
-    Texture m_texture;
+    std::vector<Texture> m_textures;
 
     float m_vertices[20] = {
 //		Position				Texture coords
