@@ -80,7 +80,10 @@ void CollisionSystem::update(float /*dt*/) {
 
 						p->position += glm::vec3(tempIntersectionAxis, 0.0f)  * tempIntersectionDepth;
 						glm::vec3 normalizedIntersectionAxis = {glm::normalize(tempIntersectionAxis), 0.0f};
-						m->velocity -= normalizedIntersectionAxis * glm::dot(normalizedIntersectionAxis, m->velocity);
+						float dotProd = glm::dot(normalizedIntersectionAxis, m->velocity);
+						if (dotProd < 0.0f) {
+							m->velocity -= normalizedIntersectionAxis * dotProd;
+						}
 
 						// Allow jumping if standing on ground pointing upwards
 						if (normalizedIntersectionAxis.y > 0.6f) {
