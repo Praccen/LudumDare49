@@ -51,6 +51,7 @@ public:
 	// Create a controllable entity at position x,y
 	const int createPlayerEntity(float x, float y, GLFWwindow* window);
 	const int createCameraEntity();
+	const int createSunEntity();
 
 	//Returns entity by ID, or NULL if it does not exist
 	static Entity* getEntity(int entityID);
