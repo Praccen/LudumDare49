@@ -17,7 +17,7 @@ void MapSystem::initialize() {
     m_render =  &Rendering::getInstance();
     // Create tile and platform enitites.
     for(unsigned int i = 0; i < m_numTiles; ++i) {
-        createNewTile(static_cast<float>(i), 1.0f, MapTileComponent::GROUND);
+        createNewTile(static_cast<float>(i), 1.0f, MapTileComponent::GROUND, 1.0f);
     }
 }
 
@@ -33,14 +33,14 @@ void MapSystem::update(float dt) {
         if((camX - p->position.x) > 14.f) {
             p->position.x = static_cast<float>(m_numTiles);
             if (mt->type) {
-                continue;
+                m_manager->removeEntity(e->getID());
             }
             // Check for platform
             if(!m_isPlatform ) {
                 int platform = rand() % 100 + 1;
                 // 10% chance for platform
                 if(platform < 10 && m_drawnTiles > 1) {
-                    m_platformHeight = rand() % 3 + 5;
+                    m_platformHeight = rand() % 3 + 3;
                     m_lastTileY += m_platformHeight;
                     m_isPlatform = true;
                     m_drawnTiles = 0;
@@ -73,7 +73,7 @@ void MapSystem::update(float dt) {
             }
 
             
-            //spawnObstacle();
+            spawnObstacle();
             // Random spawning tile 20%
             int spawn = rand() % 100 + 1;
             if ((spawn < 20) && (m_drawnTiles > 1)) {
@@ -91,31 +91,35 @@ void MapSystem::update(float dt) {
             m_numTiles++;
         } else if((camX - p->position.x) > 10.f) {
             m->constantAcceleration.y = -9.82f;
-            if (mt->type) {
-                m_manager->removeEntity(e->getID());
-            }
+            
         } 
     }
 }
 
-void MapSystem::createNewTile(float x, float y, MapTileComponent::TILE_TYPE t) {
+void MapSystem::createNewTile(float x, float y, MapTileComponent::TILE_TYPE t, float scale) {
         Entity& tileEntity = m_manager->createEntity();
-        m_manager->addComponent(tileEntity, new PositionComponent(x, y));
+        PositionComponent* posComp = new PositionComponent(x, y);
         CollisionComponent* collisionComp = new CollisionComponent();
-        collisionComp->isConstraint = true;
-        m_manager->addComponent(tileEntity, collisionComp);
-        m_manager->addComponent(tileEntity, new MapTileComponent(t));
-	    m_manager->addComponent(tileEntity, new MovementComponent());
         GraphicsComponent* graphComp = new GraphicsComponent();
         graphComp->quad->setTexureIndex(1);
         graphComp->quad->setNrOfSprites(1.0f, 1.0f);
         graphComp->quad->setCurrentSprite(0.0f, 0.0f);
+
+        collisionComp->isConstraint = true;
+        graphComp->quad->setNrOfSprites(10.5f, 2.0f);
+        graphComp->quad->setCurrentSprite(1.06f, 0.0f);
+        posComp->scale = glm::vec3(scale);
+        
+        m_manager->addComponent(tileEntity, posComp);
         m_manager->addComponent(tileEntity, graphComp);
+        m_manager->addComponent(tileEntity, collisionComp);
+        m_manager->addComponent(tileEntity, new MapTileComponent(t));
+	    m_manager->addComponent(tileEntity, new MovementComponent());
 }
 
 void MapSystem::spawnObstacle() {
     unsigned int spawn = rand() % 100 + 1;
     if(spawn < 5) {
-        createNewTile(static_cast<float>(m_numTiles), m_lastTileY + 1, MapTileComponent::OBSTACLE);
+        createNewTile(static_cast<float>(m_numTiles), m_lastTileY + 1, MapTileComponent::OBSTACLE, 0.5f);
     }
 }
