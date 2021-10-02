@@ -9,31 +9,16 @@ InstancedShaderProgram::InstancedShaderProgram() :
 
 	// Change if uniforms change in shaders, the map's values are set to match layout(location = x) in shaders.
 	m_uniformBindings["viewMatrix"] = 0;
-	m_uniformBindings["texture0"] = 1;
-	m_uniformBindings["texture1"] = 2;
-	m_uniformBindings["texture2"] = 3;
-	m_uniformBindings["texture3"] = 4;
-	m_uniformBindings["texture4"] = 5;
-	m_uniformBindings["texture5"] = 6;
-	m_uniformBindings["texture6"] = 7;
-	m_uniformBindings["texture7"] = 8;
-	m_uniformBindings["texture8"] = 9;
-	m_uniformBindings["texture8"] = 10;
+	m_uniformBindings["textures"] = 1;
 
 	use(); // Start using the shader
 
-	// Set texture0 uniform to be texture unit 0
-	glUniform1i(m_uniformBindings["texture0"], 0);
-	glUniform1i(m_uniformBindings["texture1"], 1);
-	glUniform1i(m_uniformBindings["texture2"], 2);
-	glUniform1i(m_uniformBindings["texture3"], 3);
-	glUniform1i(m_uniformBindings["texture4"], 4);
-	glUniform1i(m_uniformBindings["texture5"], 5);
-	glUniform1i(m_uniformBindings["texture6"], 6);
-	glUniform1i(m_uniformBindings["texture7"], 7);
-	glUniform1i(m_uniformBindings["texture8"], 8);
-	glUniform1i(m_uniformBindings["texture9"], 9);
-	glUniform1i(m_uniformBindings["texture10"], 10);
+	// Set textures uniform
+	int texturesArray[32] = {0};
+	for (unsigned int i = 0; i < 32; i++) {
+		texturesArray[i] = i;
+	}
+	glUniform1iv(m_uniformBindings["textures"], 32, texturesArray);
 }
 
 InstancedShaderProgram::~InstancedShaderProgram() {
