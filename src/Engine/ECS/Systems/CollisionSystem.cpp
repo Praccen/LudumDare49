@@ -9,7 +9,7 @@
 
 
 CollisionSystem::CollisionSystem(ECSManager *ECSManager)
-	: System(ECSManager, ComponentTypeEnum::COLLISION, ComponentTypeEnum::MOVEMENT, ComponentTypeEnum::POSITION) {
+	: System(ECSManager, ComponentTypeEnum::COLLISION, ComponentTypeEnum::POSITION) {
 
 }
 
@@ -31,8 +31,8 @@ void CollisionSystem::update(float /*dt*/) {
 		CollisionComponent* c = static_cast<CollisionComponent*>(e->getComponent(ComponentTypeEnum::COLLISION));
 		MovementComponent* m = static_cast<MovementComponent*>(e->getComponent(ComponentTypeEnum::MOVEMENT));
 
-		// Don't check against others if this is constraint
-		if(c->isConstraint) {
+		// Don't check against others if this is constraint or doesn't have movement component
+		if(c->isConstraint || !m) {
 			continue;
 		}
 
