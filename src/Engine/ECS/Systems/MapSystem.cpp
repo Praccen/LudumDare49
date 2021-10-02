@@ -45,7 +45,7 @@ void MapSystem::update(float dt) {
                     p->position.y = m_lastTileY-0.1f;
                 }
             } else {
-                if(m_numPlatformsDrawn > 5) {
+                if(m_numPlatformsDrawn > 5 && m_drawnTiles > 1) {
                     m_lastTileY -= 5;
                     isPlatform = false;
                     m_numPlatformsDrawn = 0;
