@@ -14,9 +14,10 @@ public:
 	GameState gameState;
 
 	Game(GLFWwindow* window);
-	~Game() = default;
+	~Game();
 	
 	void update(float dt);
+	void reset(GLFWwindow* window);
 private:
 	ECSManager* m_ECSManager;
 

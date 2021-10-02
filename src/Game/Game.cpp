@@ -21,7 +21,22 @@ Game::Game(GLFWwindow* window):
 	playerEntityId = m_ECSManager->createPlayerEntity(7.f, 4.f, window);
 	cameraEntityId = m_ECSManager->createCameraEntity();
 	m_ECSManager->createSunEntity();
-	}	
+}
+
+Game::~Game()
+{
+	m_ECSManager->~ECSManager();
+	//Rendering::getInstance().~Rendering();
+}
+
+void Game::reset(GLFWwindow *window) {
+	ECSManager::getInstance().reset();
+	//Rendering::Reset();
+
+	playerEntityId = m_ECSManager->createPlayerEntity(7.f, 4.f, window);
+	cameraEntityId = m_ECSManager->createCameraEntity();
+	m_ECSManager->createSunEntity();
+}
 
 void Game::update(float dt) {
 	m_ECSManager->update(dt);

@@ -31,6 +31,9 @@ public:
 	//Runs through all systems
 	void update(float dt);
 
+	//resets ECS
+	void reset();
+
 	void updateRenderingSystems(float dt);
 
 	//creates and returns a new entity

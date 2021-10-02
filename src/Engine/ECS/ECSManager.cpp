@@ -39,6 +39,11 @@ ECSManager::ECSManager()
 ECSManager::~ECSManager()
 {
 	//Delete all entities and systems
+	for (auto& e : m_entities) {
+		e->~Entity();
+		delete e;
+	}
+	m_entities.clear();
 }
 
 void ECSManager::update(float dt)
@@ -64,6 +69,11 @@ void ECSManager::update(float dt)
 
 void ECSManager::updateRenderingSystems(float dt) {
 	m_systems["ANIMATION"]->update(dt);
+}
+
+void ECSManager::reset() {
+	m_entities.clear();
+	m_idCounter = 0;
 }
 
 Entity& ECSManager::createEntity()

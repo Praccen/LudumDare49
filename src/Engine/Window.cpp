@@ -104,7 +104,11 @@ bool Window::gameOverLoop(Game& game) {
     glfwPollEvents();
     processInput(window);
 
-
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        //game.gameState = GameState::Playing;
+        game.~Game();
+        run();
+    }
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
@@ -114,10 +118,7 @@ bool Window::gameOverLoop(Game& game) {
 
     ImGui::Begin("Game Over");
 
-    ImGui::Text("Game is over, the world is unstable.");
-
-    /*if (ImGui::Button("Start running"))
-        game.gameState = GameState::Playing;*/
+    ImGui::Text("Game is over, the world is unstable. Press space to run again.");
 
     ImGui::End();
     // Rendering
