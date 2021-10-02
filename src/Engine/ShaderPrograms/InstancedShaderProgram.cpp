@@ -11,12 +11,14 @@ InstancedShaderProgram::InstancedShaderProgram() :
 	m_uniformBindings["viewMatrix"] = 0;
 	m_uniformBindings["texture0"] = 1;
 	m_uniformBindings["texture1"] = 2;
+	m_uniformBindings["texture2"] = 3;
 
 	use(); // Start using the shader
 
 	// Set texture0 uniform to be texture unit 0
 	glUniform1i(m_uniformBindings["texture0"], 0);
 	glUniform1i(m_uniformBindings["texture1"], 1);
+	glUniform1i(m_uniformBindings["texture2"], 2);
 }
 
 InstancedShaderProgram::~InstancedShaderProgram() {

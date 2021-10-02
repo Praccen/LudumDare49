@@ -8,6 +8,7 @@ in flat int textureId;
 // If uniforms change, also update SimpleShaderProgram to match
 layout(location = 1) uniform sampler2D texture0;
 layout(location = 2) uniform sampler2D texture1;
+layout(location = 3) uniform sampler2D texture2;
 
 out vec4 FragColor;
 
@@ -20,19 +21,16 @@ mat4 thresholdMatrix = mat4(
 
 void main()
 {
-
-    // FragColor = texture(texture1, texCoords);
-    FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+    FragColor = vec4(0.0, 1.0, 0.0, 1.0);
     if (textureId == 0) {
         FragColor = texture(texture0, texCoords);
     }
     else if (textureId == 1) {
         FragColor = texture(texture1, texCoords);
     }
-    else {
-        FragColor = vec4(0.0, 1.0, 0.0, 1.0);
-    }
-	
+    else if (textureId == 2) {
+        FragColor = texture(texture2, texCoords);
+    }	
 
     // Screen-door transparancy
     float threshold = thresholdMatrix[int(floor(mod(gl_FragCoord.x, 4)))][int(floor(mod(gl_FragCoord.y, 4)))] / 17;

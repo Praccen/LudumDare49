@@ -10,6 +10,7 @@ InstancedQuadManager::InstancedQuadManager(ShaderProgram &shaderProgram):
 	GraphicsObject(shaderProgram) {
 	m_textures.emplace_back(new Texture(0));
 	m_textures.emplace_back(new Texture(1));
+	m_textures.emplace_back(new Texture(2));
 
     bindVAO();
 	glGenBuffers(1, &m_instanceVBO);
