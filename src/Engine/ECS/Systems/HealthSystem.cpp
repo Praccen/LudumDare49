@@ -1,8 +1,11 @@
 #include "HealthSystem.hpp"
 #include "ECS/ECSManager.hpp"
+#include "Rendering.hpp"
 
 #include "ECS/Components/CollisionComponent.hpp"
 #include "ECS/Components/PositionComponent.hpp"
+#include "ECS/Components/DamageComponent.hpp"
+#include "ECS/Components/HealthComponent.hpp"
 
 #include <algorithm>
 
@@ -49,7 +52,7 @@ void HealthSystem::update(float dt) {
             PositionComponent *p = static_cast<PositionComponent *>(e->getComponent(ComponentTypeEnum::POSITION));
             if (healthComp->healthVisualizerQuad && p) {
                 healthComp->healthVisualizerQuad->setCurrentSprite(
-                    (float)(healthComp->maxHealth - healthComp->health) / (float)std::max(healthComp->maxHealth, 1),
+                    Rendering::getInstance().getQuadManager()->getTexture().getWidth() - 2.0f + (float)(healthComp->maxHealth - healthComp->health) / (float)std::max(healthComp->maxHealth, 1),
                     healthComp->healthVisualizerQuad->getCurrentSprite().y);
                 
                 glm::mat4 &modelMatrix = healthComp->healthVisualizerQuad->getModelMatrix();

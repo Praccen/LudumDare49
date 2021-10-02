@@ -1,8 +1,9 @@
 #include "Rendering.hpp"
 
 #include <iostream>
-#include <glad/glad.h>
 #include <time.h>
+
+#include "ECS/ECSManager.hpp"
 
 Rendering::Rendering():
 	m_quadManager(m_instancedShaderProgram),
@@ -24,8 +25,9 @@ Camera* Rendering::getCamera() {
 	return &m_camera;
 }
 
-void Rendering::update(float /*dt*/) {
+void Rendering::update(float dt) {
 	// Updates to texture matrices for animations etc goes here for example
+    ECSManager::getInstance().updateRenderingSystems(dt);
 }
 
 void Rendering::draw() {

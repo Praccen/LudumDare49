@@ -4,6 +4,7 @@
 #include "ECS/Components/GraphicsComponent.hpp"
 #include "ECS/Components/CollisionComponent.hpp"
 #include "ECS/Components/DamageComponent.hpp"
+#include "ECS/Components/HealthComponent.hpp"
 
 #include "ECS/ECSManager.hpp"
 

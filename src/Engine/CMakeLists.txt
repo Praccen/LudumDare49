@@ -13,6 +13,6 @@ target_compile_options(Engine PRIVATE
 						$<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:
      			       -Wall -pedantic -Werror>
 						$<$<CXX_COMPILER_ID:MSVC>:
-						/W3;/WX>)  
+						/W3;>)  
 set_target_properties(Engine PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON CMAKE_CXX_EXTENSIONS OFF)
 target_compile_definitions(Engine PUBLIC GLM_FORCE_SILENT_WARNINGS=1)

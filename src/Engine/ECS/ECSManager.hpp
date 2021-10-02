@@ -8,12 +8,12 @@
 #include "Systems/WeaponSystem.hpp"
 #include "Systems/SeeingSystem.hpp"
 #include "Systems/CameraSystem.hpp"
+#include "Systems/AnimationSystem.hpp"
 
 #include <map>
 #include <string>
 #include <memory>
 #include <iostream>
-#include <GLFW/glfw3.h>
 
 class ECSManager
 {
@@ -30,6 +30,8 @@ public:
 
 	//Runs through all systems
 	void update(float dt);
+
+	void updateRenderingSystems(float dt);
 
 	//creates and returns a new entity
 	Entity& createEntity();

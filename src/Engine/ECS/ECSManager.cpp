@@ -26,7 +26,8 @@ ECSManager::ECSManager()
 		{"WEAPON", std::make_shared<WeaponSystem>(WeaponSystem(this))},
 		{"SEEING", std::make_shared<SeeingSystem>(SeeingSystem(this))},
 		{"CAMERAFOCUS", std::make_shared<CameraSystem>(CameraSystem(this))},
-		{"MAP", std::make_shared<MapSystem>(MapSystem(this))}},
+		{"MAP", std::make_shared<MapSystem>(MapSystem(this))},
+		{"ANIMATION", std::make_shared<AnimationSystem>(AnimationSystem(this))}},
 		m_addEntities(), m_addComponents(), m_removeEntities(), m_removeComponents()
 {
 	m_systems["MAP"]->initialize();
@@ -60,6 +61,10 @@ void ECSManager::update(float dt)
 	addComponents();
 	removeEntities();
 	removeComponents();
+}
+
+void ECSManager::updateRenderingSystems(float dt) {
+	m_systems["ANIMATION"]->update(dt);
 }
 
 Entity& ECSManager::createEntity()
@@ -167,26 +172,33 @@ void ECSManager::removeComponents()
 
 const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 
-	Entity& playerEntity = createEntity();
+	Entity &playerEntity = createEntity();
 	playerEntity.setName("Player");
 	playerEntity.makePlayable();
 	// Add components to player
-	addComponent(playerEntity, new PositionComponent(x, y));
-	MovementComponent* movComp = new MovementComponent();
+	PositionComponent* posComp = new PositionComponent(x, y);
+	posComp->scale = glm::vec3(-2.0f, (34.0f/60.0f) * 2.0f, 1.0f);
+	addComponent(playerEntity, posComp);
+	MovementComponent *movComp = new MovementComponent();
 	movComp->constantAcceleration = glm::vec3(0.0f, -9.82f, 0.0f);
 	movComp->wantedVelocity = glm::vec3(4.0f, 0.0f, 0.0f);
 	addComponent(playerEntity, movComp);
 	addComponent(playerEntity, new InputComponent(window));
 	addComponent(playerEntity, new CollisionComponent());
-	HealthComponent* healthComp = new HealthComponent();
-	healthComp->healthVisualizerQuad = Rendering::getInstance().getNewQuad();
-	healthComp->healthVisualizerQuad->setNrOfSprites(2, 4);
-	healthComp->healthVisualizerQuad->setCurrentSprite(0, 3);
-	addComponent(playerEntity, healthComp);
+	// HealthComponent *healthComp = new HealthComponent();
+	// healthComp->healthVisualizerQuad = Rendering::getInstance().getNewQuad();
+	// healthComp->healthVisualizerQuad->setNrOfSprites((float) Rendering::getInstance().getQuadManager()->getTexture().getWidth(), 
+	// 	(float)Rendering::getInstance().getQuadManager()->getTexture().getHeight());
+	// healthComp->healthVisualizerQuad->setCurrentSprite((float) Rendering::getInstance().getQuadManager()->getTexture().getWidth() - 2.0f, 0.0f);
+	// addComponent(playerEntity, healthComp);
 	addComponent(playerEntity, new DamageComponent());
-	GraphicsComponent* graphComp = new GraphicsComponent();
-	graphComp->quad->setNrOfSprites(1.0f, 1.5f);
-	graphComp->quad->setCurrentSprite(0.0f, 0.0f);
+	GraphicsComponent *graphComp = new GraphicsComponent();
+	graphComp->quad->setNrOfSprites(6.0f, 2.0f);
+	graphComp->quad->setCurrentSprite(0.0f, 1.0f);
+	graphComp->advanceBy = {1.0f, 0.0f};
+	graphComp->startingTile = {0.0f, 1.0f};
+	graphComp->modAdvancement = {6.0f, 1.0f};
+	graphComp->updateInterval = 0.1f;
 	addComponent(playerEntity, graphComp);
 	addComponent(playerEntity, new WeaponComponent());
 	addComponent(playerEntity, new CameraFocusComponent());
