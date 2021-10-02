@@ -23,6 +23,7 @@ void MapSystem::initialize() {
 
 void MapSystem::update(float dt) {
 
+
     for(auto& e : m_entities) {
 		PositionComponent *p = static_cast<PositionComponent *>(e->getComponent(ComponentTypeEnum::POSITION));
 		MovementComponent *m = static_cast<MovementComponent *>(e->getComponent(ComponentTypeEnum::MOVEMENT));
@@ -30,21 +31,26 @@ void MapSystem::update(float dt) {
         if((camX - p->position.x) > 14.f) {
             p->position.x = static_cast<float>(m_numTiles);
             int upDown = rand() % 3;
-            if (upDown == 0) {
-                p->position.y = lastTileY-0.1f;
-            } else if (upDown == 1){
-                p->position.y = lastTileY+0.1f;
+
+            // Random tile y value
+            if (m_lastTileY < m_destHeight) {
+                p->position.y = m_lastTileY+0.1f;
             } else {
-                p->position.y = lastTileY;
+                p->position.y = m_lastTileY-0.1f;
             }
 
+            if(std::fabs(m_destHeight - p->position.y) < 0.01f ) {
+                m_destHeight = rand() % 4 - 2;
+            }
+
+            // Random spawning tile or not
             int spawn = rand() % 100 + 1;
             if (spawn < 20) {
                 int gap = rand() % 4+2;
                 m_numTiles += gap;
             }
 
-            lastTileY = p->position.y;
+            m_lastTileY = p->position.y;
             m->constantAcceleration.y = 0.0f;
             m->velocity.y = 0.0f;
             m_numTiles++;

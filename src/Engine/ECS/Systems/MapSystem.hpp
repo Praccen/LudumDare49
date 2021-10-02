@@ -18,6 +18,7 @@ private:
 
     unsigned int m_numTiles{30};
     Rendering* m_render;
-    float lastTileY{1.0f};
+    float m_lastTileY{1.0f};
+    int m_destHeight{1};
     
 };
