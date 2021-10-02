@@ -203,20 +203,14 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 	addComponent(playerEntity, movComp);
 	addComponent(playerEntity, new InputComponent(window));
 	addComponent(playerEntity, new CollisionComponent());
-	// HealthComponent *healthComp = new HealthComponent();
-	// healthComp->healthVisualizerQuad = Rendering::getInstance().getNewQuad();
-	// healthComp->healthVisualizerQuad->setNrOfSprites((float) Rendering::getInstance().getQuadManager()->getTexture().getWidth(), 
-	// 	(float)Rendering::getInstance().getQuadManager()->getTexture().getHeight());
-	// healthComp->healthVisualizerQuad->setCurrentSprite((float) Rendering::getInstance().getQuadManager()->getTexture().getWidth() - 2.0f, 0.0f);
-	// addComponent(playerEntity, healthComp);
 	addComponent(playerEntity, new DamageComponent());
 	GraphicsComponent *graphComp = new GraphicsComponent();
-	graphComp->quad->setTextureIndex(0);
-	graphComp->quad->setNrOfSprites(6.0f, 1.99f);
+	graphComp->quad->setTexureIndex(0);
+	graphComp->quad->setNrOfSprites(6.0f, 1.0f);
 	graphComp->quad->setCurrentSprite(0.0f, 1.0f);
 	graphComp->animate = true;
 	graphComp->advanceBy = {1.0f, 0.0f};
-	graphComp->startingTile = {0.0f, 1.0f};
+	graphComp->startingTile = {0.0f, 0.0f};
 	graphComp->modAdvancement = {6.0f, 1.0f};
 	graphComp->updateInterval = 0.2f;
 	graphComp->movementMultiplier = 0.35f;
