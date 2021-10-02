@@ -5,7 +5,7 @@
 
 #include "Engine/Objects/InstancedQuadManager.hpp"
 
-Quad::Quad(std::vector<InstanceData>* quadData, unsigned int quadIndex) :
+Quad::Quad(std::vector<InstanceData> *quadData, unsigned int quadIndex) :
     SpriteMap(quadData, quadIndex),
     m_quadData(quadData),
     m_quadIndex(quadIndex) {

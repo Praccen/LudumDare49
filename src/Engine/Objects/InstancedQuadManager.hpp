@@ -34,7 +34,7 @@ private:
     std::vector<unsigned int> m_availableQuads;
 	std::vector<Quad*> m_quads;
 
-    std::vector<Texture> m_textures;
+    std::vector<Texture*> m_textures;
 
     float m_vertices[20] = {
 //		Position				Texture coords
