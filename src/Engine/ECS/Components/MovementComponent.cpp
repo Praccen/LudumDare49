@@ -1,5 +1,4 @@
 #include "MovementComponent.hpp"
-#include "MapLoader/MapLoader.hpp"
 
 MovementComponent::MovementComponent() :
 	constantAcceleration(0.0f),

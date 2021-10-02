@@ -6,7 +6,6 @@
 #include <algorithm>
 
 #include "Engine/ECS/Entity.hpp"
-#include "Engine/MapLoader/MapLoader.hpp"
 
 Game::Game(GLFWwindow* window):
 	m_ECSManager(&ECSManager::getInstance())
