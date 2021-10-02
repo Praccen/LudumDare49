@@ -1,6 +1,8 @@
 #pragma once 
 #include "System.hpp"
 #include "ECS/Entity.hpp"
+#include "Rendering.hpp"
+
 #include <array>
 
 class MapSystem : public System {
@@ -11,10 +13,14 @@ public:
     void update(float dt);
 
 private: 
+
+    void createNewTile(float x, float y);
+
     struct tile {
         float x, y;
     };
     const unsigned int m_numTiles{30};
     std::array<Entity*, 30> tiles;
+    Rendering* render;
     
 };

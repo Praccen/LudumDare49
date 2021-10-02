@@ -16,7 +16,8 @@ enum class ComponentTypeEnum {
 	GRAPHICS,
 	WEAPON,
 	SEEING,
-	CAMERAFOCUS
+	CAMERAFOCUS,
+	MAPTILE
 };
 
 //Basic component interface which all other components implement

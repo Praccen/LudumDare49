@@ -20,6 +20,7 @@ InstancedQuadManager* Rendering::getQuadManager() {
 }
 
 Camera* Rendering::getCamera() {
+
 	return &m_camera;
 }
 

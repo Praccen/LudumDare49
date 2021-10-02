@@ -20,8 +20,8 @@ glm::mat4& Camera::getViewMatrix() {
 }
 
 void Camera::setPosition(float positionX, float positionY) {
-    m_position[0] = positionX;
-    m_position[1] = positionY;
+    m_position.x = positionX;
+    m_position.y = positionY;
     m_matrixNeedsUpdate = true;
 }
 
