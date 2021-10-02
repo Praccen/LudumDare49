@@ -142,6 +142,9 @@ bool Window::menuLoop(Game& game) {
     glfwPollEvents();
     processInput(window);
 
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        game.gameState = GameState::Playing;
+    }
 
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
@@ -150,15 +153,14 @@ bool Window::menuLoop(Game& game) {
     bool open{true};
     ImGui::Begin("Unstable!", &open, ImGuiWindowFlags_NoTitleBar  | 
                                      ImGuiWindowFlags_NoResize   | 
-                                     ImGuiWindowFlags_NoMove); 
+                                     ImGuiWindowFlags_NoMove    | 
+                                     ImGuiWindowFlags_NoBackground);
 
     ImGui::Text("Welcome to Unstable Cowboy putting down very stable horse, escaping to a stable.");
+    ImGui::Text("Press SPACE to start running.");
     ImVec2 v = ImGui::GetWindowSize();
     ImGui::SetWindowPos(ImVec2(SCR_WIDTH/2 - v.x / 2, SCR_HEIGHT/2 - v.y / 2));
 
-    if (ImGui::Button("Start running")) {
-        game.gameState=GameState::Playing;
-    } 
     ImGui::End();
     // Rendering
     ImGui::Render();
