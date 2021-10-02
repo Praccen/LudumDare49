@@ -191,7 +191,7 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 	// addComponent(playerEntity, healthComp);
 	addComponent(playerEntity, new DamageComponent());
 	GraphicsComponent *graphComp = new GraphicsComponent();
-	graphComp->quad->setTexureIndex(0);
+	graphComp->quad->setTextureIndex(0);
 	graphComp->quad->setNrOfSprites(6.0f, 1.99f);
 	graphComp->quad->setCurrentSprite(0.0f, 1.0f);
 	graphComp->animate = true;
@@ -219,7 +219,7 @@ const int ECSManager::createCameraEntity() {
 	addComponent(cameraEntity, movComp);
 	addComponent(cameraEntity, new CameraFocusComponent());
 	GraphicsComponent* graphComp = new GraphicsComponent();
-	graphComp->quad->setTexureIndex(1);
+	graphComp->quad->setTextureIndex(1);
 	graphComp->quad->setNrOfSprites(1.0f, 1.0f);
 	graphComp->animate = true;
 	graphComp->advanceBy = {0.00001f, 0.0f};
@@ -245,7 +245,7 @@ const int ECSManager::createSunEntity() {
 	addComponent(sunEntity, movComp);
 	addComponent(sunEntity, new CameraFocusComponent());
 	GraphicsComponent* graphComp = new GraphicsComponent();
-	graphComp->quad->setTexureIndex(3);
+	graphComp->quad->setTextureIndex(3);
 	graphComp->quad->setNrOfSprites(1.0f, 1.0f);
 	addComponent(sunEntity, graphComp);
 

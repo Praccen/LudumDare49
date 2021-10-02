@@ -13,7 +13,7 @@ public:
 
 	glm::mat4& getModelMatrix();
     unsigned int getQuadIndex();
-    void setTexureIndex(unsigned int index);
+    void setTextureIndex(unsigned int index);
 
 private:
     std::vector<InstanceData>* m_quadData;

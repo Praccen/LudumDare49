@@ -117,6 +117,18 @@ void MapSystem::update(float dt) {
             mt->unstable = false;   
         }
     }
+
+    //add to unstable timer
+    m_unstableTimer += dt;
+    if (m_unstableTimer > m_unstableInterval) {
+        m_unstableTimer = 0.0f;
+        increaseUnstable();
+    }
+}
+
+void MapSystem::increaseUnstable()
+{
+    m_unstableChance += 2;
 }
 
 void MapSystem::createNewTile(float x, float y, MapTileComponent::TILE_TYPE t, float scaleX, float scaleY) {
@@ -124,7 +136,7 @@ void MapSystem::createNewTile(float x, float y, MapTileComponent::TILE_TYPE t, f
         PositionComponent* posComp = new PositionComponent(x, y);
         CollisionComponent* collisionComp = new CollisionComponent();
         GraphicsComponent* graphComp = new GraphicsComponent();
-        graphComp->quad->setTexureIndex(2);
+        graphComp->quad->setTextureIndex(2);
         graphComp->quad->setNrOfSprites(1.0f, 1.0f);
         graphComp->quad->setCurrentSprite(0.0f, 0.0f);
         collisionComp->isConstraint = true;

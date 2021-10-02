@@ -25,6 +25,6 @@ unsigned int Quad::getQuadIndex() {
 }
 
 
-void Quad::setTexureIndex(unsigned int index) {
+void Quad::setTextureIndex(unsigned int index) {
     m_quadData->at(m_quadIndex).textureIndex = index;
 }
