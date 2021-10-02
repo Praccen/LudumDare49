@@ -6,7 +6,13 @@
 #include "ECS/Components/GraphicsComponent.hpp"
 #include "ECS/Components/MapTileComponent.hpp"
 
-MapSystem::MapSystem(ECSManager *ECSManager) : System(ECSManager, ComponentTypeEnum::MAPTILE) {}
+#include <cstdlib>
+#include <ctime>
+
+MapSystem::MapSystem(ECSManager *ECSManager) : System(ECSManager, ComponentTypeEnum::MAPTILE) {
+    // Init random seed
+    srand(time(NULL));
+}
 
 void MapSystem::initialize() {
     m_render =  &Rendering::getInstance();
@@ -23,7 +29,21 @@ void MapSystem::update(float dt) {
         float camX = m_render->getCamera()->getPosition().x;
         if((camX - p->position.x) > 14.f) {
             p->position.x = static_cast<float>(m_numTiles);
-            p->position.y = lastTileY+0.1f;
+            int upDown = rand() % 3;
+            if (upDown == 0) {
+                p->position.y = lastTileY-0.1f;
+            } else if (upDown == 1){
+                p->position.y = lastTileY+0.1f;
+            } else {
+                p->position.y = lastTileY;
+            }
+
+            int spawn = rand() % 100 + 1;
+            if (spawn < 20) {
+                int gap = rand() % 4+2;
+                m_numTiles += gap;
+            }
+
             lastTileY = p->position.y;
             m->constantAcceleration.y = 0.0f;
             m->velocity.y = 0.0f;
