@@ -8,16 +8,10 @@
 
 InstancedQuadManager::InstancedQuadManager(ShaderProgram &shaderProgram):
 	GraphicsObject(shaderProgram) {
-	m_textures.emplace_back(new Texture(0));
-	m_textures.emplace_back(new Texture(1));
-	m_textures.emplace_back(new Texture(2));
-	m_textures.emplace_back(new Texture(3));
-	m_textures.emplace_back(new Texture(4));
-	m_textures.emplace_back(new Texture(5));
-	m_textures.emplace_back(new Texture(6));
-	m_textures.emplace_back(new Texture(7));
-	m_textures.emplace_back(new Texture(8));
-	m_textures.emplace_back(new Texture(9));
+    
+    for (unsigned int i = 0; i < 32; i++) {
+        m_textures.emplace_back(new Texture(i));
+    }
 
     bindVAO();
 	glGenBuffers(1, &m_instanceVBO);
@@ -32,6 +26,10 @@ InstancedQuadManager::InstancedQuadManager(ShaderProgram &shaderProgram):
 InstancedQuadManager::~InstancedQuadManager() {
     for (size_t i = 0; i < m_quads.size(); i++) {
         delete m_quads[i];
+    }
+
+    for (size_t i = 0; i < m_textures.size(); i++) {
+        delete m_textures[i];
     }
 }
 
