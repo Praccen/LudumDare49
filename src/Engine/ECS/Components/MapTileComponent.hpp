@@ -2,10 +2,16 @@
 #include "Component.hpp"
 
 class MapTileComponent : public Component {
-
 public:
     bool unstable;
 
-    MapTileComponent();
+    enum TILE_TYPE{
+        GROUND,
+        OBSTACLE
+    };
 
+    MapTileComponent() = delete;
+    MapTileComponent(TILE_TYPE t);
+
+    TILE_TYPE type;
 };

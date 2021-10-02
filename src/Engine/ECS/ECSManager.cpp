@@ -193,6 +193,7 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 	// addComponent(playerEntity, healthComp);
 	addComponent(playerEntity, new DamageComponent());
 	GraphicsComponent *graphComp = new GraphicsComponent();
+	graphComp->quad->setTexureIndex(0);
 	graphComp->quad->setNrOfSprites(6.0f, 1.99f);
 	graphComp->quad->setCurrentSprite(0.0f, 1.0f);
 	graphComp->animate = true;
@@ -210,11 +211,19 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 const int ECSManager::createCameraEntity() {
 	Entity &cameraEntity = createEntity();
 	// Add components to player
-	addComponent(cameraEntity, new PositionComponent());
+	PositionComponent* posComp = new PositionComponent();
+	posComp->position.z = 0.0f;
+	posComp->scale = {40.0f, 20.0f, 1.0f};
+	addComponent(cameraEntity, posComp);
 	MovementComponent *movComp = new MovementComponent();
 	movComp->constantAcceleration = glm::vec3(0.1f, 0.0f, 0.0f);
 	movComp->velocity = glm::vec3(4.0f, 0.0f, 0.0f);
 	addComponent(cameraEntity, movComp);
 	addComponent(cameraEntity, new CameraFocusComponent());
+	GraphicsComponent* graphComp = new GraphicsComponent();
+	graphComp->quad->setTexureIndex(1);
+	graphComp->quad->setNrOfSprites(1.0f, 1.0f);
+	addComponent(cameraEntity, graphComp);
+
 	return cameraEntity.getID();
 }

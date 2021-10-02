@@ -2,6 +2,7 @@
 #include "System.hpp"
 #include "ECS/Entity.hpp"
 #include "Rendering.hpp"
+#include "ECS/Components/MapTileComponent.hpp"
 
 #include <array>
 
@@ -14,8 +15,8 @@ public:
     void increaseUnstable(); //increases chance of tile becoming unstable
 
 private: 
-
-    void createNewTile(float x, float y);
+    void createNewTile(float x, float y, MapTileComponent::TILE_TYPE t, float scaleX, float scaleY);
+    void spawnObstacle();
 
     unsigned int m_numTiles{30};
     Rendering* m_render{nullptr};
