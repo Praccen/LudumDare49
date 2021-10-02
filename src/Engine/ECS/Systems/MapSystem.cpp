@@ -108,10 +108,10 @@ void MapSystem::update(float dt) {
         //gives unstable a chance to rise or fall and then remove unstable
         if (mt->unstable) {
             int activate = rand() % 100 + 1;
-            if (activate < 30) {
+            if (activate < 50) {
                 m->constantAcceleration.y = 1.0f;
             }
-            else if (activate < 60) {
+            else {
                 m->constantAcceleration.y = -9.82f;  
             }
             mt->unstable = false;   
@@ -128,7 +128,7 @@ void MapSystem::update(float dt) {
 
 void MapSystem::increaseUnstable()
 {
-    m_unstableChance += 2;
+    m_unstableChance += 1;
 }
 
 void MapSystem::createNewTile(float x, float y, MapTileComponent::TILE_TYPE t, float scaleX, float scaleY) {

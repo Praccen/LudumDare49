@@ -31,7 +31,7 @@ private:
     unsigned int m_platformHeight{0};
 
     //unstable vaiables
-    int m_unstableChance{5}; //how many chances in 100 that a tile becomes unstable
-    const float m_unstableInterval{10.0f};
+    int m_unstableChance{1}; //how many chances in 100 that a tile becomes unstable
+    const float m_unstableInterval{4.5f};
     float m_unstableTimer{ 0.0f };
 };
