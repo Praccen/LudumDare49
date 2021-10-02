@@ -21,7 +21,9 @@ private:
     float m_lastTileY{1.0f};
     int m_destHeight{1};
     unsigned int m_drawnTiles{0};
-    bool isPlatform{false};
+    bool m_isPlatform{false};
     unsigned int m_numPlatformsDrawn{0};
+    unsigned int m_platformHeight{0};
+
     
 };

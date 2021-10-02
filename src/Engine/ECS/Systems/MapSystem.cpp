@@ -30,11 +30,12 @@ void MapSystem::update(float dt) {
         if((camX - p->position.x) > 14.f) {
             p->position.x = static_cast<float>(m_numTiles);
 
-            if(!isPlatform ) {
+            if(!m_isPlatform ) {
                 int platform = rand() % 100 + 1;
                 if(platform < 10 && m_drawnTiles > 1) {
-                    m_lastTileY += 5;
-                    isPlatform = true;
+                    m_platformHeight = rand() % 3 + 5;
+                    m_lastTileY += m_platformHeight;
+                    m_isPlatform = true;
                     m_drawnTiles = 0;
                 }
 
@@ -46,13 +47,13 @@ void MapSystem::update(float dt) {
                 }
             } else {
                 if(m_numPlatformsDrawn > 5 && m_drawnTiles > 1) {
-                    m_lastTileY -= 5;
-                    isPlatform = false;
+                    m_lastTileY -= m_platformHeight;
+                    m_isPlatform = false;
                     m_numPlatformsDrawn = 0;
                     m_drawnTiles = 0;
                 }
                 m_numPlatformsDrawn++;
-                // Random tile y value
+                // Random tile y value compensate for platform height
                 if (m_lastTileY-5 < m_destHeight) {
                     p->position.y = m_lastTileY+0.1f;
                 } else {
@@ -60,7 +61,7 @@ void MapSystem::update(float dt) {
                 }
             }
 
-                       // New destination height for ground
+            // New destination height for ground
             if(std::fabs(m_destHeight - p->position.y) < 0.01f ) {
                 m_destHeight = rand() % 4 - 2;
             }
