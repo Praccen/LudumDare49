@@ -17,7 +17,11 @@ private:
     void createNewTile(float x, float y);
 
     unsigned int m_numTiles{30};
-    Rendering* m_render;
-    float lastTileY{1.0f};
+    Rendering* m_render{nullptr};
+    float m_lastTileY{1.0f};
+    int m_destHeight{1};
+    unsigned int m_drawnTiles{0};
+    bool isPlatform{false};
+    unsigned int m_numPlatformsDrawn{0};
     
 };

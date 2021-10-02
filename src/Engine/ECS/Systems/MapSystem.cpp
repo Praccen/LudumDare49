@@ -11,40 +11,72 @@
 
 MapSystem::MapSystem(ECSManager *ECSManager) : System(ECSManager, ComponentTypeEnum::MAPTILE) {
     // Init random seed
-    srand(time(NULL));
+    srand(static_cast<unsigned int>(time(NULL)));
 }
 
 void MapSystem::initialize() {
     m_render =  &Rendering::getInstance();
+    // Create tile and platform enitites.
     for(unsigned int i = 0; i < m_numTiles; ++i) {
         createNewTile(static_cast<float>(i), 1.0f);
     }
 }
 
 void MapSystem::update(float dt) {
-
     for(auto& e : m_entities) {
 		PositionComponent *p = static_cast<PositionComponent *>(e->getComponent(ComponentTypeEnum::POSITION));
 		MovementComponent *m = static_cast<MovementComponent *>(e->getComponent(ComponentTypeEnum::MOVEMENT));
         float camX = m_render->getCamera()->getPosition().x;
         if((camX - p->position.x) > 14.f) {
             p->position.x = static_cast<float>(m_numTiles);
-            int upDown = rand() % 3;
-            if (upDown == 0) {
-                p->position.y = lastTileY-0.1f;
-            } else if (upDown == 1){
-                p->position.y = lastTileY+0.1f;
+
+            if(!isPlatform ) {
+                int platform = rand() % 100 + 1;
+                if(platform < 10 && m_drawnTiles > 1) {
+                    m_lastTileY += 5;
+                    isPlatform = true;
+                    m_drawnTiles = 0;
+                }
+
+                // Random tile y value
+                if (m_lastTileY < m_destHeight) {
+                    p->position.y = m_lastTileY+0.1f;
+                } else {
+                    p->position.y = m_lastTileY-0.1f;
+                }
             } else {
-                p->position.y = lastTileY;
+                if(m_numPlatformsDrawn > 5 && m_drawnTiles > 1) {
+                    m_lastTileY -= 5;
+                    isPlatform = false;
+                    m_numPlatformsDrawn = 0;
+                    m_drawnTiles = 0;
+                }
+                m_numPlatformsDrawn++;
+                // Random tile y value
+                if (m_lastTileY-5 < m_destHeight) {
+                    p->position.y = m_lastTileY+0.1f;
+                } else {
+                    p->position.y = m_lastTileY-0.1f;
+                }
             }
 
+                       // New destination height for ground
+            if(std::fabs(m_destHeight - p->position.y) < 0.01f ) {
+                m_destHeight = rand() % 4 - 2;
+            }
+
+            // Random spawning tile or not
             int spawn = rand() % 100 + 1;
-            if (spawn < 20) {
+            if ((spawn < 20) && (m_drawnTiles > 1)) {
                 int gap = rand() % 4+2;
                 m_numTiles += gap;
+                m_drawnTiles = 0;
+            } else {
+                m_drawnTiles++;
             }
 
-            lastTileY = p->position.y;
+            // Update last tile and enitity properties.
+            m_lastTileY = p->position.y;
             m->constantAcceleration.y = 0.0f;
             m->velocity.y = 0.0f;
             m_numTiles++;

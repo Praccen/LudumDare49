@@ -193,7 +193,7 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 	// addComponent(playerEntity, healthComp);
 	addComponent(playerEntity, new DamageComponent());
 	GraphicsComponent *graphComp = new GraphicsComponent();
-	graphComp->quad->setNrOfSprites(6.0f, 2.0f);
+	graphComp->quad->setNrOfSprites(6.0f, 1.99f);
 	graphComp->quad->setCurrentSprite(0.0f, 1.0f);
 	graphComp->animate = true;
 	graphComp->advanceBy = {1.0f, 0.0f};
