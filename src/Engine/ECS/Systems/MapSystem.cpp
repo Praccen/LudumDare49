@@ -17,7 +17,7 @@ void MapSystem::initialize() {
     m_render =  &Rendering::getInstance();
     // Create tile and platform enitites.
     for(unsigned int i = 0; i < m_numTiles; ++i) {
-        createNewTile(static_cast<float>(i), 1.0f, MapTileComponent::GROUND, 1.0f, 1.0f);
+        createNewTile(static_cast<float>(i), 1.0f, MapTileComponent::GROUND, 1.3f, 1.3f);
     }
 }
 
