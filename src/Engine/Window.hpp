@@ -12,6 +12,7 @@ public:
     bool setup();
     bool open();
 	bool run();
+	bool gameOverLoop(Game& game);
 	bool menuLoop(Game& game);
 	bool gameLoop(Game& game);
 

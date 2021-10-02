@@ -7,6 +7,8 @@
 class Entity
 {
 public:
+	bool alive;
+
 	Entity(int ID);
 	~Entity();
 	Entity(const Entity&) = delete;

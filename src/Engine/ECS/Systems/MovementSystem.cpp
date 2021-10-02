@@ -34,6 +34,7 @@ void MovementSystem::update(float dt)
 		
 		p->position += (oldVelocity + m->velocity) * 0.5f * dt; // This works for any update rate
 
+
 		m->accelerationDirection = { 0.0f, 0.0f, 0.0f };
 		m->jumpRequested = false;
 	}

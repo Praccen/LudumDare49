@@ -71,27 +71,60 @@ bool Window::run() {
         switch (game.gameState)
         {
         case GameState::Menu:
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
             //do menu loop
-            //menuLoop(game);
-            //break;
+            menuLoop(game);
+            break;
         case GameState::Playing:
             //do gameloop stuff
             gameLoop(game);
             break;
         case GameState::GameOver:
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
             //do game over stuff
+            gameOverLoop(game);
             break;
         default:
             break;
         }
 
     }
+
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
 
     glfwDestroyWindow(window);
     glfwTerminate();
+
+    return true;
+}
+
+bool Window::gameOverLoop(Game& game) {
+    glfwPollEvents();
+    processInput(window);
+
+
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+
+    static float f = 0.0f;
+    static int counter = 0;
+
+    ImGui::Begin("Game Over");
+
+    ImGui::Text("Game is over, the world is unstable.");
+
+    /*if (ImGui::Button("Start running"))
+        game.gameState = GameState::Playing;*/
+
+    ImGui::End();
+    // Rendering
+    ImGui::Render();
+
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    glfwSwapBuffers(window);
 
     return true;
 }
@@ -126,8 +159,6 @@ bool Window::menuLoop(Game& game) {
 }
 
 bool Window::gameLoop(Game& game) {
-
-
     // input
     // -----
     glfwPollEvents();

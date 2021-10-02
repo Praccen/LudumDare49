@@ -27,4 +27,8 @@ void Game::update(float dt) {
 	MovementComponent* cameraMovComp = static_cast<MovementComponent*>(cameraEntity->getComponent(ComponentTypeEnum::MOVEMENT));
 	playerMovComp->wantedVelocity = cameraMovComp->velocity;
 	playerMovComp->maxAcceleration.x = playerMovComp->wantedVelocity.x;
+
+	if (!m_ECSManager->getEntity(playerEntityId)->alive) {
+		gameState = GameState::GameOver;
+	}
 }

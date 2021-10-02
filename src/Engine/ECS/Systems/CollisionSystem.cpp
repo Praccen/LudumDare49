@@ -42,6 +42,24 @@ void CollisionSystem::update(float /*dt*/) {
 				continue;
 			}
 
+			//if playerEntity has reached the limits of the screen
+			if (e->isPlayable()) {
+				//limit to the right is set to the right limit
+				if (p->position.x > Rendering::getInstance().getCamera()->getPosition().x + 5.0f) {
+					p->position.x = Rendering::getInstance().getCamera()->getPosition().x + 5.0f;
+					//uppdatera inte position
+					continue;
+				}
+				//limit to the left or bottom kills player
+				if (p->position.x < Rendering::getInstance().getCamera()->getPosition().x -15.0f || 
+					p->position.y < Rendering::getInstance().getCamera()->getPosition().y - 10.0f) {
+					//uppdatera inte position
+					//döda entity
+					e->alive = false;
+					continue;
+				}
+			}
+
 			CollisionComponent* c2 = static_cast<CollisionComponent*>(e2->getComponent(ComponentTypeEnum::COLLISION));
 
 			glm::vec2 tempIntersectionAxis(0.0f);
