@@ -6,6 +6,7 @@
 #include <algorithm>
 
 #include "Engine/ECS/Entity.hpp"
+#include "Engine/ECS/Components/PlayerComponent.hpp"
 
 Game::Game(GLFWwindow* window):
 	gameState(GameState::Menu), m_ECSManager(&ECSManager::getInstance())
@@ -28,7 +29,7 @@ void Game::update(float dt) {
 	playerMovComp->wantedVelocity = cameraMovComp->velocity;
 	playerMovComp->maxAcceleration.x = playerMovComp->wantedVelocity.x;
 
-	if (!m_ECSManager->getEntity(playerEntityId)->alive) {
+	if (static_cast<PlayerComponent*>(m_ECSManager->getEntity(playerEntityId)->getComponent(ComponentTypeEnum::PLAYER))->alive == false) {
 		gameState = GameState::GameOver;
 	}
 }

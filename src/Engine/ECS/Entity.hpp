@@ -7,8 +7,6 @@
 class Entity
 {
 public:
-	bool alive;
-
 	Entity(int ID);
 	~Entity();
 	Entity(const Entity&) = delete;
@@ -31,12 +29,8 @@ public:
 	void setName(std::string name) { m_name = name; };
 	std::string getName() { return m_name; };
 
-	void makePlayable() { m_playable = true; }
-	bool isPlayable() { return m_playable; }
-
 private:
 	int m_ID;
-	bool m_playable;
 	std::string m_name;
 	std::vector<Component*> m_components;
 };

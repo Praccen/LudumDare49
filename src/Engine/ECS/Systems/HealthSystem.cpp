@@ -41,7 +41,7 @@ void HealthSystem::update(float dt) {
 
         //entity is dead if health is 0
         if (healthComp->health <= 0) {
-            if(e->isPlayable()) {
+            if(e->hasComponent(ComponentTypeEnum::PLAYER)) {
                 std::cout << "Entity: " << e->getName() << " is dead!" << std::endl;
             }
             m_manager->removeEntity(e->getID());

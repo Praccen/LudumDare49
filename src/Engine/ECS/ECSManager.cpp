@@ -9,6 +9,7 @@
 #include "Components/WeaponComponent.hpp"
 #include "Components/SeeingComponent.hpp"
 #include "Components/CameraFocusComponent.hpp"
+#include "Components/PlayerComponent.hpp"
 #include "Systems/MapSystem.hpp"
 #include "Rendering.hpp"
 
@@ -174,7 +175,6 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 
 	Entity &playerEntity = createEntity();
 	playerEntity.setName("Player");
-	playerEntity.makePlayable();
 	// Add components to player
 	PositionComponent* posComp = new PositionComponent(x, y);
 	posComp->scale = glm::vec3(-2.0f, (34.0f/60.0f) * 2.0f, 1.0f);
@@ -203,6 +203,7 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 	graphComp->movementMultiplier = 0.35f;
 	addComponent(playerEntity, graphComp);
 	addComponent(playerEntity, new WeaponComponent());
+	addComponent(playerEntity, new PlayerComponent());
 	return playerEntity.getID();
 }
 

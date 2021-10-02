@@ -5,6 +5,7 @@
 #include "ECS/Components/MovementComponent.hpp"
 #include "ECS/Components/CollisionComponent.hpp"
 #include "ECS/Components/MapTileComponent.hpp"
+#include "ECS/Components/PlayerComponent.hpp"
 
 
 
@@ -43,19 +44,16 @@ void CollisionSystem::update(float /*dt*/) {
 			}
 
 			//if playerEntity has reached the limits of the screen
-			if (e->isPlayable()) {
+			if (e->hasComponent(ComponentTypeEnum::PLAYER)) {
 				//limit to the right is set to the right limit
 				if (p->position.x > Rendering::getInstance().getCamera()->getPosition().x + 10.0f) {
 					p->position.x = Rendering::getInstance().getCamera()->getPosition().x + 10.0f;
-					//uppdatera inte position
 					continue;
 				}
 				//limit to the left or bottom kills player
-				if (p->position.x < Rendering::getInstance().getCamera()->getPosition().x -15.0f || 
+				if (p->position.x < Rendering::getInstance().getCamera()->getPosition().x - 15.0f || 
 					p->position.y < Rendering::getInstance().getCamera()->getPosition().y - 10.0f) {
-					//uppdatera inte position
-					//döda entity
-					e->alive = false;
+					static_cast<PlayerComponent*>(e->getComponent(ComponentTypeEnum::PLAYER))->alive = false;
 					continue;
 				}
 			}
