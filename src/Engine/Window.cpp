@@ -117,9 +117,15 @@ bool Window::gameOverLoop(Game& game) {
     static float f = 0.0f;
     static int counter = 0;
 
-    ImGui::Begin("Game Over");
-
-    ImGui::Text("Game is over, the world is unstable. Press space to run again.");
+    bool open{true};
+    ImGui::Begin("Game Over", &open, ImGuiWindowFlags_NoTitleBar | 
+                                     ImGuiWindowFlags_NoResize   | 
+                                     ImGuiWindowFlags_NoMove     | 
+                                     ImGuiWindowFlags_NoBackground);
+    ImGui::SetNextWindowSize(ImVec2(4, 5));
+    ImGui::Text("Game is over, the world is unstable. Press space to run again");
+    ImVec2 v = ImGui::GetWindowSize();
+    ImGui::SetWindowPos(ImVec2(SCR_WIDTH/2 - v.x / 2, SCR_HEIGHT/2 - v.y / 2));
 
     ImGui::End();
     // Rendering
@@ -140,17 +146,18 @@ bool Window::menuLoop(Game& game) {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    static float f = 0.0f;
-    static int counter = 0;
+    bool open{true};
+    ImGui::Begin("Unstable!", &open, ImGuiWindowFlags_NoTitleBar  | 
+                                     ImGuiWindowFlags_NoResize   | 
+                                     ImGuiWindowFlags_NoMove); 
 
-    ImGui::Begin("Unstable!"); 
     ImGui::Text("Welcome to Unstable Cowboy putting down very stable horse, escaping to a stable.");
+    ImVec2 v = ImGui::GetWindowSize();
+    ImGui::SetWindowPos(ImVec2(SCR_WIDTH/2 - v.x / 2, SCR_HEIGHT/2 - v.y / 2));
 
     if (ImGui::Button("Start running")) {
         game.gameState=GameState::Playing;
     } 
-
-
     ImGui::End();
     // Rendering
     ImGui::Render();
