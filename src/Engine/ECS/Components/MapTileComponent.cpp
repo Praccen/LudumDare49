@@ -1,5 +1,6 @@
 #include "MapTileComponent.hpp"
 
-MapTileComponent::MapTileComponent() {
+MapTileComponent::MapTileComponent() 
+    : unstable(false) {
     m_componentType = ComponentTypeEnum::MAPTILE;
 }

@@ -11,6 +11,7 @@ public:
     MapSystem(ECSManager *ECSManager);
     void initialize() override;
     void update(float dt);
+    void increaseUnstable(); //increases chance of tile becoming unstable
 
 private: 
 
@@ -25,5 +26,5 @@ private:
     unsigned int m_numPlatformsDrawn{0};
     unsigned int m_platformHeight{0};
 
-    
+    int m_unstableChance{5}; //how many chances in 100 that a tile becomes unstable
 };

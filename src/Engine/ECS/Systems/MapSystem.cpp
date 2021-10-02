@@ -26,9 +26,18 @@ void MapSystem::update(float dt) {
     for(auto& e : m_entities) {
 		PositionComponent *p = static_cast<PositionComponent *>(e->getComponent(ComponentTypeEnum::POSITION));
 		MovementComponent *m = static_cast<MovementComponent *>(e->getComponent(ComponentTypeEnum::MOVEMENT));
+        MapTileComponent *tile = static_cast<MapTileComponent*>(e->getComponent(ComponentTypeEnum::MAPTILE));
         float camX = m_render->getCamera()->getPosition().x;
+
+        //Check if tile should be move to the front
         if((camX - p->position.x) > 14.f) {
             p->position.x = static_cast<float>(m_numTiles);
+
+            //10% chance of getting unstable
+            int unstableChance = rand() % 100 + 1;
+            if (unstableChance < m_unstableChance) {
+                tile->unstable = true;
+            }
 
             if(!m_isPlatform ) {
                 int platform = rand() % 100 + 1;
@@ -82,8 +91,23 @@ void MapSystem::update(float dt) {
             m->velocity.y = 0.0f;
             m_numTiles++;
         } else if((camX - p->position.x) > 10.f) {
+            //tile is at its end, let it fall and remov unstable
             m->constantAcceleration.y = -9.82f;
+            tile->unstable = false;
+            
         } 
+
+        //gives unstable a chance to rise or fall and then remove unstable
+        if (tile->unstable) {
+            int activate = rand() % 100 + 1;
+            if (activate < 30) {
+                m->constantAcceleration.y = 1.0f;
+            }
+            else if (activate < 60) {
+                m->constantAcceleration.y = -9.82f;  
+            }
+            tile->unstable = false;   
+        }
     }
 }
 
