@@ -177,9 +177,7 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 	movComp->wantedVelocity = glm::vec3(4.0f, 0.0f, 0.0f);
 	addComponent(playerEntity, movComp);
 	addComponent(playerEntity, new InputComponent(window));
-	CollisionComponent* cCo = new CollisionComponent();
-	cCo->effectMovement = false;
-	addComponent(playerEntity, cCo);
+	addComponent(playerEntity, new CollisionComponent());
 	HealthComponent* healthComp = new HealthComponent();
 	healthComp->healthVisualizerQuad = Rendering::getInstance().getNewQuad();
 	healthComp->healthVisualizerQuad->setNrOfSprites(2, 4);

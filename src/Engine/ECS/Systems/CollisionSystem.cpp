@@ -4,6 +4,7 @@
 #include "ECS/Components/PositionComponent.hpp"
 #include "ECS/Components/MovementComponent.hpp"
 #include "ECS/Components/CollisionComponent.hpp"
+#include "ECS/Components/MapTileComponent.hpp"
 
 
 
@@ -26,6 +27,10 @@ void CollisionSystem::update(float /*dt*/) {
 
 
 	for (auto& e : m_entities) {
+		// Ignore collisions for map tiles
+		if(e->hasComponent(ComponentTypeEnum::MAPTILE)) {
+			continue;
+		}
 		PositionComponent* p = static_cast<PositionComponent*>(e->getComponent(ComponentTypeEnum::POSITION));
 		CollisionComponent* c = static_cast<CollisionComponent*>(e->getComponent(ComponentTypeEnum::COLLISION));
 		MovementComponent* m = static_cast<MovementComponent*>(e->getComponent(ComponentTypeEnum::MOVEMENT));

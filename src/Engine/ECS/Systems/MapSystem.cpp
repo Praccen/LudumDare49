@@ -21,8 +21,7 @@ void MapSystem::update(float dt) {
 		PositionComponent *p = static_cast<PositionComponent *>(e->getComponent(ComponentTypeEnum::POSITION));
         float camX = render->getCamera()->getPosition().x;
         if((camX - p->position.x) > 10.f) {
-            m_manager->removeEntity(e->getID());
-            createNewTile(camX + 19.f, 1.0f);
+            p->position.x = camX + 18.f;
         }
     }
 }
