@@ -34,7 +34,7 @@ void MapSystem::createNewTile(float x, float y) {
         m_manager->addComponent(tileEntity, new MapTileComponent());
 	    m_manager->addComponent(tileEntity, new MovementComponent());
         GraphicsComponent* graphComp = new GraphicsComponent();
-        // graphComp->quad->setNrOfSprites(10.0f, 2.0f);
-        graphComp->quad->setCurrentSprite(1.0f, 0.0f);
+        graphComp->quad->setNrOfSprites(10.5f, 2.0f);
+        graphComp->quad->setCurrentSprite(1.06f, 0.0f);
         m_manager->addComponent(tileEntity, graphComp);
 }
