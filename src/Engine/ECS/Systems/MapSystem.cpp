@@ -104,10 +104,7 @@ void MapSystem::createNewTile(float x, float y, MapTileComponent::TILE_TYPE t, f
         graphComp->quad->setTexureIndex(2);
         graphComp->quad->setNrOfSprites(1.0f, 1.0f);
         graphComp->quad->setCurrentSprite(0.0f, 0.0f);
-
         collisionComp->isConstraint = true;
-        graphComp->quad->setNrOfSprites(10.5f, 2.0f);
-        graphComp->quad->setCurrentSprite(1.06f, 0.0f);
         posComp->scale = glm::vec3(scaleX, scaleY, 1.f);
         
         m_manager->addComponent(tileEntity, posComp);
