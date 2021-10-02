@@ -17,7 +17,7 @@ void MapSystem::initialize() {
     m_render =  &Rendering::getInstance();
     // Create tile and platform enitites.
     for(unsigned int i = 0; i < m_numTiles; ++i) {
-        createNewTile(static_cast<float>(i), 1.0f, MapTileComponent::GROUND, 1.0f);
+        createNewTile(static_cast<float>(i), 1.0f, MapTileComponent::GROUND, 1.0f, 1.0f);
     }
 }
 
@@ -96,7 +96,7 @@ void MapSystem::update(float dt) {
     }
 }
 
-void MapSystem::createNewTile(float x, float y, MapTileComponent::TILE_TYPE t, float scale) {
+void MapSystem::createNewTile(float x, float y, MapTileComponent::TILE_TYPE t, float scaleX, float scaleY) {
         Entity& tileEntity = m_manager->createEntity();
         PositionComponent* posComp = new PositionComponent(x, y);
         CollisionComponent* collisionComp = new CollisionComponent();
@@ -108,7 +108,7 @@ void MapSystem::createNewTile(float x, float y, MapTileComponent::TILE_TYPE t, f
         collisionComp->isConstraint = true;
         graphComp->quad->setNrOfSprites(10.5f, 2.0f);
         graphComp->quad->setCurrentSprite(1.06f, 0.0f);
-        posComp->scale = glm::vec3(scale);
+        posComp->scale = glm::vec3(scaleX, scaleY, 1.f);
         
         m_manager->addComponent(tileEntity, posComp);
         m_manager->addComponent(tileEntity, graphComp);
@@ -120,6 +120,6 @@ void MapSystem::createNewTile(float x, float y, MapTileComponent::TILE_TYPE t, f
 void MapSystem::spawnObstacle() {
     unsigned int spawn = rand() % 100 + 1;
     if(spawn < 5) {
-        createNewTile(static_cast<float>(m_numTiles), m_lastTileY + 1, MapTileComponent::OBSTACLE, 0.5f);
+        createNewTile(static_cast<float>(m_numTiles), m_lastTileY + 1, MapTileComponent::OBSTACLE, 0.5f, 1.5f);
     }
 }

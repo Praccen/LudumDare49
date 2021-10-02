@@ -14,7 +14,7 @@ public:
     void update(float dt);
 
 private: 
-    void createNewTile(float x, float y, MapTileComponent::TILE_TYPE t, float scale);
+    void createNewTile(float x, float y, MapTileComponent::TILE_TYPE t, float scaleX, float scaleY);
     void spawnObstacle();
 
     unsigned int m_numTiles{30};
