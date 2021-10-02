@@ -13,17 +13,8 @@ void MovementSystem::update(float dt)
 		PositionComponent *p = static_cast<PositionComponent *>(e->getComponent(ComponentTypeEnum::POSITION));
 		MovementComponent *m = static_cast<MovementComponent*>(e->getComponent(ComponentTypeEnum::MOVEMENT));
 
-		glm::vec3 normalizedAccelerationDirection(0.0f);
-		bool accelerating = false;
-
-
-		if (glm::length2(m->accelerationDirection) > 0.0001f) {
-			normalizedAccelerationDirection = glm::normalize(m->accelerationDirection);
-			accelerating = true;
-		}
-
 		glm::vec3 oldVelocity = m->velocity;
-		m->velocity += normalizedAccelerationDirection * (m->acceleration * dt);
+		m->velocity += m->accelerationDirection * (glm::vec3(m->maxAcceleration, 0.0f) * dt);
 
 		// Gravity
 		m->velocity += m->constantAcceleration * dt;

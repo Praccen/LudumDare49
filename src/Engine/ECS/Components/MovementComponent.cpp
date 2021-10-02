@@ -5,7 +5,7 @@ MovementComponent::MovementComponent() :
 	accelerationDirection(0.0f),
 	velocity(0.0f),
 	wantedVelocity(0.0f),
-	acceleration(5.0f),
+	maxAcceleration(5.0f),
 	drag(10.0f),
 	maxSpeed(7.0f),
 	jumpRequested(false),

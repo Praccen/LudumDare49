@@ -12,7 +12,7 @@ public:
 	glm::vec3 accelerationDirection;
 	glm::vec3 velocity;
 	glm::vec3 wantedVelocity;
-	float acceleration;
+	glm::vec2 maxAcceleration;
 	float drag;
 	float maxSpeed;
 	bool jumpRequested;

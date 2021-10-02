@@ -203,6 +203,17 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 	graphComp->movementMultiplier = 0.35f;
 	addComponent(playerEntity, graphComp);
 	addComponent(playerEntity, new WeaponComponent());
-	addComponent(playerEntity, new CameraFocusComponent());
 	return playerEntity.getID();
+}
+
+const int ECSManager::createCameraEntity() {
+	Entity &cameraEntity = createEntity();
+	// Add components to player
+	addComponent(cameraEntity, new PositionComponent());
+	MovementComponent *movComp = new MovementComponent();
+	movComp->constantAcceleration = glm::vec3(0.1f, 0.0f, 0.0f);
+	movComp->velocity = glm::vec3(4.0f, 0.0f, 0.0f);
+	addComponent(cameraEntity, movComp);
+	addComponent(cameraEntity, new CameraFocusComponent());
+	return cameraEntity.getID();
 }

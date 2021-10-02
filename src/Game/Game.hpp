@@ -20,5 +20,8 @@ public:
 private:
 	ECSManager* m_ECSManager;
 
+	int playerEntityId;
+	int cameraEntityId;
+
 };
 
