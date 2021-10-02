@@ -2,6 +2,7 @@
 #include "System.hpp"
 #include "ECS/Entity.hpp"
 #include "Rendering.hpp"
+#include "ECS/Components/MapTileComponent.hpp"
 
 #include <array>
 
@@ -13,8 +14,8 @@ public:
     void update(float dt);
 
 private: 
-
-    void createNewTile(float x, float y);
+    void createNewTile(float x, float y, MapTileComponent::TILE_TYPE t);
+    void spawnObstacle();
 
     unsigned int m_numTiles{30};
     Rendering* m_render{nullptr};

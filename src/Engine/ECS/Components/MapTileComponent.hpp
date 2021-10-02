@@ -2,8 +2,14 @@
 #include "Component.hpp"
 
 class MapTileComponent : public Component {
-
 public:
-    MapTileComponent();
+    enum TILE_TYPE{
+        GROUND,
+        OBSTACLE
+    };
 
+    MapTileComponent() = delete;
+    MapTileComponent(TILE_TYPE t);
+
+    TILE_TYPE type;
 };

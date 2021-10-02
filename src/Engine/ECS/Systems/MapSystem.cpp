@@ -4,7 +4,6 @@
 #include "ECS/Components/PositionComponent.hpp"
 #include "ECS/Components/CollisionComponent.hpp"
 #include "ECS/Components/GraphicsComponent.hpp"
-#include "ECS/Components/MapTileComponent.hpp"
 
 #include <cstdlib>
 #include <ctime>
@@ -18,27 +17,34 @@ void MapSystem::initialize() {
     m_render =  &Rendering::getInstance();
     // Create tile and platform enitites.
     for(unsigned int i = 0; i < m_numTiles; ++i) {
-        createNewTile(static_cast<float>(i), 1.0f);
+        createNewTile(static_cast<float>(i), 1.0f, MapTileComponent::GROUND);
     }
 }
 
 void MapSystem::update(float dt) {
+
+
     for(auto& e : m_entities) {
 		PositionComponent *p = static_cast<PositionComponent *>(e->getComponent(ComponentTypeEnum::POSITION));
 		MovementComponent *m = static_cast<MovementComponent *>(e->getComponent(ComponentTypeEnum::MOVEMENT));
+		MapTileComponent *mt = static_cast<MapTileComponent *>(e->getComponent(ComponentTypeEnum::MAPTILE));
+
         float camX = m_render->getCamera()->getPosition().x;
         if((camX - p->position.x) > 14.f) {
             p->position.x = static_cast<float>(m_numTiles);
-
+            if (mt->type) {
+                continue;
+            }
+            // Check for platform
             if(!m_isPlatform ) {
                 int platform = rand() % 100 + 1;
+                // 10% chance for platform
                 if(platform < 10 && m_drawnTiles > 1) {
                     m_platformHeight = rand() % 3 + 5;
                     m_lastTileY += m_platformHeight;
                     m_isPlatform = true;
                     m_drawnTiles = 0;
                 }
-
                 // Random tile y value
                 if (m_lastTileY < m_destHeight) {
                     p->position.y = m_lastTileY+0.1f;
@@ -66,7 +72,9 @@ void MapSystem::update(float dt) {
                 m_destHeight = rand() % 4 - 2;
             }
 
-            // Random spawning tile or not
+            
+            //spawnObstacle();
+            // Random spawning tile 20%
             int spawn = rand() % 100 + 1;
             if ((spawn < 20) && (m_drawnTiles > 1)) {
                 int gap = rand() % 4+2;
@@ -83,20 +91,30 @@ void MapSystem::update(float dt) {
             m_numTiles++;
         } else if((camX - p->position.x) > 10.f) {
             m->constantAcceleration.y = -9.82f;
+            if (mt->type) {
+                m_manager->removeEntity(e->getID());
+            }
         } 
     }
 }
 
-void MapSystem::createNewTile(float x, float y) {
+void MapSystem::createNewTile(float x, float y, MapTileComponent::TILE_TYPE t) {
         Entity& tileEntity = m_manager->createEntity();
         m_manager->addComponent(tileEntity, new PositionComponent(x, y));
         CollisionComponent* collisionComp = new CollisionComponent();
         collisionComp->isConstraint = true;
         m_manager->addComponent(tileEntity, collisionComp);
-        m_manager->addComponent(tileEntity, new MapTileComponent());
+        m_manager->addComponent(tileEntity, new MapTileComponent(t));
 	    m_manager->addComponent(tileEntity, new MovementComponent());
         GraphicsComponent* graphComp = new GraphicsComponent();
         graphComp->quad->setNrOfSprites(10.5f, 2.0f);
         graphComp->quad->setCurrentSprite(1.06f, 0.0f);
         m_manager->addComponent(tileEntity, graphComp);
+}
+
+void MapSystem::spawnObstacle() {
+    unsigned int spawn = rand() % 100 + 1;
+    if(spawn < 5) {
+        createNewTile(static_cast<float>(m_numTiles), m_lastTileY + 1, MapTileComponent::OBSTACLE);
+    }
 }
