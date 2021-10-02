@@ -19,11 +19,17 @@ void MapSystem::update(float dt) {
 
     for(auto& e : m_entities) {
 		PositionComponent *p = static_cast<PositionComponent *>(e->getComponent(ComponentTypeEnum::POSITION));
+		MovementComponent *m = static_cast<MovementComponent *>(e->getComponent(ComponentTypeEnum::MOVEMENT));
         float camX = render->getCamera()->getPosition().x;
-        if((camX - p->position.x) > 10.f) {
+        if((camX - p->position.x) > 14.f) {
             p->position.x = static_cast<float>(m_numTiles);
+            p->position.y = 1.0f;
+            m->constantAcceleration.y = 0.0f;
+            m->velocity.y = 0.0f;
             m_numTiles++;
-        }
+        } else if((camX - p->position.x) > 10.f) {
+            m->constantAcceleration.y = -9.82f;
+        } 
     }
 }
 
