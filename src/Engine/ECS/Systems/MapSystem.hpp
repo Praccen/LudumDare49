@@ -18,6 +18,9 @@ private:
     void createNewTile(float x, float y, MapTileComponent::TILE_TYPE t, float scaleX, float scaleY);
     void spawnObstacle();
 
+    unsigned int m_platformChance{10};
+    unsigned int m_obstacleChance{20};
+
     unsigned int m_numTiles{30};
     Rendering* m_render{nullptr};
     float m_lastTileY{1.0f};

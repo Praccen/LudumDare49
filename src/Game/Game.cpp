@@ -14,11 +14,13 @@ Game::Game(GLFWwindow* window):
 	Rendering::getInstance().getQuadManager()->getTexture(0).loadFromFile("resources/Textures/instanced.png");
 	Rendering::getInstance().getQuadManager()->getTexture(1).loadFromFile("resources/Textures/bg.png");
 	Rendering::getInstance().getQuadManager()->getTexture(2).loadFromFile("resources/Textures/platta.png");
+	Rendering::getInstance().getQuadManager()->getTexture(3).loadFromFile("resources/Textures/sun.png");
 	Rendering::getInstance().getCamera()->setZoom(1.0f/(0.5f * 15.f, 15.f)); // Zoom out so that the whole map is visible
 	Rendering::getInstance().getCamera()->setPosition(0.5f * 15.f, 0.5f * 15.f);
 	
 	playerEntityId = m_ECSManager->createPlayerEntity(7.f, 4.f, window);
 	cameraEntityId = m_ECSManager->createCameraEntity();
+	m_ECSManager->createSunEntity();
 	}	
 
 void Game::update(float dt) {

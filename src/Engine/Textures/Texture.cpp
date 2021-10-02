@@ -68,3 +68,11 @@ void Texture::loadFromFile(std::string path) {
 	unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, STBI_rgb_alpha);
 	setTextureData(data, width, height);
 }
+
+void Texture::setTexParameters(unsigned int a, unsigned int b) {
+	glBindTexture(GL_TEXTURE_2D, m_texture);
+
+    glTexParameteri(GL_TEXTURE_2D, a, b);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+}

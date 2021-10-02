@@ -12,6 +12,13 @@ InstancedShaderProgram::InstancedShaderProgram() :
 	m_uniformBindings["texture0"] = 1;
 	m_uniformBindings["texture1"] = 2;
 	m_uniformBindings["texture2"] = 3;
+	m_uniformBindings["texture3"] = 4;
+	m_uniformBindings["texture4"] = 5;
+	m_uniformBindings["texture5"] = 6;
+	m_uniformBindings["texture6"] = 7;
+	m_uniformBindings["texture7"] = 8;
+	m_uniformBindings["texture8"] = 9;
+	m_uniformBindings["texture8"] = 10;
 
 	use(); // Start using the shader
 
@@ -19,6 +26,14 @@ InstancedShaderProgram::InstancedShaderProgram() :
 	glUniform1i(m_uniformBindings["texture0"], 0);
 	glUniform1i(m_uniformBindings["texture1"], 1);
 	glUniform1i(m_uniformBindings["texture2"], 2);
+	glUniform1i(m_uniformBindings["texture3"], 3);
+	glUniform1i(m_uniformBindings["texture4"], 4);
+	glUniform1i(m_uniformBindings["texture5"], 5);
+	glUniform1i(m_uniformBindings["texture6"], 6);
+	glUniform1i(m_uniformBindings["texture7"], 7);
+	glUniform1i(m_uniformBindings["texture8"], 8);
+	glUniform1i(m_uniformBindings["texture9"], 9);
+	glUniform1i(m_uniformBindings["texture10"], 10);
 }
 
 InstancedShaderProgram::~InstancedShaderProgram() {

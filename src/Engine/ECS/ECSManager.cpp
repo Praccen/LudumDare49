@@ -13,8 +13,6 @@
 #include "Systems/MapSystem.hpp"
 #include "Rendering.hpp"
 
-
-
 std::vector<Entity*> ECSManager::m_entities;
 
 ECSManager::ECSManager()
@@ -210,7 +208,7 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 
 const int ECSManager::createCameraEntity() {
 	Entity &cameraEntity = createEntity();
-	// Add components to player
+	
 	PositionComponent* posComp = new PositionComponent();
 	posComp->position.z = 0.0f;
 	posComp->scale = {40.0f, 20.0f, 1.0f};
@@ -223,7 +221,33 @@ const int ECSManager::createCameraEntity() {
 	GraphicsComponent* graphComp = new GraphicsComponent();
 	graphComp->quad->setTexureIndex(1);
 	graphComp->quad->setNrOfSprites(1.0f, 1.0f);
+	graphComp->animate = true;
+	graphComp->advanceBy = {0.00001f, 0.0f};
+	graphComp->startingTile = {0.0f, 0.0f};
+	graphComp->modAdvancement = {1.0f, 1.0f};
+	graphComp->updateInterval = 0.001f;
+	graphComp->movementMultiplier = 0.01f;
+	Rendering::getInstance().getQuadManager()->getTexture(1).setTexParameters(GL_TEXTURE_WRAP_S, GL_REPEAT);
 	addComponent(cameraEntity, graphComp);
 
 	return cameraEntity.getID();
+}
+
+const int ECSManager::createSunEntity() {
+	Entity &sunEntity = createEntity();
+	PositionComponent* posComp = new PositionComponent();
+	posComp->position.z = 0.01f;
+	posComp->scale = {20.0f, 10.0f, 1.0f};
+	addComponent(sunEntity, posComp);
+	MovementComponent *movComp = new MovementComponent();
+	movComp->constantAcceleration = glm::vec3(0.1f, 0.0f, 0.0f);
+	movComp->velocity = glm::vec3(4.0f, 0.0f, 0.0f);
+	addComponent(sunEntity, movComp);
+	addComponent(sunEntity, new CameraFocusComponent());
+	GraphicsComponent* graphComp = new GraphicsComponent();
+	graphComp->quad->setTexureIndex(3);
+	graphComp->quad->setNrOfSprites(1.0f, 1.0f);
+	addComponent(sunEntity, graphComp);
+
+	return sunEntity.getID();
 }
