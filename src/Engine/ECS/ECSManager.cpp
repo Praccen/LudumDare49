@@ -69,6 +69,7 @@ void ECSManager::update(float dt)
 	m_systems["WEAPON"]->update(dt);
 	m_systems["CAMERAFOCUS"]->update(dt);
 	m_systems["MAP"]->update(dt);
+	m_systems["PLAYER"]->update(dt);
 }
 
 void ECSManager::updateRenderingSystems(float dt) {

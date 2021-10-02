@@ -9,6 +9,7 @@
 #include "Systems/SeeingSystem.hpp"
 #include "Systems/CameraSystem.hpp"
 #include "Systems/AnimationSystem.hpp"
+#include "Systems/PlayerSystem.hpp"
 
 #include <map>
 #include <string>

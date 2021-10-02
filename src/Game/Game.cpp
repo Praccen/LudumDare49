@@ -9,8 +9,7 @@
 #include "Engine/ECS/Components/PlayerComponent.hpp"
 
 Game::Game(GLFWwindow* window):
-	gameState(GameState::Menu), m_ECSManager(&ECSManager::getInstance())
-{
+	gameState(GameState::Menu), m_ECSManager(&ECSManager::getInstance()) {
 	Rendering::getInstance().getQuadManager()->getTexture(0).loadFromFile("resources/Textures/instanced.png");
 	Rendering::getInstance().getQuadManager()->getTexture(1).loadFromFile("resources/Textures/bg.png");
 	Rendering::getInstance().getQuadManager()->getTexture(2).loadFromFile("resources/Textures/platta.png");
@@ -42,12 +41,17 @@ void Game::update(float dt) {
 	Entity* playerEntity = m_ECSManager->getEntity(playerEntityId);
 	Entity* cameraEntity = m_ECSManager->getEntity(cameraEntityId);
 
+
 	MovementComponent* playerMovComp = static_cast<MovementComponent*>(playerEntity->getComponent(ComponentTypeEnum::MOVEMENT));
+	PlayerComponent* playerComp = static_cast<PlayerComponent*>(m_ECSManager->getEntity(playerEntityId)->getComponent(ComponentTypeEnum::PLAYER));
 	MovementComponent* cameraMovComp = static_cast<MovementComponent*>(cameraEntity->getComponent(ComponentTypeEnum::MOVEMENT));
 	playerMovComp->wantedVelocity = cameraMovComp->velocity;
 	playerMovComp->maxAcceleration.x = playerMovComp->wantedVelocity.x;
 
-	if (static_cast<PlayerComponent*>(m_ECSManager->getEntity(playerEntityId)->getComponent(ComponentTypeEnum::PLAYER))->alive == false) {
+	// Update score
+	m_score = playerComp->score;
+
+	if (playerComp->alive == false) {
 		gameState = GameState::GameOver;
 	}
 }

@@ -16,7 +16,6 @@ public:
 	bool menuLoop(Game& game);
 	bool gameLoop(Game& game);
 
-	
 private:
 
 	void renderImgui();
@@ -34,4 +33,6 @@ private:
     double minUpdateRate = 1.0f / 60.0f;
 	double updateTimer = 0.0f;
 	int updatesSinceRender = 0;
+
+	unsigned int m_playerScore{0};
 };

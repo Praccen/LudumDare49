@@ -144,11 +144,12 @@ bool Window::menuLoop(Game& game) {
     static int counter = 0;
 
     ImGui::Begin("Unstable!"); 
-
     ImGui::Text("Welcome to Unstable Cowboy putting down very stable horse, escaping to a stable.");
 
-    if (ImGui::Button("Start running"))  
+    if (ImGui::Button("Start running")) {
         game.gameState=GameState::Playing;
+    } 
+
 
     ImGui::End();
     // Rendering
@@ -200,11 +201,13 @@ bool Window::gameLoop(Game& game) {
     }
 
         game.update((float) minUpdateRate);
+        m_playerScore = game.getScore();
         updateTimer -= minUpdateRate;
         updatesSinceRender++;
     }
 
     if (updatesSinceRender == 0) { // dt is faster than 
+        m_playerScore = game.getScore();
         game.update((float) updateTimer);
         updateTimer = 0.0f;
     }
@@ -237,27 +240,20 @@ void framebuffer_size_callback(GLFWwindow* /*window*/, int width, int height)
 }
 
 void Window::renderImgui() {
-   // Start the Dear ImGui frame
-   ImGui_ImplOpenGL3_NewFrame();
-   ImGui_ImplGlfw_NewFrame();
-   ImGui::NewFrame();
-
-   static float f = 0.0f;
-   static int counter = 0;
-
-   ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-   ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-
-   ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-
-   if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-   counter++;
-   ImGui::SameLine();
-   ImGui::Text("counter = %d", counter);
-
-   ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-   ImGui::End();
-   // Rendering
-   ImGui::Render();
+    // Start the Dear ImGui frame
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+    
+    bool open = true; 
+    ImGui::Begin("Score", &open, ImGuiWindowFlags_NoTitleBar | 
+                                 ImGuiWindowFlags_NoResize   | 
+                                 ImGuiWindowFlags_NoMove     | 
+                                 ImGuiWindowFlags_NoBackground);
+    ImGui::SetNextWindowSize(ImVec2(4, 5));
+    ImGui::SetWindowPos(ImVec2(4, 4));
+    ImGui::Text("Score: %d", m_playerScore);
+    ImGui::End();
+    // Rendering
+    ImGui::Render();
 }
