@@ -4,6 +4,7 @@
 #include "Objects/InstancedQuadManager.hpp"
 
 GraphicsComponent::GraphicsComponent():
+	animate(false),
 	startingTile(0.0f),
 	advanceBy(0.0f),
 	updateInterval(1.0f),

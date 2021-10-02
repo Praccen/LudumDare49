@@ -8,6 +8,7 @@ class GraphicsComponent : public Component
 public:
 	Quad* quad;
 
+	bool animate;
 	glm::vec2 startingTile;
 	glm::vec2 advanceBy;
 	float updateInterval;

@@ -12,6 +12,9 @@ void AnimationSystem::update(float dt) {
 	//System should only have one entity
 	for (auto& e : m_entities) {
 		GraphicsComponent* graphComp = static_cast<GraphicsComponent*>(e->getComponent(ComponentTypeEnum::GRAPHICS));
+		if (!graphComp->animate) {
+			continue;
+		}
 
 		graphComp->updateTimer += dt;
         float advancements = std::floor(graphComp->updateTimer / std::max(graphComp->updateInterval, 0.00001f));

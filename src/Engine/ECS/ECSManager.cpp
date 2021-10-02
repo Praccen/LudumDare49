@@ -195,6 +195,7 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 	GraphicsComponent *graphComp = new GraphicsComponent();
 	graphComp->quad->setNrOfSprites(6.0f, 2.0f);
 	graphComp->quad->setCurrentSprite(0.0f, 1.0f);
+	graphComp->animate = true;
 	graphComp->advanceBy = {1.0f, 0.0f};
 	graphComp->startingTile = {0.0f, 1.0f};
 	graphComp->modAdvancement = {6.0f, 1.0f};
