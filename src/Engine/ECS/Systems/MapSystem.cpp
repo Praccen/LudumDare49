@@ -11,7 +11,7 @@
 
 MapSystem::MapSystem(ECSManager *ECSManager) : System(ECSManager, ComponentTypeEnum::MAPTILE) {
     // Init random seed
-    srand(time(NULL));
+    srand(static_cast<unsigned int>(time(NULL)));
 }
 
 void MapSystem::initialize() {
