@@ -36,7 +36,9 @@ void MapSystem::update(float dt) {
 void MapSystem::createNewTile(float x, float y) {
         Entity& tileEntity = m_manager->createEntity();
         m_manager->addComponent(tileEntity, new PositionComponent(x, y));
-        m_manager->addComponent(tileEntity, new CollisionComponent());
+        CollisionComponent* collisionComp = new CollisionComponent();
+        collisionComp->isConstraint = true;
+        m_manager->addComponent(tileEntity, collisionComp);
         m_manager->addComponent(tileEntity, new MapTileComponent());
 	    m_manager->addComponent(tileEntity, new MovementComponent());
         GraphicsComponent* graphComp = new GraphicsComponent();

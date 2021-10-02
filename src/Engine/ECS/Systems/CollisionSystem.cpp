@@ -27,13 +27,14 @@ void CollisionSystem::update(float /*dt*/) {
 
 
 	for (auto& e : m_entities) {
-		// Ignore collisions for map tiles
-		if(e->hasComponent(ComponentTypeEnum::MAPTILE)) {
-			continue;
-		}
 		PositionComponent* p = static_cast<PositionComponent*>(e->getComponent(ComponentTypeEnum::POSITION));
 		CollisionComponent* c = static_cast<CollisionComponent*>(e->getComponent(ComponentTypeEnum::COLLISION));
 		MovementComponent* m = static_cast<MovementComponent*>(e->getComponent(ComponentTypeEnum::MOVEMENT));
+
+		// Don't check against others if this is constraint
+		if(c->isConstraint) {
+			continue;
+		}
 
 		// Collide with other entities
 		for (auto& e2 : m_entities) {
