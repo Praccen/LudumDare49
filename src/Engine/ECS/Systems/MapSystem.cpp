@@ -38,8 +38,8 @@ void MapSystem::update(float dt) {
             // Check for platform
             if(!m_isPlatform ) {
                 int platform = rand() % 100 + 1;
-                // 10% chance for platform
-                if(platform < 10 && m_drawnTiles > 1) {
+                // check if to spawn platform
+                if(platform < m_platformChance && m_drawnTiles > 1) {
                     m_platformHeight = rand() % 3 + 3;
                     m_lastTileY += m_platformHeight;
                     m_isPlatform = true;
@@ -72,11 +72,12 @@ void MapSystem::update(float dt) {
                 m_destHeight = rand() % 4 - 2;
             }
 
-            
+            // Spawn an obstacle
             spawnObstacle();
-            // Random spawning tile 20%
+
+            // Random spawning tile 
             int spawn = rand() % 100 + 1;
-            if ((spawn < 20) && (m_drawnTiles > 1)) {
+            if ((spawn < m_obstacleChance) && (m_drawnTiles > 1)) {
                 int gap = rand() % 4+2;
                 m_numTiles += gap;
                 m_drawnTiles = 0;
@@ -91,7 +92,6 @@ void MapSystem::update(float dt) {
             m_numTiles++;
         } else if((camX - p->position.x) > 10.f) {
             m->constantAcceleration.y = -9.82f;
-            
         } 
     }
 }
