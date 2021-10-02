@@ -14,6 +14,8 @@ public:
 	float updateInterval;
 	glm::vec2 modAdvancement;
 	float updateTimer;
+	float movementMultiplier;
+	int advancements;
 
 	GraphicsComponent();
 	virtual ~GraphicsComponent();

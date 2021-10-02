@@ -1,5 +1,6 @@
 #include "AnimationSystem.hpp"
 #include "ECS/Components/GraphicsComponent.hpp"
+#include "ECS/Components/MovementComponent.hpp"
 
 #include <algorithm>
 
@@ -16,11 +17,20 @@ void AnimationSystem::update(float dt) {
 			continue;
 		}
 
-		graphComp->updateTimer += dt;
-        float advancements = std::floor(graphComp->updateTimer / std::max(graphComp->updateInterval, 0.00001f));
+		MovementComponent* movComp = static_cast<MovementComponent*>(e->getComponent(ComponentTypeEnum::MOVEMENT));
 
-        float xAdvance = std::fmod((graphComp->advanceBy.x * advancements), std::max(graphComp->modAdvancement.x, 1.0f));
-        float yAdvance = std::fmod((graphComp->advanceBy.y * advancements), std::max(graphComp->modAdvancement.y, 1.0f));
+		graphComp->updateTimer += dt;
+		float totUpdateInterval = graphComp->updateInterval;
+
+		if (movComp && graphComp->movementMultiplier != 0.0f) {
+			totUpdateInterval = graphComp->updateInterval / std::max(movComp->velocity.x * graphComp->movementMultiplier, 1.0f); 
+		}
+
+		graphComp->advancements += std::floor(graphComp->updateTimer / std::max(totUpdateInterval, 0.00001f));
+		graphComp->updateTimer = std::fmod(graphComp->updateTimer, std::max(totUpdateInterval, 0.00001f));
+
+        float xAdvance = std::fmod((graphComp->advanceBy.x * graphComp->advancements), std::max(graphComp->modAdvancement.x, 1.0f));
+        float yAdvance = std::fmod((graphComp->advanceBy.y * graphComp->advancements), std::max(graphComp->modAdvancement.y, 1.0f));
         graphComp->quad->setCurrentSprite(graphComp->startingTile.x + xAdvance, graphComp->startingTile.y + yAdvance);
 	}
 }

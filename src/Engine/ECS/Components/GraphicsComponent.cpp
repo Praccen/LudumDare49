@@ -9,7 +9,9 @@ GraphicsComponent::GraphicsComponent():
 	advanceBy(0.0f),
 	updateInterval(1.0f),
 	modAdvancement(1.0f),
-	updateTimer(0.0f) {
+	updateTimer(0.0f),
+	movementMultiplier(0.0f),
+	advancements(0) {
 	quad = Rendering::getInstance().getNewQuad();
 
 	m_componentType = ComponentTypeEnum::GRAPHICS;
