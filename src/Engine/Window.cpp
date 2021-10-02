@@ -63,79 +63,125 @@ bool Window::open() {
    return true;
 }
 
-bool Window::gameLoop() {
+bool Window::run() {
+    Game game(window);
+
+    while (!glfwWindowShouldClose(window)) {
+        switch (game.gameState)
+        {
+        case GameState::Menu:
+            //do menu loop
+            menuLoop(game);
+            break;
+        case GameState::Playing:
+            //do gameloop stuff
+            gameLoop(game);
+            break;
+        case GameState::GameOver:
+            //do game over stuff
+            break;
+        default:
+            break;
+        }
+
+    }
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
+    glfwDestroyWindow(window);
+    glfwTerminate();
+}
+
+bool Window::menuLoop(Game& game) {
+    // input
+    // -----
+    glfwPollEvents();
+    processInput(window);
+
+
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+
+    static float f = 0.0f;
+    static int counter = 0;
+
+    ImGui::Begin("Unstable!"); 
+
+    ImGui::Text("Welcome to Unstable Cowboy putting down very stable horse, escaping to a stable.");
+
+    if (ImGui::Button("Start running"))  
+        game.gameState=GameState::Playing;
+
+    ImGui::End();
+    // Rendering
+    ImGui::Render();
+
+}
+
+bool Window::gameLoop(Game& game) {
 	currentTime = glfwGetTime();
 	previousTime = currentTime;
 
-	Game game(window);
+    Game game(window);
+    // input
+    // -----
+    glfwPollEvents();
+    processInput(window);
 
-   // render loop
-   // -----------
-   while (!glfwWindowShouldClose(window)) {
-      // input
-      // -----
-      glfwPollEvents();
-      processInput(window);
-
-      renderImgui();
+    renderImgui();
       
-      // Update
-      // -----
-      currentTime = glfwGetTime();
-      dt = currentTime - previousTime;
-      previousTime = currentTime;
+    // Update
+    // -----
+    currentTime = glfwGetTime();
+    dt = currentTime - previousTime;
+    previousTime = currentTime;
 
-      if (fpsUpdateTimer <= fpsUpdate) {
-         fpsUpdateTimer += (float) dt;
-         tempFps += (1 / (float) dt);
-         counter++;
-      }
-      else {
-         fps = tempFps / counter;
-         tempFps = 0.0f;
-         counter = 0;
-         fpsUpdateTimer = 0.0f;
-         //std::cout << fps;
-         glfwSetWindowTitle(window, ("OpenGL FPS: " + std::to_string((int)fps)).c_str());
-      }
+    if (fpsUpdateTimer <= fpsUpdate) {
+        fpsUpdateTimer += (float) dt;
+        tempFps += (1 / (float) dt);
+        counter++;
+    }
+    else {
+        fps = tempFps / counter;
+        tempFps = 0.0f;
+        counter = 0;
+        fpsUpdateTimer = 0.0f;
+        //std::cout << fps;
+        glfwSetWindowTitle(window, ("OpenGL FPS: " + std::to_string((int)fps)).c_str());
+    }
 
-      updateTimer += dt;
-      updatesSinceRender = 0;
+    updateTimer += dt;
+    updatesSinceRender = 0;
 
-      // If dt is bigger than minUpdateRate - update multiple times
-      while (updateTimer >= minUpdateRate) { 
-      if (updatesSinceRender >= 20) {
-               // Too many updates, throw away the rest of dt (makes the game run in slow-motion)
-         updateTimer = 0.0f;
-         break;
-      }
+    // If dt is bigger than minUpdateRate - update multiple times
+    while (updateTimer >= minUpdateRate) { 
+    if (updatesSinceRender >= 20) {
+            // Too many updates, throw away the rest of dt (makes the game run in slow-motion)
+        updateTimer = 0.0f;
+        break;
+    }
 
-         game.update((float) minUpdateRate);
-         updateTimer -= minUpdateRate;
-         updatesSinceRender++;
-      }
+        game.update((float) minUpdateRate);
+        updateTimer -= minUpdateRate;
+        updatesSinceRender++;
+    }
 
-      if (updatesSinceRender == 0) { // dt is faster than 
-         game.update((float) updateTimer);
-         updateTimer = 0.0f;
-      }
-      Rendering::getInstance().update((float) dt);
+    if (updatesSinceRender == 0) { // dt is faster than 
+        game.update((float) updateTimer);
+        updateTimer = 0.0f;
+    }
+    Rendering::getInstance().update((float) dt);
 
-      // render
-      // ------
-      Rendering::getInstance().draw();
+    // render
+    // ------
+    Rendering::getInstance().draw();
 
-      ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-      glfwSwapBuffers(window);
-   }
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    glfwSwapBuffers(window);
 
-   ImGui_ImplOpenGL3_Shutdown();
-   ImGui_ImplGlfw_Shutdown();
-   ImGui::DestroyContext();
-
-   glfwDestroyWindow(window);
-   glfwTerminate();
-   return true;
+    return true;
 }
 
 void processInput(GLFWwindow *theWindow)

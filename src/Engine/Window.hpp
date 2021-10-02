@@ -10,7 +10,9 @@ public:
 
     bool setup();
     bool open();
-    bool gameLoop();
+	bool run();
+	bool menuLoop(Game& game);
+	bool gameLoop(Game& game);
 
 	
 private:

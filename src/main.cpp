@@ -19,7 +19,7 @@ int main() {
     try {
         Window win;
         if (win.open()) {
-            return win.gameLoop();
+            return win.run();
         }
         return -1;
     } catch(...) {

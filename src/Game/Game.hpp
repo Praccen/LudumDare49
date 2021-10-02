@@ -3,8 +3,16 @@
 #include "Engine/Objects/Quad.hpp"
 #include "Engine/ECS/ECSManager.hpp"
 
+enum class GameState {
+	Menu,
+	Playing,
+	GameOver
+};
+
 class Game {
 public:
+	GameState gameState;
+
 	Game(GLFWwindow* window);
 	~Game() = default;
 	
