@@ -21,7 +21,8 @@ void MapSystem::update(float dt) {
 		PositionComponent *p = static_cast<PositionComponent *>(e->getComponent(ComponentTypeEnum::POSITION));
         float camX = render->getCamera()->getPosition().x;
         if((camX - p->position.x) > 10.f) {
-            p->position.x = camX + 18.f;
+            p->position.x = static_cast<float>(m_numTiles);
+            m_numTiles++;
         }
     }
 }

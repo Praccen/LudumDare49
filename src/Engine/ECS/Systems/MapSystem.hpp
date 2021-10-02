@@ -19,7 +19,7 @@ private:
     struct tile {
         float x, y;
     };
-    const unsigned int m_numTiles{30};
+    unsigned int m_numTiles{30};
     std::array<Entity*, 30> tiles;
     Rendering* render;
     
