@@ -17,7 +17,7 @@ void MapSystem::initialize() {
     m_render =  &Rendering::getInstance();
     // Create tile and platform enitites.
     for(unsigned int i = 0; i < m_numTiles; ++i) {
-        createNewTile(static_cast<float>(i), 1.0f, MapTileComponent::GROUND, 1.3f, 1.3f);
+        createNewTile(static_cast<float>(i), 1.0f, MapTileComponent::GROUND, 1.1f, 1.1f * 0.75f);
     }
 }
 
@@ -140,6 +140,6 @@ void MapSystem::createNewTile(float x, float y, MapTileComponent::TILE_TYPE t, f
 void MapSystem::spawnObstacle() {
     unsigned int spawn = rand() % 100 + 1;
     if(spawn < 5) {
-        createNewTile(static_cast<float>(m_numTiles), m_lastTileY + 1, MapTileComponent::OBSTACLE, 0.5f, 1.5f);
+        createNewTile(static_cast<float>(m_numTiles), m_lastTileY + 1, MapTileComponent::OBSTACLE, 0.5f, 0.9f);
     }
 }
