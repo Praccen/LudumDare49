@@ -11,7 +11,7 @@
 Game::Game(GLFWwindow* window):
 	gameState(GameState::Menu), m_ECSManager(&ECSManager::getInstance()) {
 	Rendering::getInstance().getQuadManager()->getTexture(0).loadFromFile("resources/Textures/instanced.png");
-	Rendering::getInstance().getQuadManager()->getTexture(1).loadFromFile("resources/Textures/bg.png");
+	Rendering::getInstance().getQuadManager()->getTexture(1).loadFromFile("resources/Textures/bg-blurr.png");
 	Rendering::getInstance().getQuadManager()->getTexture(2).loadFromFile("resources/Textures/platta.png");
 	Rendering::getInstance().getQuadManager()->getTexture(3).loadFromFile("resources/Textures/sun.png");
 	Rendering::getInstance().getCamera()->setZoom(1.0f/(0.5f * 15.f, 15.f)); // Zoom out so that the whole map is visible
