@@ -21,14 +21,17 @@ mat4 thresholdMatrix = mat4(
 void main()
 {
 
-    FragColor = texture(texture0, texCoords);
-    // FragColor = vec4(1.0, 0.0, 0.0, 1.0);
-    // if (textureId == 0) {
-    //     FragColor = texture(texture0, texCoords);
-    // }
-    // else if (textureId == 1) {
-    //     FragColor = texture(texture1, texCoords);
-    // }
+    // FragColor = texture(texture1, texCoords);
+    FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+    if (textureId == 0) {
+        FragColor = texture(texture0, texCoords);
+    }
+    else if (textureId == 1) {
+        FragColor = texture(texture1, texCoords);
+    }
+    else {
+        FragColor = vec4(0.0, 1.0, 0.0, 1.0);
+    }
 	
 
     // Screen-door transparancy

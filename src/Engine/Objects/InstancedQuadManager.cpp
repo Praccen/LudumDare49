@@ -8,8 +8,8 @@
 
 InstancedQuadManager::InstancedQuadManager(ShaderProgram &shaderProgram):
 	GraphicsObject(shaderProgram) {
-	m_textures.emplace_back(0);
-    m_textures.emplace_back(1);
+	m_textures.emplace_back(new Texture(0));
+	m_textures.emplace_back(new Texture(1));
 
     bindVAO();
 	glGenBuffers(1, &m_instanceVBO);
@@ -52,7 +52,7 @@ std::vector<Quad*>& InstancedQuadManager::getQuads() {
 }
 
 Texture& InstancedQuadManager::getTexture(unsigned int textureId) {
-    return m_textures[textureId];
+    return *(m_textures[textureId]);
 }
 
 void InstancedQuadManager::returnQuad(Quad* quadToReturn) {
@@ -73,7 +73,7 @@ void InstancedQuadManager::draw() {
 	glBufferData(GL_ARRAY_BUFFER, m_quadData.size() * sizeof(InstanceData), m_quadData.data(), GL_DYNAMIC_DRAW);
 
     for (size_t i = 0; i < m_textures.size(); i++) {
-	    m_textures[i].bind();
+	    m_textures[i]->bind();
     }
 
     glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, (GLsizei) m_quadData.size());
