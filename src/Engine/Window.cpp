@@ -202,11 +202,11 @@ bool Window::gameLoop(Game& game) {
 
     // If dt is bigger than minUpdateRate - update multiple times
     while (updateTimer >= minUpdateRate) { 
-    if (updatesSinceRender >= 20) {
-            // Too many updates, throw away the rest of dt (makes the game run in slow-motion)
-        updateTimer = 0.0f;
-        break;
-    }
+        if (updatesSinceRender >= 20) {
+                // Too many updates, throw away the rest of dt (makes the game run in slow-motion)
+            updateTimer = 0.0f;
+            break;
+        }
 
         game.update((float) minUpdateRate);
         m_playerScore = game.getScore();
@@ -258,7 +258,7 @@ void Window::renderImgui() {
                                  ImGuiWindowFlags_NoResize   | 
                                  ImGuiWindowFlags_NoMove     | 
                                  ImGuiWindowFlags_NoBackground);
-    ImGui::SetNextWindowSize(ImVec2(4, 5));
+    ImGui::SetWindowSize(ImVec2(1000, 5));
     ImGui::SetWindowPos(ImVec2(4, 4));
     ImGui::Text("Score: %d", m_playerScore);
     ImGui::End();
