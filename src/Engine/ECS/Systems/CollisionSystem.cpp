@@ -50,6 +50,15 @@ void CollisionSystem::update(float /*dt*/) {
 			if (SAT::getIntersection(c->shape, c2->shape, tempIntersectionAxis, tempIntersectionDepth)) {
 				if (c2->effectMovement) {
 					if (glm::length2(tempIntersectionAxis) > 0.0001f) {
+
+						// Climbing ontop of things
+						bool reverse = false;
+						float verticalIntersectionDepth = SAT::getOverlap(glm::vec3(0.0f, 1.0f, 0.0f), c->shape.getTransformedVertices(), c2->shape.getTransformedVertices(), reverse);
+						if (!reverse && verticalIntersectionDepth <= c->allowedClimbing) {
+							tempIntersectionAxis = {0.0f, 1.0f};
+							tempIntersectionDepth = verticalIntersectionDepth;
+						} 
+
 						p->position += glm::vec3(tempIntersectionAxis, 0.0f)  * tempIntersectionDepth;
 						glm::vec3 normalizedIntersectionAxis = {glm::normalize(tempIntersectionAxis), 0.0f};
 						m->velocity -= normalizedIntersectionAxis * glm::dot(normalizedIntersectionAxis, m->velocity);
