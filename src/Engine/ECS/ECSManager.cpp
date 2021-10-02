@@ -199,8 +199,8 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 	graphComp->advanceBy = {1.0f, 0.0f};
 	graphComp->startingTile = {0.0f, 1.0f};
 	graphComp->modAdvancement = {6.0f, 1.0f};
-	graphComp->updateInterval = 0.35f;
-	graphComp->movementMultiplier = 1.0f;
+	graphComp->updateInterval = 0.2f;
+	graphComp->movementMultiplier = 0.35f;
 	addComponent(playerEntity, graphComp);
 	addComponent(playerEntity, new WeaponComponent());
 	addComponent(playerEntity, new CameraFocusComponent());
