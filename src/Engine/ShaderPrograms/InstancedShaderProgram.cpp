@@ -53,7 +53,7 @@ void InstancedShaderProgram::setupInstancedVertexAttributePointers() {
 	}
 
 	// Texture index
-	glVertexAttribPointer(10, 1, GL_INT, GL_FALSE, stride, (void*) (totalFloats * sizeof(float)));
+	glVertexAttribIPointer(10, 1, GL_INT, stride, (void*) (totalFloats * sizeof(float)));
 	glEnableVertexAttribArray(10);
 	glVertexAttribDivisor(10, 1);
 }
