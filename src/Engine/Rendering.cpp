@@ -88,8 +88,10 @@ void Rendering::reInit(unsigned int width, unsigned int height) {
     m_width = width; 
     m_height = height;
 
+    glDeleteFramebuffers(m_fbos.size(), m_fbos.data());
+    glGenFramebuffers(m_fbos.size(), m_fbos.data());
+
     for(unsigned int i = 0; i < m_fbos.size(); ++i) {
-        glDeleteFramebuffers(m_fbos.size(), m_fbos.data());
         glBindFramebuffer(GL_FRAMEBUFFER, m_fbos[i]);
         glBindTexture(GL_TEXTURE_2D, m_colTexs[i]);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
