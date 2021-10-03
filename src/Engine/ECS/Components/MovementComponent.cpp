@@ -9,8 +9,12 @@ MovementComponent::MovementComponent() :
 	drag(10.0f),
 	maxSpeed(7.0f),
 	jumpRequested(false),
+	dashRequested(false),
 	jumpAllowed(true),
-	jumpPower(8.0f) {
+	dashTimer(0.0f),
+	dashFrequency(2.0f),
+	jumpPower(8.0f),
+	dashPower(10.0f) {
 	m_componentType = ComponentTypeEnum::MOVEMENT;
 }
 

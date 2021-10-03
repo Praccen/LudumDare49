@@ -16,8 +16,12 @@ public:
 	float drag;
 	float maxSpeed;
 	bool jumpRequested;
+	bool dashRequested;
 	bool jumpAllowed;
+	float dashTimer;
+	float dashFrequency;
 	float jumpPower;
+	float dashPower;
 
 	MovementComponent();
 	MovementComponent(float velX, float velY);

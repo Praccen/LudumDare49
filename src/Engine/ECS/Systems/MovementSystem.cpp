@@ -13,6 +13,9 @@ void MovementSystem::update(float dt)
 		PositionComponent *p = static_cast<PositionComponent *>(e->getComponent(ComponentTypeEnum::POSITION));
 		MovementComponent *m = static_cast<MovementComponent*>(e->getComponent(ComponentTypeEnum::MOVEMENT));
 
+		
+		m->dashTimer += dt;
+
 		glm::vec3 oldVelocity = m->velocity;
 		m->velocity += m->accelerationDirection * (glm::vec3(m->maxAcceleration, 0.0f) * dt);
 
@@ -27,9 +30,19 @@ void MovementSystem::update(float dt)
 			}
 		}
 
+		// Jump
 		if (m->jumpRequested && m->jumpAllowed) {
 			m->velocity.y = m->jumpPower;
 			m->jumpAllowed = false;
+		}
+
+		// Dash
+		if (m->dashRequested && m->dashTimer >= m->dashFrequency) {
+			glm::vec2 dashDirection = {1.0f, 0.0f};
+			m->velocity += glm::vec3(dashDirection, 0.0f) * m->dashPower;
+			m->velocity.y = 3.0f;
+
+			m->dashTimer = 0.0f;
 		}
 		
 		p->position += (oldVelocity + m->velocity) * 0.5f * dt; // This works for any update rate
@@ -37,5 +50,6 @@ void MovementSystem::update(float dt)
 
 		m->accelerationDirection = { 0.0f, 0.0f, 0.0f };
 		m->jumpRequested = false;
+		m->dashRequested = false;
 	}
 }

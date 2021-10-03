@@ -224,16 +224,28 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 
 const int ECSManager::createCameraEntity() {
 	Entity &cameraEntity = createEntity();
-	
-	PositionComponent* posComp = new PositionComponent();
-	posComp->position.z = 0.0f;
-	posComp->scale = {40.0f, 20.0f, 1.0f};
-	addComponent(cameraEntity, posComp);
+
+	addComponent(cameraEntity, new PositionComponent());
 	MovementComponent *movComp = new MovementComponent();
 	movComp->constantAcceleration = glm::vec3(0.7f, 0.0f, 0.0f);
 	movComp->velocity = glm::vec3(0.0f, 0.0f, 0.0f);
 	addComponent(cameraEntity, movComp);
-	addComponent(cameraEntity, new CameraFocusComponent());
+	CameraFocusComponent* camFocComp = new CameraFocusComponent();
+	camFocComp->offset = {5.0f, 3.0f};
+	addComponent(cameraEntity, camFocComp);
+
+	return cameraEntity.getID();
+}
+
+const int ECSManager::createBackgroundEntity() {
+	Entity &backgroundEntity= createEntity();
+
+	PositionComponent* posComp = new PositionComponent();
+	posComp->position.y = 4.0f;
+	posComp->position.z = 0.0f;
+	posComp->scale = {40.0f, 20.0f, 1.0f};
+	addComponent(backgroundEntity, posComp);
+
 	GraphicsComponent* graphComp = new GraphicsComponent();
 	graphComp->quad->setTextureIndex(1);
 	graphComp->quad->setNrOfSprites(1.0f, 1.0f);
@@ -244,15 +256,16 @@ const int ECSManager::createCameraEntity() {
 	graphComp->updateInterval = 0.001f;
 	graphComp->movementMultiplier = 0.01f;
 	Rendering::getInstance().getQuadManager()->getTexture(1).setTexParameters(GL_TEXTURE_WRAP_S, GL_REPEAT);
-	addComponent(cameraEntity, graphComp);
+	addComponent(backgroundEntity, graphComp);
 
-	return cameraEntity.getID();
+	return backgroundEntity.getID();
 }
 
 const int ECSManager::createSunEntity() {
 	Entity &sunEntity = createEntity();
 	PositionComponent* posComp = new PositionComponent();
 	posComp->position.z = 0.01f;
+	posComp->position.y = 3.0f;
 	posComp->scale = {20.0f, 10.0f, 1.0f};
 	addComponent(sunEntity, posComp);
 	GraphicsComponent* graphComp = new GraphicsComponent();

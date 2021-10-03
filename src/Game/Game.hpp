@@ -29,6 +29,7 @@ private:
 
 	int playerEntityId;
 	int cameraEntityId;
+	int backgroundEntityId;
 	int sunEntityId;
 	unsigned int m_score;
 
