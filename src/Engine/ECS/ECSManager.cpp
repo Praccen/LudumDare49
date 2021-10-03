@@ -77,14 +77,15 @@ void ECSManager::updateRenderingSystems(float dt) {
 }
 
 void ECSManager::reset() {
-	//Delete all entities and systems
+	//Delete all entities
 	for (auto& e : m_entities) {
 		delete e;
 	}
-	initializeSystems();
-
 	m_entities.clear();
 	m_idCounter = 0;
+
+	//re-init systems
+	initializeSystems();
 }
 
 Entity& ECSManager::createEntity()

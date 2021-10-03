@@ -29,6 +29,7 @@ Game::~Game()
 }
 
 void Game::reset(GLFWwindow *window) {
+	Rendering::getInstance().reset();
 	m_ECSManager->reset();
 
 	playerEntityId = m_ECSManager->createPlayerEntity(7.f, 4.f, window);
