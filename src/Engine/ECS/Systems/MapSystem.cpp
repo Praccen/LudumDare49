@@ -32,6 +32,7 @@ void MapSystem::update(float dt) {
 
         float camX = m_render->getCamera()->getPosition().x;
 
+        //if tile was destroyed, remove components
         if (mt->destroyed) {
             m_manager->removeComponent(*e, ComponentTypeEnum::GRAPHICS);
             m_manager->removeComponent(*e, ComponentTypeEnum::COLLISION);
@@ -42,12 +43,10 @@ void MapSystem::update(float dt) {
 
         //Check if tile should be move to the front
         if((camX - p->position.x) > 14.f) {
-            //if tile was destroyed, re-add components and reset life
+            //if tile was destroyed, re-add components
             if (mt->wasDestroyed) {
                 mt->wasDestroyed = false;
-                HealthComponent* h = static_cast<HealthComponent*>(e->getComponent(ComponentTypeEnum::HEALTH));
-                h->health = h->maxHealth;
-
+                
                 CollisionComponent* collisionComp = new CollisionComponent();
                 GraphicsComponent* graphComp = new GraphicsComponent();
                 graphComp->quad->setTextureIndex(2);

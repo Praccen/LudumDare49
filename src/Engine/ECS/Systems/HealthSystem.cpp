@@ -47,8 +47,7 @@ void HealthSystem::update(float dt) {
             }
             if (e->hasComponent(ComponentTypeEnum::MAPTILE)) {
                 static_cast<MapTileComponent *>(e->getComponent(ComponentTypeEnum::MAPTILE))->destroyed = true;
-                //m_manager->removeComponent(*e, ComponentTypeEnum::GRAPHICS);
-                //m_manager->removeComponent(*e, ComponentTypeEnum::COLLISION);
+                healthComp->health = healthComp->maxHealth; //reset life of tile
             }
             //m_manager->removeEntity(e->getID());
         }
