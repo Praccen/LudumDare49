@@ -17,7 +17,7 @@ void MapSystem::initialize() {
     m_render =  &Rendering::getInstance();
     // Create tile and platform enitites.
     for(unsigned int i = 0; i < m_numTiles; ++i) {
-        createNewTile(static_cast<float>(i), 1.0f, MapTileComponent::GROUND, 1.1f, 1.1f * 0.75f);
+        createNewTile(static_cast<float>(i), 1.0f, MapTileComponent::GROUND, 1.0f, 1.0f * 0.81f);
     }
 }
 
@@ -99,7 +99,7 @@ void MapSystem::update(float dt) {
             m->constantAcceleration.y = 0.0f;
             m->velocity.y = 0.0f;
             m_numTiles++;
-        } else if((camX - p->position.x) > 10.f) {
+        } else if((camX - p->position.x) > 10.f && p->position.x > 10.0f) {
             //tile is at its end, let it fall and remov unstable
             m->constantAcceleration.y = -9.82f;
             mt->unstable = false;

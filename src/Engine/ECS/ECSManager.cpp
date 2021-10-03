@@ -230,8 +230,8 @@ const int ECSManager::createCameraEntity() {
 	posComp->scale = {40.0f, 20.0f, 1.0f};
 	addComponent(cameraEntity, posComp);
 	MovementComponent *movComp = new MovementComponent();
-	movComp->constantAcceleration = glm::vec3(0.1f, 0.0f, 0.0f);
-	movComp->velocity = glm::vec3(4.0f, 0.0f, 0.0f);
+	movComp->constantAcceleration = glm::vec3(0.7f, 0.0f, 0.0f);
+	movComp->velocity = glm::vec3(0.0f, 0.0f, 0.0f);
 	addComponent(cameraEntity, movComp);
 	addComponent(cameraEntity, new CameraFocusComponent());
 	GraphicsComponent* graphComp = new GraphicsComponent();
@@ -255,15 +255,26 @@ const int ECSManager::createSunEntity() {
 	posComp->position.z = 0.01f;
 	posComp->scale = {20.0f, 10.0f, 1.0f};
 	addComponent(sunEntity, posComp);
-	MovementComponent *movComp = new MovementComponent();
-	movComp->constantAcceleration = glm::vec3(0.1f, 0.0f, 0.0f);
-	movComp->velocity = glm::vec3(4.0f, 0.0f, 0.0f);
-	addComponent(sunEntity, movComp);
-	addComponent(sunEntity, new CameraFocusComponent());
 	GraphicsComponent* graphComp = new GraphicsComponent();
 	graphComp->quad->setTextureIndex(3);
 	graphComp->quad->setNrOfSprites(1.0f, 1.0f);
 	addComponent(sunEntity, graphComp);
 
 	return sunEntity.getID();
+}
+
+const int ECSManager::createStableEntity() {
+	Entity &stableEntity = createEntity();
+	PositionComponent* posComp = new PositionComponent();
+	posComp->position.x = 7.0f;
+	posComp->position.y = -1.5f;
+	posComp->position.z = -0.5f;
+	posComp->scale = {1024.0f * 0.03f, 512.0f * 0.03f, 1.0f};
+	addComponent(stableEntity, posComp);
+	GraphicsComponent* graphComp = new GraphicsComponent();
+	graphComp->quad->setTextureIndex(4);
+	graphComp->quad->setNrOfSprites(1.0f, 1.0f);
+	addComponent(stableEntity, graphComp);
+
+	return stableEntity.getID();
 }
