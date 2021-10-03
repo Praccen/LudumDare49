@@ -20,7 +20,7 @@ public:
 	bool jumpAllowed;
 	float dashTimer;
 	float dashFrequency;
-	float dashDamageTimer;
+	bool dashIsDamaging;
 	const float dashDamageTime;
 	float jumpPower;
 	float dashPower;

@@ -205,7 +205,6 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 	addComponent(playerEntity, movComp);
 	addComponent(playerEntity, new InputComponent(window));
 	addComponent(playerEntity, new CollisionComponent());
-	addComponent(playerEntity, new DamageComponent());
 	GraphicsComponent *graphComp = new GraphicsComponent();
 	graphComp->quad->setTextureIndex(0);
 	graphComp->quad->setNrOfSprites(6.0f, 1.0f);

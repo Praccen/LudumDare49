@@ -37,30 +37,28 @@ void CollisionSystem::update(float /*dt*/) {
 			continue;
 		}
 
+		//if playerEntity has reached the limits of the screen
+		if (e->hasComponent(ComponentTypeEnum::PLAYER)) {
+			//limit to the right is set to the right limit
+			if (p->position.x > Rendering::getInstance().getCamera()->getPosition().x + 14.0f) {
+				p->position.x = Rendering::getInstance().getCamera()->getPosition().x + 14.0f;
+			}
+			//limit top is set to limit top
+			if (p->position.y > Rendering::getInstance().getCamera()->getPosition().y + 14.0f) {
+				p->position.y = Rendering::getInstance().getCamera()->getPosition().y + 14.0f;
+			}
+			//limit to the left or bottom kills player
+			if (p->position.x < Rendering::getInstance().getCamera()->getPosition().x - 15.0f ||
+				p->position.y < Rendering::getInstance().getCamera()->getPosition().y - 10.0f) {
+				static_cast<PlayerComponent*>(e->getComponent(ComponentTypeEnum::PLAYER))->alive = false;
+				continue;
+			}
+		}
+
 		// Collide with other entities
 		for (auto& e2 : m_entities) {
 			if (e->getID() == e2->getID()) {
 				continue;
-			}
-
-			//if playerEntity has reached the limits of the screen
-			if (e->hasComponent(ComponentTypeEnum::PLAYER)) {
-				//limit to the right is set to the right limit
-				if (p->position.x > Rendering::getInstance().getCamera()->getPosition().x + 14.0f) {
-					p->position.x = Rendering::getInstance().getCamera()->getPosition().x + 14.0f;
-					continue;
-				}
-				//limit top is set to limit top
-				if (p->position.y > Rendering::getInstance().getCamera()->getPosition().y + 14.0f) {
-					p->position.y = Rendering::getInstance().getCamera()->getPosition().y + 14.0f;
-					continue;
-				}
-				//limit to the left or bottom kills player
-				if (p->position.x < Rendering::getInstance().getCamera()->getPosition().x - 15.0f || 
-					p->position.y < Rendering::getInstance().getCamera()->getPosition().y - 10.0f) {
-					static_cast<PlayerComponent*>(e->getComponent(ComponentTypeEnum::PLAYER))->alive = false;
-					continue;
-				}
 			}
 
 			CollisionComponent* c2 = static_cast<CollisionComponent*>(e2->getComponent(ComponentTypeEnum::COLLISION));

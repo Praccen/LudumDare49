@@ -111,7 +111,6 @@ bool Window::gameOverLoop(Game& game) {
         
         game.reset(window);
         game.gameState = GameState::Playing;
-       // run();
     }
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();

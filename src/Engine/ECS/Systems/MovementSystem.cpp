@@ -17,7 +17,6 @@ void MovementSystem::update(float dt)
 
 		
 		m->dashTimer += dt;
-		m->dashDamageTimer -= dt;
 
 		glm::vec3 oldVelocity = m->velocity;
 		m->velocity += m->accelerationDirection * (glm::vec3(m->maxAcceleration, 0.0f) * dt);
@@ -45,10 +44,11 @@ void MovementSystem::update(float dt)
 			m->velocity += glm::vec3(dashDirection, 0.0f) * m->dashPower;
 			m->velocity.y = 3.0f;
 			m->dashTimer = 0.0f;
-			m->dashDamageTimer = m->dashDamageTime;
+			m->dashIsDamaging = true;
 			m_manager->addComponent(*e, new DamageComponent());
 		}
-		if (m->dashDamageTimer <= 0.0f) {
+		if (m->dashTimer >= m->dashDamageTime && m->dashIsDamaging) {
+			m->dashIsDamaging = false;
 			m_manager->removeComponent(*e, ComponentTypeEnum::DAMAGE);
 		}
 

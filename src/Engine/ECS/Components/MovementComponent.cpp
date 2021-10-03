@@ -13,7 +13,7 @@ MovementComponent::MovementComponent() :
 	jumpAllowed(true),
 	dashTimer(0.0f),
 	dashFrequency(2.0f),
-	dashDamageTimer(0.0f),
+	dashIsDamaging(false),
 	dashDamageTime(0.5f),
 	jumpPower(8.0f),
 	dashPower(10.0f) {
