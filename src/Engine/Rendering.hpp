@@ -5,9 +5,11 @@
 #include "ShaderPrograms/SimpleShaderProgram.hpp"
 #include "ShaderPrograms/InstancedShaderProgram.hpp"
 #include "ShaderPrograms/QuadShaderProgram.hpp"
+#include "ShaderPrograms/Effects/BlurEffect.hpp"
 #include "Objects/ScreenQuad.hpp"
 #include "Objects/InstancedQuadManager.hpp"
 #include "Objects/LowPolyLiquid.hpp"
+#include "Objects/BlurObject.hpp"
 
 #include <array>
 
@@ -47,12 +49,10 @@ private:
     QuadShaderProgram m_screenShaderProgram;
     ScreenQuad m_screenQuad;
 
-    // Framebuffer variables
-    enum FB {
-        READ,
-        WRITE
-    };
+    BlurEffect m_blurEffect;
+    BlurObject m_quadBlur;
 
+    // Framebuffer variables
     std::array<unsigned int, 2> m_fbos;
     std::array<unsigned int, 2> m_colTexs;
     std::array<unsigned int, 2> m_rbos;

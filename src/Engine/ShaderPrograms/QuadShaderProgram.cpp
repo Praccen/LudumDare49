@@ -4,7 +4,6 @@
 
 
 QuadShaderProgram::QuadShaderProgram() : ShaderProgram("resources/Shaders/vertex_quad.glsl", "resources/Shaders/fragment_quad.glsl") {
-    // Set texture0 uniform to be texture unit 0
 	glUniform1i(m_uniformBindings["screenTexture"], 0);
 }
 

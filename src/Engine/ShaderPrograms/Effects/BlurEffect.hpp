@@ -4,7 +4,7 @@
 
 class BlurEffect : public ShaderProgram {
 public:
-
     BlurEffect();
+    ~BlurEffect() = default;
 	void setupVertexAttributePointers() override;
 };
