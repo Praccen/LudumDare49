@@ -57,6 +57,17 @@ std::vector<Quad*>& InstancedQuadManager::getQuads() {
 	return m_quads;
 }
 
+void InstancedQuadManager::reset()
+{
+    for (size_t i = 0; i < m_quads.size(); i++) {
+        delete m_quads[i];
+    }
+    m_quads.clear();
+    m_quadData.clear();
+    m_availableQuads.clear();
+
+}
+
 Texture& InstancedQuadManager::getTexture(unsigned int textureId) {
     return *(m_textures[textureId]);
 }

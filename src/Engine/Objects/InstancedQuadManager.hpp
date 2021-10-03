@@ -23,6 +23,9 @@ public:
     Quad* getNewQuad();
 	std::vector<Quad*>& getQuads();
 
+    //resets data for a new start
+    void reset();
+
     Texture& getTexture(unsigned int textureId);
 
     void returnQuad(Quad* quadToReturn);

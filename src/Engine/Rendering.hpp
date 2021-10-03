@@ -19,6 +19,7 @@ public:
 
     ~Rendering() = default;
 
+    void reset();
 	Quad* getNewQuad();
     InstancedQuadManager* getQuadManager();
 	Camera* getCamera();

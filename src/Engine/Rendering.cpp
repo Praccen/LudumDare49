@@ -12,6 +12,10 @@ Rendering::Rendering():
 
 }
 
+void Rendering::reset() {
+    m_quadManager.reset();
+}
+
 Quad* Rendering::getNewQuad() {
 	return m_quadManager.getNewQuad();
 }
