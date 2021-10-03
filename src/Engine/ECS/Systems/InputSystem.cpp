@@ -46,6 +46,7 @@ void InputSystem::update(float /*dt*/){
 			// if (weaponComp) {
 			// 	weaponComp->fire = true;
 			// }
+			movement->dashRequested = true;
 		}
 		movement->accelerationDirection.x = direction.x;
 		movement->accelerationDirection.y = direction.y;

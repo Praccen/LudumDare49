@@ -10,12 +10,16 @@ MovementComponent::MovementComponent() :
 	maxSpeed(7.0f),
 	jumpRequested(false),
 	jumpAllowed(true),
-	jumpPower(8.0f) {
+	jumpPower(8.0f),
+	dashRequested(false),
+	dashCooldown(2.0f),
+	dashTimer(0.0f),
+	dashPower(15.0f){
 	m_componentType = ComponentTypeEnum::MOVEMENT;
 }
 
-MovementComponent::MovementComponent(float velX, float velY) {
-	MovementComponent();
+MovementComponent::MovementComponent(float velX, float velY) :
+	MovementComponent() {
 	velocity.x = velX;
 	velocity.y = velY;
 }

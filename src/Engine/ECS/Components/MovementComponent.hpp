@@ -19,6 +19,11 @@ public:
 	bool jumpAllowed;
 	float jumpPower;
 
+	bool dashRequested;
+	const float dashCooldown;
+	float dashTimer;
+	float dashPower;
+
 	MovementComponent();
 	MovementComponent(float velX, float velY);
 };

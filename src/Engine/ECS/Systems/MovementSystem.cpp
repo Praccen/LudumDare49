@@ -26,16 +26,27 @@ void MovementSystem::update(float dt)
 				m->velocity[i] += (m->wantedVelocity[i] - m->velocity[i]) * 2.0f * dt;
 			}
 		}
-
+		
+		//jump
 		if (m->jumpRequested && m->jumpAllowed) {
 			m->velocity.y = m->jumpPower;
 			m->jumpAllowed = false;
 		}
 		
+		//dash
+		m->dashTimer += dt;
+		if (m->dashRequested && m->dashTimer >= m->dashCooldown) {
+			m->velocity.x = m->dashPower;
+			m->velocity.y = m->accelerationDirection.y * m->dashPower * 0.5f;
+			m->dashTimer = 0.0f;
+		}
+		
+
 		p->position += (oldVelocity + m->velocity) * 0.5f * dt; // This works for any update rate
 
 
 		m->accelerationDirection = { 0.0f, 0.0f, 0.0f };
 		m->jumpRequested = false;
+		m->dashRequested = false;
 	}
 }

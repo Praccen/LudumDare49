@@ -6,6 +6,7 @@
 #include "ECS/Components/PositionComponent.hpp"
 #include "ECS/Components/DamageComponent.hpp"
 #include "ECS/Components/HealthComponent.hpp"
+#include "ECS/Components/MapTileComponent.hpp"
 
 #include <algorithm>
 
@@ -44,7 +45,12 @@ void HealthSystem::update(float dt) {
             if(e->hasComponent(ComponentTypeEnum::PLAYER)) {
                 std::cout << "Entity: " << e->getName() << " is dead!" << std::endl;
             }
-            m_manager->removeEntity(e->getID());
+            if (e->hasComponent(ComponentTypeEnum::MAPTILE)) {
+                static_cast<MapTileComponent *>(e->getComponent(ComponentTypeEnum::MAPTILE))->destroyed = true;
+                //m_manager->removeComponent(*e, ComponentTypeEnum::GRAPHICS);
+                //m_manager->removeComponent(*e, ComponentTypeEnum::COLLISION);
+            }
+            //m_manager->removeEntity(e->getID());
         }
         else {
             healthComp->health = std::min(healthComp->health, healthComp->maxHealth);

@@ -4,6 +4,7 @@
 #include "ECS/Components/PositionComponent.hpp"
 #include "ECS/Components/CollisionComponent.hpp"
 #include "ECS/Components/GraphicsComponent.hpp"
+#include "ECS/Components/HealthComponent.hpp"
 
 #include <cstdlib>
 #include <ctime>
@@ -31,8 +32,33 @@ void MapSystem::update(float dt) {
 
         float camX = m_render->getCamera()->getPosition().x;
 
+        if (mt->destroyed) {
+            m_manager->removeComponent(*e, ComponentTypeEnum::GRAPHICS);
+            m_manager->removeComponent(*e, ComponentTypeEnum::COLLISION);
+            mt->wasDestroyed = true;
+            mt->destroyed = false;
+            continue;
+        }
+
         //Check if tile should be move to the front
         if((camX - p->position.x) > 14.f) {
+            //if tile was destroyed, re-add components and reset life
+            if (mt->wasDestroyed) {
+                mt->wasDestroyed = false;
+                HealthComponent* h = static_cast<HealthComponent*>(e->getComponent(ComponentTypeEnum::HEALTH));
+                h->health = h->maxHealth;
+
+                CollisionComponent* collisionComp = new CollisionComponent();
+                GraphicsComponent* graphComp = new GraphicsComponent();
+                graphComp->quad->setTextureIndex(2);
+                graphComp->quad->setNrOfSprites(1.0f, 1.0f);
+                graphComp->quad->setCurrentSprite(0.0f, 0.0f);
+                collisionComp->isConstraint = true;
+
+                m_manager->addComponent(*e, graphComp);
+                m_manager->addComponent(*e, collisionComp);
+            }
+
             p->position.x = static_cast<float>(m_numTiles);
 
             //10% chance of getting unstable
@@ -147,6 +173,7 @@ void MapSystem::createNewTile(float x, float y, MapTileComponent::TILE_TYPE t, f
         m_manager->addComponent(tileEntity, collisionComp);
         m_manager->addComponent(tileEntity, new MapTileComponent(t));
 	    m_manager->addComponent(tileEntity, new MovementComponent());
+        m_manager->addComponent(tileEntity, new HealthComponent(1));
 }
 
 void MapSystem::spawnObstacle() {
