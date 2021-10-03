@@ -16,3 +16,4 @@ target_compile_options(Engine PRIVATE
 						/W3;>)  
 set_target_properties(Engine PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON CMAKE_CXX_EXTENSIONS OFF)
 target_compile_definitions(Engine PUBLIC GLM_FORCE_SILENT_WARNINGS=1)
+target_precompile_headers(Engine PRIVATE pch.h)
