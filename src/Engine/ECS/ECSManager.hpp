@@ -54,10 +54,14 @@ public:
 	//Removes  componenet from entity and then the entity from all concerned systems
 	void removeComponent(Entity& entity, ComponentTypeEnum component);
 
+	// ---- Entity factory ----
 	// Create a controllable entity at position x,y
 	const int createPlayerEntity(float x, float y, GLFWwindow* window);
 	const int createCameraEntity();
+	const int createBackgroundEntity();
 	const int createSunEntity();
+	const int createStableEntity();
+	// ------------------------
 
 	//Returns entity by ID, or NULL if it does not exist
 	static Entity* getEntity(int entityID);

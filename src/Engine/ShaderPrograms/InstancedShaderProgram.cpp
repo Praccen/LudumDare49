@@ -14,11 +14,11 @@ InstancedShaderProgram::InstancedShaderProgram() :
 	use(); // Start using the shader
 
 	// Set textures uniform
-	int texturesArray[32] = {0};
-	for (unsigned int i = 0; i < 32; i++) {
+	int texturesArray[15] = {0};
+	for (unsigned int i = 0; i < 15; i++) {
 		texturesArray[i] = i;
 	}
-	glUniform1iv(m_uniformBindings["textures"], 32, texturesArray);
+	glUniform1iv(m_uniformBindings["textures"], 31, texturesArray);
 }
 
 InstancedShaderProgram::~InstancedShaderProgram() {
@@ -58,15 +58,4 @@ void InstancedShaderProgram::setupInstancedVertexAttributePointers() {
 	glVertexAttribIPointer(10, 1, GL_INT, stride, (void*) (totalFloats * sizeof(float)));
 	glEnableVertexAttribArray(10);
 	glVertexAttribDivisor(10, 1);
-}
-
-unsigned int InstancedShaderProgram::getUniformLocation(std::string uniformName) {
-	if (m_uniformBindings.find(uniformName) == m_uniformBindings.end()) {
-		std::cout << "No uniform with name " << uniformName << "\n";
-	}
-	else {
-		return m_uniformBindings[uniformName];
-	}
-
-	return static_cast<unsigned int>(NULL);
 }

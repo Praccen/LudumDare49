@@ -23,10 +23,14 @@ public:
 	unsigned int getScore() { return m_score; };
 
 private:
+	void setupEntities(GLFWwindow *window);
+
 	ECSManager* m_ECSManager;
 
 	int playerEntityId;
 	int cameraEntityId;
+	int backgroundEntityId;
+	int sunEntityId;
 	unsigned int m_score;
 
 };

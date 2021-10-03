@@ -16,8 +16,12 @@ public:
 	float drag;
 	float maxSpeed;
 	bool jumpRequested;
+	bool dashRequested;
 	bool jumpAllowed;
+	float dashTimer;
+	float dashFrequency;
 	float jumpPower;
+	float dashPower;
 
 	bool dashRequested;
 	const float dashCooldown;

@@ -3,13 +3,10 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 
-#include "ShaderPrograms/ShaderProgram.hpp"
-
-
 InstancedQuadManager::InstancedQuadManager(ShaderProgram &shaderProgram):
 	GraphicsObject(shaderProgram) {
     
-    for (unsigned int i = 0; i < 32; i++) {
+    for (unsigned int i = 0; i < 15; i++) {
         m_textures.emplace_back(new Texture(i));
     }
 

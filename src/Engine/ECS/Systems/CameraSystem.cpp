@@ -15,6 +15,6 @@ void CameraSystem::update(float dt) {
 		CameraFocusComponent* camComp =  static_cast<CameraFocusComponent*>(e->getComponent(ComponentTypeEnum::CAMERAFOCUS));
 
 		Rendering::getInstance().getCamera()->setPosition(
-			posComp->position.x + camComp->offset, posComp->position.y);
+			posComp->position.x + camComp->offset.x, posComp->position.y + camComp->offset.y);
 	}
 }

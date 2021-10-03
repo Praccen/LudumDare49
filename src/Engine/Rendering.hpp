@@ -4,8 +4,12 @@
 #include "Objects/Quad.hpp"
 #include "ShaderPrograms/SimpleShaderProgram.hpp"
 #include "ShaderPrograms/InstancedShaderProgram.hpp"
+#include "ShaderPrograms/QuadShaderProgram.hpp"
+#include "Objects/ScreenQuad.hpp"
 #include "Objects/InstancedQuadManager.hpp"
 #include "Objects/LowPolyLiquid.hpp"
+
+#include <array>
 
 class Rendering {
 public:
@@ -24,8 +28,11 @@ public:
     InstancedQuadManager* getQuadManager();
 	Camera* getCamera();
 
+    
 	void update(float dt);
     void draw();
+    void init(unsigned int width, unsigned int height);
+    void reInit(unsigned int width, unsigned int height);
 private:
     Rendering();
 
@@ -37,5 +44,20 @@ private:
     SimpleShaderProgram m_simpleShaderProgram;
     LowPolyLiquid m_lowPolyLiquid;
 
+    QuadShaderProgram m_screenShaderProgram;
+    ScreenQuad m_screenQuad;
+
+    // Framebuffer variables
+    enum FB {
+        READ,
+        WRITE
+    };
+
+    std::array<unsigned int, 2> m_fbos;
+    std::array<unsigned int, 2> m_colTexs;
+    std::array<unsigned int, 2> m_rbos;
+
+    unsigned int m_width, m_height;
+    unsigned int quadVAO, quadVBO;
     void initGL();
 };
