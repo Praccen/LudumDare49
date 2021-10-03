@@ -9,6 +9,8 @@
 #include "Objects/InstancedQuadManager.hpp"
 #include "Objects/LowPolyLiquid.hpp"
 
+#include <array>
+
 class Rendering {
 public:
     static Rendering& getInstance() {
@@ -31,12 +33,10 @@ public:
     void draw();
     void init(unsigned int width, unsigned int height);
     void reInit(unsigned int width, unsigned int height);
-    void postPass();
 private:
     Rendering();
 
     Camera m_camera;
-
 
     InstancedShaderProgram m_instancedShaderProgram;
     InstancedQuadManager m_quadManager;
@@ -47,9 +47,16 @@ private:
     QuadShaderProgram m_screenShaderProgram;
     ScreenQuad m_screenQuad;
 
-    unsigned int m_preBuffer;
-    unsigned int m_preTex;
-    unsigned int m_rbo;
+    // Framebuffer variables
+    enum FB {
+        READ,
+        WRITE
+    };
+
+    std::array<unsigned int, 2> m_fbos;
+    std::array<unsigned int, 2> m_colTexs;
+    std::array<unsigned int, 2> m_rbos;
+
     unsigned int m_width, m_height;
     unsigned int quadVAO, quadVBO;
     void initGL();

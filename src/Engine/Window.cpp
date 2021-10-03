@@ -229,7 +229,6 @@ bool Window::gameLoop(Game& game) {
     // render
     // ------
     Rendering::getInstance().draw();
-    Rendering::getInstance().postPass();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     glfwSwapBuffers(window);
 

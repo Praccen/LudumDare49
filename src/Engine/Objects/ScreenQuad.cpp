@@ -3,7 +3,6 @@
 
 
 ScreenQuad::ScreenQuad(ShaderProgram &shaderProgram) : GraphicsObject(shaderProgram) {
-
     bindVAO();
     glGenBuffers(1, &m_vbo);
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);

@@ -37,64 +37,14 @@ void Rendering::update(float dt) {
 }
 
 void Rendering::draw() {
-    glBindFramebuffer(GL_FRAMEBUFFER, m_preBuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_fbos[0]);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST); 
     m_instancedShaderProgram.use();
 	m_camera.bindViewMatrix(m_instancedShaderProgram.getUniformLocation("viewMatrix"));
 	m_quadManager.draw();
 
-}
-
-void Rendering::init(unsigned int width, unsigned int height) {
-    m_width = width; 
-    m_height = height;
-
-    // Framebuffer
-    glGenFramebuffers(1, &m_preBuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, m_preBuffer);
-
-    glGenTextures(1, &m_preTex);
-    glBindTexture(GL_TEXTURE_2D, m_preTex);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_preTex, 0);
-
-    glGenRenderbuffers(1, &m_rbo);
-    glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_width, m_height); 
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rbo); 
-
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
-    }
-    
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    m_screenQuad.setTexture(m_preTex);
-   
-}
-
-void Rendering::reInit(unsigned int width, unsigned int height) {
-    m_width = width; 
-    m_height = height;
-
-    glDeleteFramebuffers(1, &m_preBuffer);
-    glGenFramebuffers(1, &m_preBuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, m_preBuffer);
-    glBindTexture(GL_TEXTURE_2D, m_preTex);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_preTex, 0);
-
-    glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_width, m_height);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rbo); 
-
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
-
-
-void Rendering::postPass() {
+    // Render to quad
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glDisable(GL_DEPTH_TEST); 
     glClearColor(0.3f, 0.2f, 0.4f, 1.0f);
@@ -102,6 +52,60 @@ void Rendering::postPass() {
 
     m_screenShaderProgram.use();
     m_screenQuad.draw();
+}
+
+void Rendering::init(unsigned int width, unsigned int height) {
+    m_width = width; 
+    m_height = height;
+
+    // Framebuffer
+    glGenFramebuffers(m_fbos.size(), m_fbos.data());
+    glGenTextures(m_colTexs.size(), m_colTexs.data());
+    glGenRenderbuffers(m_rbos.size(), m_rbos.data());
+
+    for(unsigned int i = 0; i < m_fbos.size(); ++i) {
+        glBindFramebuffer(GL_FRAMEBUFFER, m_fbos[i]);
+        glBindTexture(GL_TEXTURE_2D, m_colTexs[i]);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_colTexs[i], 0);
+
+        glBindRenderbuffer(GL_RENDERBUFFER, m_rbos[i]);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_width, m_height); 
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rbos[i]); 
+
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+            std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
+        }
+    }
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    m_screenQuad.setTexture(m_colTexs[0]);
+}
+
+void Rendering::reInit(unsigned int width, unsigned int height) {
+    m_width = width; 
+    m_height = height;
+
+    for(unsigned int i = 0; i < m_fbos.size(); ++i) {
+        glDeleteFramebuffers(m_fbos.size(), m_fbos.data());
+        glBindFramebuffer(GL_FRAMEBUFFER, m_fbos[i]);
+        glBindTexture(GL_TEXTURE_2D, m_colTexs[i]);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_colTexs[i], 0);
+
+        glBindRenderbuffer(GL_RENDERBUFFER, m_rbos[i]);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_width, m_height); 
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rbos[i]); 
+
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+            std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
+        }
+    }
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void Rendering::initGL() {
