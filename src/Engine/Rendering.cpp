@@ -50,10 +50,6 @@ void Rendering::init(unsigned int width, unsigned int height) {
     m_width = width; 
     m_height = height;
 
-    glDeleteBuffers(1, &m_preBuffer);
-    glDeleteBuffers(1, &m_rbo);
-    glDeleteTextures(1, &m_preTex);
-
     // Framebuffer
     glGenFramebuffers(1, &m_preBuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, m_preBuffer);
@@ -76,6 +72,7 @@ void Rendering::init(unsigned int width, unsigned int height) {
     
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     m_screenQuad.setTexture(m_preTex);
+   
 }
 
 void Rendering::postPass() {
