@@ -40,8 +40,7 @@ void MovementSystem::update(float dt)
 
 		// Dash
 		if (m->dashRequested && m->dashTimer >= m->dashFrequency) {
-			glm::vec2 dashDirection = {1.0f, 0.0f};
-			m->velocity += glm::vec3(dashDirection, 0.0f) * m->dashPower;
+			m->velocity.x += m->dashPower;
 			m->velocity.y = 3.0f;
 			m->dashTimer = 0.0f;
 			m->dashIsDamaging = true;

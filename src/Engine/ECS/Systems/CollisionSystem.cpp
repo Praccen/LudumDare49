@@ -67,7 +67,7 @@ void CollisionSystem::update(float /*dt*/) {
 			float tempIntersectionDepth = 0.0f;
 
 			if (SAT::getIntersection(c->shape, c2->shape, tempIntersectionAxis, tempIntersectionDepth)) {
-				if (c2->effectMovement) {
+				if (c2->effectMovement && !m->dashIsDamaging) {
 					if (glm::length2(tempIntersectionAxis) > 0.0001f) {
 
 						// Climbing ontop of things / being pushed down
