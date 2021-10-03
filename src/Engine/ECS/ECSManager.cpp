@@ -16,19 +16,10 @@
 std::vector<Entity*> ECSManager::m_entities;
 
 ECSManager::ECSManager()
-	:m_idCounter(1), m_systems{
-		{"INPUT", std::make_shared<InputSystem>(InputSystem(this))},
-		{"MOVEMENT", std::make_shared<MovementSystem>(MovementSystem(this))},
-		{"COLLISION", std::make_shared<CollisionSystem>(CollisionSystem(this))},
-		{"HEALTH", std::make_shared<HealthSystem>(HealthSystem(this))},
-		{"GRAPHICS", std::make_shared<GraphicsSystem>(GraphicsSystem(this))},
-		{"WEAPON", std::make_shared<WeaponSystem>(WeaponSystem(this))},
-		{"SEEING", std::make_shared<SeeingSystem>(SeeingSystem(this))},
-		{"CAMERAFOCUS", std::make_shared<CameraSystem>(CameraSystem(this))},
-		{"MAP", std::make_shared<MapSystem>(MapSystem(this))},
-		{"ANIMATION", std::make_shared<AnimationSystem>(AnimationSystem(this))}},
+	:m_idCounter(1), m_systems(),
 		m_addEntities(), m_addComponents(), m_removeEntities(), m_removeComponents()
 {
+	initializeSystems();
 	m_systems["MAP"]->initialize();
 	m_startingPositions.push_back(glm::vec2(2, 2));
 	m_startingPositions.push_back(glm::vec2(28, 2));
@@ -40,15 +31,35 @@ ECSManager::~ECSManager()
 {
 	//Delete all entities and systems
 	for (auto& e : m_entities) {
-		e->~Entity();
 		delete e;
 	}
-	m_entities.clear();
+}
+
+void ECSManager::initializeSystems() {
+	m_systems["INPUT"] = std::make_shared<InputSystem>(InputSystem(this));
+	m_systems["MOVEMENT"] = std::make_shared<MovementSystem>(MovementSystem(this));;
+	m_systems["COLLISION"] = std::make_shared<CollisionSystem>(CollisionSystem(this));
+	m_systems["SEEING"] = std::make_shared<SeeingSystem>(SeeingSystem(this));
+	m_systems["HEALTH"] = std::make_shared<HealthSystem>(HealthSystem(this));
+	m_systems["GRAPHICS"] = std::make_shared<GraphicsSystem>(GraphicsSystem(this));
+	m_systems["WEAPON"] = std::make_shared<WeaponSystem>(WeaponSystem(this));
+	m_systems["CAMERAFOCUS"] = std::make_shared<CameraSystem>(CameraSystem(this));
+	m_systems["MAP"] = std::make_shared<MapSystem>(MapSystem(this));
+	m_systems["ANIMATION"] = std::make_shared<AnimationSystem>(AnimationSystem(this));
+
+	m_systems["MAP"]->initialize();
 }
 
 void ECSManager::update(float dt)
 {
-	//G� igenom alla systems och g�r update
+	//for all entities, remove/add components
+    //remove/add entities from systems
+	addEntities();
+	addComponents();
+	removeEntities();
+	removeComponents();
+
+	//update all systems
 	m_systems["INPUT"]->update(dt);
 	m_systems["MOVEMENT"]->update(dt);
 	m_systems["COLLISION"]->update(dt);
@@ -58,13 +69,6 @@ void ECSManager::update(float dt)
 	m_systems["WEAPON"]->update(dt);
 	m_systems["CAMERAFOCUS"]->update(dt);
 	m_systems["MAP"]->update(dt);
-
-	//for all entities, remove/add components
-	//remove/add entities from systems
-	addEntities();
-	addComponents();
-	removeEntities();
-	removeComponents();
 }
 
 void ECSManager::updateRenderingSystems(float dt) {
@@ -72,6 +76,12 @@ void ECSManager::updateRenderingSystems(float dt) {
 }
 
 void ECSManager::reset() {
+	//Delete all entities and systems
+	for (auto& e : m_entities) {
+		delete e;
+	}
+	initializeSystems();
+
 	m_entities.clear();
 	m_idCounter = 0;
 }

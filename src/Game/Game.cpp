@@ -25,13 +25,12 @@ Game::Game(GLFWwindow* window):
 
 Game::~Game()
 {
-	m_ECSManager->~ECSManager();
+	m_ECSManager->reset();
 	//Rendering::getInstance().~Rendering();
 }
 
 void Game::reset(GLFWwindow *window) {
-	ECSManager::getInstance().reset();
-	//Rendering::Reset();
+	m_ECSManager->reset();
 
 	playerEntityId = m_ECSManager->createPlayerEntity(7.f, 4.f, window);
 	cameraEntityId = m_ECSManager->createCameraEntity();

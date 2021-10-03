@@ -28,6 +28,8 @@ public:
 
 	~ECSManager();
 
+	void initializeSystems();
+
 	//Runs through all systems
 	void update(float dt);
 
