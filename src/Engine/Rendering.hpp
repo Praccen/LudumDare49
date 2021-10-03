@@ -30,6 +30,7 @@ public:
 	void update(float dt);
     void draw();
     void init(unsigned int width, unsigned int height);
+    void reInit(unsigned int width, unsigned int height);
     void postPass();
 private:
     Rendering();

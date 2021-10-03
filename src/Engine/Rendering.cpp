@@ -75,6 +75,25 @@ void Rendering::init(unsigned int width, unsigned int height) {
    
 }
 
+void Rendering::reInit(unsigned int width, unsigned int height) {
+    m_width = width; 
+    m_height = height;
+
+    glDeleteFramebuffers(1, &m_preBuffer);
+    glGenFramebuffers(1, &m_preBuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_preBuffer);
+    glBindTexture(GL_TEXTURE_2D, m_preTex);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_preTex, 0);
+
+    glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_width, m_height);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_rbo); 
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+
 void Rendering::postPass() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glDisable(GL_DEPTH_TEST); 
