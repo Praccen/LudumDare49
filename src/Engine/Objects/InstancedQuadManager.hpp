@@ -7,8 +7,6 @@
 #include "Quad.hpp"
 #include "../Textures/Texture.hpp"
 
-class ShaderProgram;
-
 struct InstanceData {
     glm::mat4 modelMatrix = glm::mat4(1.0f);
     glm::mat4 textureMatrix = glm::mat4(1.0f);

@@ -8,8 +8,10 @@
 #include <glad/glad.h>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
-
 #include <GLFW/glfw3.h>
+#include <chrono>
+#include <thread>
+
 
 #include "Rendering.hpp"
 #include "Game/Game.hpp"
@@ -67,12 +69,14 @@ bool Window::run() {
     Game game(window);
     currentTime = glfwGetTime();
     previousTime = currentTime;
+    Rendering::getInstance().init(SCR_WIDTH, SCR_HEIGHT);
     while (!glfwWindowShouldClose(window)) {
         switch (game.gameState)
         {
         case GameState::Menu:
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
             //do menu loop
+            std::this_thread::sleep_for(std::chrono::milliseconds(20));
             menuLoop(game);
             break;
         case GameState::Playing:
@@ -87,7 +91,6 @@ bool Window::run() {
         default:
             break;
         }
-
     }
 
     ImGui_ImplOpenGL3_Shutdown();
@@ -226,8 +229,9 @@ bool Window::gameLoop(Game& game) {
     // render
     // ------
     Rendering::getInstance().draw();
-
+    Rendering::getInstance().postPass();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
     glfwSwapBuffers(window);
 
     return true;
@@ -247,6 +251,7 @@ void framebuffer_size_callback(GLFWwindow* /*window*/, int width, int height)
 
    glViewport(0, 0, width, height);
    Rendering::getInstance().getCamera()->setAspectRatio((float)width / (float)height);
+   Rendering::getInstance().init(width, height);
 }
 
 void Window::renderImgui() {

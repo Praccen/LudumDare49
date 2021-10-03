@@ -1,6 +1,6 @@
 #version 440
 
-#define numTextures 32
+#define numTextures 15 
 
 precision highp float;
 

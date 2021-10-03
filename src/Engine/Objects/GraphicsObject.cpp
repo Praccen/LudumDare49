@@ -1,7 +1,5 @@
 #include "GraphicsObject.hpp"
 
-#include "ShaderPrograms/ShaderProgram.hpp"
-
 #include <glad/glad.h>
 
 GraphicsObject::GraphicsObject(ShaderProgram& shaderProgram):
