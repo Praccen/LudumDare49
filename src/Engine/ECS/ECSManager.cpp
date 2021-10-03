@@ -20,7 +20,6 @@ ECSManager::ECSManager()
 		m_addEntities(), m_addComponents(), m_removeEntities(), m_removeComponents()
 {
 	initializeSystems();
-	m_systems["MAP"]->initialize();
 	m_startingPositions.push_back(glm::vec2(2, 2));
 	m_startingPositions.push_back(glm::vec2(28, 2));
 	m_startingPositions.push_back(glm::vec2(2, 28));
@@ -46,6 +45,7 @@ void ECSManager::initializeSystems() {
 	m_systems["CAMERAFOCUS"] = std::make_shared<CameraSystem>(CameraSystem(this));
 	m_systems["MAP"] = std::make_shared<MapSystem>(MapSystem(this));
 	m_systems["ANIMATION"] = std::make_shared<AnimationSystem>(AnimationSystem(this));
+	m_systems["PLAYER"] = std::make_shared<PlayerSystem>(PlayerSystem(this));
 
 	m_systems["MAP"]->initialize();
 }
