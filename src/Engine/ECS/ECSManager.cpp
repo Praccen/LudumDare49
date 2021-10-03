@@ -219,7 +219,6 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 	addComponent(playerEntity, graphComp);
 	addComponent(playerEntity, new WeaponComponent());
 	addComponent(playerEntity, new PlayerComponent());
-	addComponent(playerEntity, new DamageComponent());
 	return playerEntity.getID();
 }
 

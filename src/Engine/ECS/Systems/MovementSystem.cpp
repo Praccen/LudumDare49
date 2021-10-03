@@ -1,8 +1,10 @@
 #include "MovementSystem.hpp"
 #include "ECS/Components/PositionComponent.hpp"
 #include "ECS/Components/MovementComponent.hpp"
+#include "ECS/Components/DamageComponent.hpp"
+#include "ECS/ECSManager.hpp"
 
-MovementSystem::MovementSystem(ECSManager * ECSManager) 
+MovementSystem::MovementSystem(ECSManager *ECSManager) 
 	: System(ECSManager, ComponentTypeEnum::POSITION, ComponentTypeEnum::MOVEMENT){
 
 }
@@ -15,6 +17,7 @@ void MovementSystem::update(float dt)
 
 		
 		m->dashTimer += dt;
+		m->dashDamageTimer -= dt;
 
 		glm::vec3 oldVelocity = m->velocity;
 		m->velocity += m->accelerationDirection * (glm::vec3(m->maxAcceleration, 0.0f) * dt);
@@ -41,18 +44,13 @@ void MovementSystem::update(float dt)
 			glm::vec2 dashDirection = {1.0f, 0.0f};
 			m->velocity += glm::vec3(dashDirection, 0.0f) * m->dashPower;
 			m->velocity.y = 3.0f;
-
 			m->dashTimer = 0.0f;
+			m->dashDamageTimer = m->dashDamageTime;
+			m_manager->addComponent(*e, new DamageComponent());
 		}
-		
-		//dash
-		m->dashTimer += dt;
-		if (m->dashRequested && m->dashTimer >= m->dashCooldown) {
-			m->velocity.x = m->dashPower;
-			m->velocity.y = m->accelerationDirection.y * m->dashPower * 0.5f;
-			m->dashTimer = 0.0f;
+		if (m->dashDamageTimer <= 0.0f) {
+			m_manager->removeComponent(*e, ComponentTypeEnum::DAMAGE);
 		}
-		
 
 		p->position += (oldVelocity + m->velocity) * 0.5f * dt; // This works for any update rate
 

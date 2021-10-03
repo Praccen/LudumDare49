@@ -20,12 +20,9 @@ public:
 	bool jumpAllowed;
 	float dashTimer;
 	float dashFrequency;
+	float dashDamageTimer;
+	const float dashDamageTime;
 	float jumpPower;
-	float dashPower;
-
-	bool dashRequested;
-	const float dashCooldown;
-	float dashTimer;
 	float dashPower;
 
 	MovementComponent();
