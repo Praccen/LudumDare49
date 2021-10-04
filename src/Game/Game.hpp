@@ -26,6 +26,7 @@ public:
 	unsigned int getScore() { return m_score; };
 
 private:
+	void init();
 	void setupEntities();
 
 	GLFWwindow* m_window;
