@@ -36,6 +36,9 @@ void Game::reset() {
 	Rendering::getInstance().reset();
 	m_ECSManager->reset();
 
+	introRunning = true;
+	introTimer = 0.0f;
+
 	setupEntities();
 }	
 

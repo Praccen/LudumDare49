@@ -202,7 +202,6 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 	MovementComponent *movComp = new MovementComponent();
 	movComp->constantAcceleration = glm::vec3(0.0f, -9.82f, 0.0f);
 	addComponent(playerEntity, movComp);
-	addComponent(playerEntity, new InputComponent(window));
 	addComponent(playerEntity, new CollisionComponent());
 	GraphicsComponent *graphComp = new GraphicsComponent();
 	graphComp->quad->setTextureIndex(0);
@@ -259,6 +258,7 @@ const int ECSManager::createSunEntity() {
 	Entity &sunEntity = createEntity();
 	PositionComponent* posComp = new PositionComponent();
 	posComp->position.z = 0.01f;
+	posComp->position.x = -0.5f;
 	posComp->position.y = 3.0f;
 	posComp->scale = {20.0f, 10.0f, 1.0f};
 	addComponent(sunEntity, posComp);
