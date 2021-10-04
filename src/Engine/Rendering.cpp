@@ -51,10 +51,6 @@ void Rendering::draw() {
     glClear(GL_COLOR_BUFFER_BIT);    
     m_crtEffect.use();
     m_quadCrt.draw();
-//    
-//    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_fbos[0]);
-//    glUniform1i(m_blurEffect.getUniformLocation("horizontal"), 1);
-//    m_quadBlur.drawH();
 
     // Render to quad
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
