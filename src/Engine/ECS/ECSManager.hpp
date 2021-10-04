@@ -61,6 +61,7 @@ public:
 	const int createBackgroundEntity();
 	const int createSunEntity();
 	const int createStableEntity();
+	const int createFarmerEntity();
 	// ------------------------
 
 	//Returns entity by ID, or NULL if it does not exist

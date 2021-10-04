@@ -16,21 +16,29 @@ public:
 	Game(GLFWwindow* window);
 	~Game();
 	
+	void introInit();
+	void introUpdate(float dt);
+	void finishIntro();
 	void update(float dt);
 
-	void reset(GLFWwindow* window);
+	void reset();
 
 	unsigned int getScore() { return m_score; };
 
 private:
-	void setupEntities(GLFWwindow *window);
+	void setupEntities();
 
+	GLFWwindow* m_window;
 	ECSManager* m_ECSManager;
+
+	bool introRunning;
+	float introTimer;
 
 	int playerEntityId;
 	int cameraEntityId;
 	int backgroundEntityId;
 	int sunEntityId;
+	int farmerEntityId;
 	unsigned int m_score;
 
 };

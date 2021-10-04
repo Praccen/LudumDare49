@@ -201,20 +201,18 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 	addComponent(playerEntity, posComp);
 	MovementComponent *movComp = new MovementComponent();
 	movComp->constantAcceleration = glm::vec3(0.0f, -9.82f, 0.0f);
-	movComp->wantedVelocity = glm::vec3(4.0f, 0.0f, 0.0f);
 	addComponent(playerEntity, movComp);
 	addComponent(playerEntity, new InputComponent(window));
 	addComponent(playerEntity, new CollisionComponent());
 	GraphicsComponent *graphComp = new GraphicsComponent();
 	graphComp->quad->setTextureIndex(0);
-	graphComp->quad->setNrOfSprites(6.0f, 1.0f);
-	graphComp->quad->setCurrentSprite(0.0f, 1.0f);
+	graphComp->quad->setNrOfSprites(13.0f, 3.0f);
+	graphComp->quad->setCurrentSprite(0.0f, 2.0f);
 	graphComp->animate = true;
 	graphComp->advanceBy = {1.0f, 0.0f};
-	graphComp->startingTile = {0.0f, 0.0f};
-	graphComp->modAdvancement = {6.0f, 1.0f};
-	graphComp->updateInterval = 0.2f;
-	graphComp->movementMultiplier = 0.35f;
+	graphComp->startingTile = {0.0f, 2.0f};
+	graphComp->modAdvancement = {13.0f, 1.0f};
+	graphComp->updateInterval = 0.3f;
 	addComponent(playerEntity, graphComp);
 	addComponent(playerEntity, new WeaponComponent());
 	addComponent(playerEntity, new PlayerComponent());
@@ -225,10 +223,7 @@ const int ECSManager::createCameraEntity() {
 	Entity &cameraEntity = createEntity();
 
 	addComponent(cameraEntity, new PositionComponent());
-	MovementComponent *movComp = new MovementComponent();
-	movComp->constantAcceleration = glm::vec3(0.7f, 0.0f, 0.0f);
-	movComp->velocity = glm::vec3(0.0f, 0.0f, 0.0f);
-	addComponent(cameraEntity, movComp);
+	addComponent(cameraEntity, new MovementComponent());
 	CameraFocusComponent* camFocComp = new CameraFocusComponent();
 	camFocComp->offset = {5.0f, 3.0f};
 	addComponent(cameraEntity, camFocComp);
@@ -289,4 +284,19 @@ const int ECSManager::createStableEntity() {
 	addComponent(stableEntity, graphComp);
 
 	return stableEntity.getID();
+}
+
+const int ECSManager::createFarmerEntity() {
+	Entity &farmerEntity = createEntity();
+	PositionComponent* posComp = new PositionComponent();
+	posComp->position.z = 0.01f;
+	posComp->position.y = 3.0f;
+	posComp->scale = {1.0f, 2.0f, 1.0f};
+	addComponent(farmerEntity, posComp);
+	GraphicsComponent* graphComp = new GraphicsComponent();
+	graphComp->quad->setTextureIndex(5);
+	graphComp->quad->setNrOfSprites(1.0f, 1.0f);
+	addComponent(farmerEntity, graphComp);
+
+	return farmerEntity.getID();
 }

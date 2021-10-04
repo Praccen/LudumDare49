@@ -109,7 +109,7 @@ bool Window::gameOverLoop(Game& game) {
 
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
         
-        game.reset(window);
+        game.reset();
         game.gameState = GameState::Playing;
     }
     ImGui_ImplOpenGL3_NewFrame();

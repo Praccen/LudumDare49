@@ -1,6 +1,6 @@
 #include "Component.hpp"
 
-#include "Objects/Quad.hpp"
+#include "Engine/Objects/Quad.hpp"
 
 class GraphicsComponent : public Component 
 {
