@@ -66,7 +66,6 @@ void PowerUpSystem::update(float dt) {
 					//start han saving timer
 				}
 				
-				
 				//if hen saving timer is out remove damagecomponent
 				break;
 			default:
@@ -78,6 +77,7 @@ void PowerUpSystem::update(float dt) {
 }
 void PowerUpSystem::spawnPowerUp(){
 	//int totalWeight = 0;
+
 	//for (auto &w : m_powerWeights) {
 	//	totalWeight += w.second;
 	//}
