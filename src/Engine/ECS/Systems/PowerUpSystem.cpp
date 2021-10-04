@@ -77,7 +77,6 @@ void PowerUpSystem::update(float dt) {
 }
 void PowerUpSystem::spawnPowerUp(){
 	//int totalWeight = 0;
-
 	//for (auto &w : m_powerWeights) {
 	//	totalWeight += w.second;
 	//}

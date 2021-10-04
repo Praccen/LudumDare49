@@ -16,6 +16,7 @@ private:
 	Entity &m_existingPowerUp;
 	float m_spawnChance; // chance of powerup spawning
 	std::map<PowerUpType, int> m_powerWeights;
+
 	void spawnPowerUp();
 };
 
