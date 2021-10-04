@@ -13,12 +13,12 @@ PowerUpSystem::PowerUpSystem(ECSManager* ECSManager)
 
 void PowerUpSystem::update(float dt) {
 	if (!m_powerUpExists) {
-		bool shouldSpawn = (rand() % 100 + 1) > m_spawnChance;
+		bool shouldSpawn = (rand() % 900000 + 1) < m_spawnChance;
 		if (shouldSpawn) {
 			spawnPowerUp();
 			m_spawnChance = 0.0f;
+			m_powerUpExists = true;
 		}
-		m_powerUpExists = true;
 		m_spawnChance += dt;
 	}
 	
