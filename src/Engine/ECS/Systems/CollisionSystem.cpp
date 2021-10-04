@@ -56,7 +56,7 @@ void CollisionSystem::update(float /*dt*/) {
 			if(p->position.y < Rendering::getInstance().getCamera()->getPosition().y - 10.0f){
 				PowerUpComponent* powerComp = static_cast<PowerUpComponent*>(e->getComponent(ComponentTypeEnum::POWERUP));
 				bool saved = false;
-				for (int i = 0; i < powerComp->type.size(); i++) {
+				for (unsigned int i = 0; i < powerComp->type.size(); i++) {
 					if (powerComp->type[i] == PowerUpType::Hen) {
 						saved = true;
 						powerComp->activated[i] = true;
