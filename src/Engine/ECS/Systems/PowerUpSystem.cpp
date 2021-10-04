@@ -47,6 +47,7 @@ void PowerUpSystem::update(float dt) {
 			//if power does not exist, add it to the player
 			if (!powerExists) {
 				playerPower->type.push_back(collisionPower->type.front());
+				playerPower->activated.push_back(false);
 			}
 
 			//destroy powerup entity
