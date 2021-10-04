@@ -13,7 +13,6 @@ public:
 
 private:
 	bool m_powerUpExists;
-	Entity &m_existingPowerUp;
 	float m_spawnChance; // chance of powerup spawning
 	std::map<PowerUpType, int> m_powerWeights;
 
