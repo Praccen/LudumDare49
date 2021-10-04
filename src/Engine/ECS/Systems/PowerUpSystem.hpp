@@ -12,7 +12,10 @@ public:
 	void update(float dt);
 
 private:
-	void spawnPowerUp();
+	bool powerUpExists;
+	float spawnChance; // chance of powerup spawning
 	std::map<PowerUpType, int> powerWeights;
+
+	void spawnPowerUp();
 };
 
