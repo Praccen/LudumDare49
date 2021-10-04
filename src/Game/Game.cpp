@@ -34,6 +34,7 @@ Game::~Game()
 
 void Game::reset() {
 	Rendering::getInstance().reset();
+	Rendering::getInstance().getCamera()->setPosition(0.5f * 15.f, 0.5f * 15.f);
 	m_ECSManager->reset();
 
 	introRunning = true;

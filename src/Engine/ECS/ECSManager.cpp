@@ -289,8 +289,7 @@ const int ECSManager::createStableEntity() {
 const int ECSManager::createFarmerEntity() {
 	Entity &farmerEntity = createEntity();
 	PositionComponent* posComp = new PositionComponent();
-	posComp->position.z = 0.01f;
-	posComp->position.y = 3.0f;
+	posComp->position.y = 6.0f;
 	posComp->scale = {1.0f, 2.0f, 1.0f};
 	addComponent(farmerEntity, posComp);
 	GraphicsComponent* graphComp = new GraphicsComponent();
