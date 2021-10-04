@@ -20,6 +20,7 @@ Game::Game(GLFWwindow* window):
 	Rendering::getInstance().getQuadManager()->getTexture(3).loadFromFile("resources/Textures/sun.png");
 	Rendering::getInstance().getQuadManager()->getTexture(4).loadFromFile("resources/Textures/Stable.png");
 	Rendering::getInstance().getQuadManager()->getTexture(5).loadFromFile("resources/Textures/Farmer.png");
+	Rendering::getInstance().getQuadManager()->getTexture(6).loadFromFile("resources/Textures/chicken.png");
 	
 	init();
 }

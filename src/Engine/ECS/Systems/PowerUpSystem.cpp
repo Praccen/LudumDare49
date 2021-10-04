@@ -31,8 +31,6 @@ void PowerUpSystem::update(float dt) {
 			PowerUpComponent* playerPower = static_cast<PowerUpComponent*>(e->getComponent(ComponentTypeEnum::POWERUP));
 			CollisionComponent* collComp = static_cast<CollisionComponent*>(e->getComponent(ComponentTypeEnum::COLLISION));
 
-			//gå igenom alla powerups player kolliderat med
-				//för varje powerup checka vilken typ de är och adda till playerns types
 			for (auto& e2 : collComp->currentCollisionEntities) {
 				PowerUpComponent* collisionPower = static_cast<PowerUpComponent*>(e2->getComponent(ComponentTypeEnum::POWERUP));
 				if (!collisionPower) {
@@ -98,14 +96,6 @@ void PowerUpSystem::update(float dt) {
 
 }
 void PowerUpSystem::spawnPowerUp(){
-	//int totalWeight = 0;
-	//for (auto &w : m_powerWeights) {
-	//	totalWeight += w.second;
-	//}
-
-	//int selector = rand() % totalWeight + 1;
-
-
 	Entity& powerup = m_manager->createEntity();
 	PowerUpComponent* powerComp = new PowerUpComponent();
 	//sätt type beroende på vad som randomats fram
@@ -113,7 +103,7 @@ void PowerUpSystem::spawnPowerUp(){
 	m_manager->addComponent(powerup, powerComp);
 
 	GraphicsComponent* graphComp = new GraphicsComponent();
-	graphComp->quad->setTextureIndex(2);
+	graphComp->quad->setTextureIndex(6);
 	graphComp->quad->setNrOfSprites(1.0f, 1.0f);
 	graphComp->quad->setCurrentSprite(0.0f, 0.0f);
 	m_manager->addComponent(powerup, graphComp);
