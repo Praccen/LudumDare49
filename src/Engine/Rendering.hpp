@@ -5,7 +5,7 @@
 #include "ShaderPrograms/SimpleShaderProgram.hpp"
 #include "ShaderPrograms/InstancedShaderProgram.hpp"
 #include "ShaderPrograms/QuadShaderProgram.hpp"
-#include "ShaderPrograms/Effects/BlurEffect.hpp"
+#include "ShaderPrograms/Effects/CrtEffect.hpp"
 #include "Objects/ScreenQuad.hpp"
 #include "Objects/InstancedQuadManager.hpp"
 #include "Objects/LowPolyLiquid.hpp"
@@ -49,8 +49,8 @@ private:
     QuadShaderProgram m_screenShaderProgram;
     ScreenQuad m_screenQuad;
 
-    BlurEffect m_blurEffect;
-    BlurObject m_quadBlur;
+    CrtEffect m_crtEffect;
+    ScreenQuad m_quadCrt;
 
     // Framebuffer variables
     std::array<unsigned int, 2> m_fbos;

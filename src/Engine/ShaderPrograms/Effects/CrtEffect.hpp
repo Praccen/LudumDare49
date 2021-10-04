@@ -2,9 +2,9 @@
 
 #include "ShaderPrograms/ShaderProgram.hpp"
 
-class BlurEffect : public ShaderProgram {
+class CrtEffect : public ShaderProgram {
 public:
-    BlurEffect();
-    ~BlurEffect() = default;
+    CrtEffect();
+    ~CrtEffect() = default;
 	void setupVertexAttributePointers() override;
 };

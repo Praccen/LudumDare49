@@ -10,7 +10,7 @@ Rendering::Rendering():
 	m_quadManager(m_instancedShaderProgram),
 	m_lowPolyLiquid(m_simpleShaderProgram),
     m_screenQuad(m_screenShaderProgram),
-    m_quadBlur(m_blurEffect) {
+    m_quadCrt(m_crtEffect) {
     initGL();
 }
 
@@ -46,12 +46,11 @@ void Rendering::draw() {
     // No depth during pos fx
     glDisable(GL_DEPTH_TEST); 
 
-//    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_fbos[1]);
-//    glClearColor(0.3f, 0.2f, 0.4f, 1.0f);
-//    glClear(GL_COLOR_BUFFER_BIT);    
-//    m_blurEffect.use();
-//    glUniform1i(m_blurEffect.getUniformLocation("horizontal"), 0);
-//    m_quadBlur.draw();
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_fbos[1]);
+    glClearColor(0.3f, 0.2f, 0.4f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);    
+    m_crtEffect.use();
+    m_quadCrt.draw();
 //    
 //    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_fbos[0]);
 //    glUniform1i(m_blurEffect.getUniformLocation("horizontal"), 1);
@@ -93,8 +92,8 @@ void Rendering::init(unsigned int width, unsigned int height) {
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    m_quadBlur.setTextures(m_colTexs[1], m_colTexs[0]);
-    m_screenQuad.setTexture(m_colTexs[0]);
+    m_quadCrt.setTexture(m_colTexs[0]);
+    m_screenQuad.setTexture(m_colTexs[1]);
 }
 
 void Rendering::reInit(unsigned int width, unsigned int height) {

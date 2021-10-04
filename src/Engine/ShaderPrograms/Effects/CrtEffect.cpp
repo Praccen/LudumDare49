@@ -1,12 +1,11 @@
-#include "BlurEffect.hpp"
+#include "CrtEffect.hpp"
 #include <glad/glad.h>
 
-BlurEffect::BlurEffect() : ShaderProgram("resources/shaders/vertex_blur.glsl", "resources/shaders/fragment_blur.glsl") {
+CrtEffect::CrtEffect() : ShaderProgram("resources/shaders/vertex_crt.glsl", "resources/shaders/fragment_crt.glsl") {
 	glUniform1i(m_uniformBindings["screenTexture"], 0);
-	glUniform1i(m_uniformBindings["horizontal"], 0);
 }
 
-void BlurEffect::setupVertexAttributePointers() {
+void CrtEffect::setupVertexAttributePointers() {
    // Change if input layout changes in shaders
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
