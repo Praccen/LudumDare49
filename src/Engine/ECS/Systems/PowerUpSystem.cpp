@@ -109,7 +109,7 @@ void PowerUpSystem::spawnPowerUp(){
 	m_manager->addComponent(powerup, graphComp);
 
 	glm::vec2 pos = Rendering::getInstance().getCamera()->getPosition();
-	PositionComponent* posComp = new PositionComponent(pos.x+14.0f, pos.y+4.0f);
+	PositionComponent* posComp = new PositionComponent(pos.x+14.0f, pos.y-2.0f + rand() % 6);
 	m_manager->addComponent(powerup, posComp);
 
 	CollisionComponent* collisionComp = new CollisionComponent();
