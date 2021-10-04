@@ -101,9 +101,7 @@ void CollisionSystem::update(float /*dt*/) {
 				c->currentCollisionEntities.emplace_back(e2); // Save collision
 				//add to constraint entity that it has been hit, it wont check it by itself
 				if (c2->isConstraint) {
-					if (e2->hasComponent(ComponentTypeEnum::MAPTILE)) {
-						c2->currentCollisionEntities.emplace_back(e);
-					}
+					c2->currentCollisionEntities.emplace_back(e);
 				}
 			}
 		}

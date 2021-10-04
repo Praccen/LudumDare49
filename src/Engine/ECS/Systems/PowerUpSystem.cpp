@@ -8,18 +8,18 @@
 
 PowerUpSystem::PowerUpSystem(ECSManager* ECSManager) 
 	: System(ECSManager, ComponentTypeEnum::POWERUP, ComponentTypeEnum::PLAYER, ComponentTypeEnum::COLLISION),
-	powerUpExists(false), spawnChance(0.0f), powerWeights() {
+	m_powerUpExists(false), m_existingPowerUp(0), m_spawnChance(0.0f), m_powerWeights() {
 }
 
 void PowerUpSystem::update(float dt) {
-	if (!powerUpExists) {
-		bool shouldSpawn = (rand() % 100 + 1) > spawnChance;
+	if (!m_powerUpExists) {
+		bool shouldSpawn = (rand() % 100 + 1) > m_spawnChance;
 		if (shouldSpawn) {
 			spawnPowerUp();
-			spawnChance = 0.0f;
+			m_spawnChance = 0.0f;
 		}
-		spawnChance += dt;
-		powerUpExists = true;
+		m_spawnChance += dt;
+		m_powerUpExists = true;
 	}
 
 
@@ -32,6 +32,11 @@ void PowerUpSystem::update(float dt) {
 			//för varje powerup checka vilken typ de är och adda till playerns types
 		for (auto& e2 : collComp->currentCollisionEntities) {
 			PowerUpComponent* collisionPower = static_cast<PowerUpComponent*>(e2->getComponent(ComponentTypeEnum::POWERUP));
+			if (!collisionPower) {
+				//not a powerup!
+				continue;
+			}
+			//check if powerup power should be added to player powerupcomponent
 			bool powerExists = false;
 			for (int i = 0; i < playerPower->type.size(); i++) {
 				if (playerPower->type[i] == collisionPower->type.front()) {
@@ -43,6 +48,9 @@ void PowerUpSystem::update(float dt) {
 			if (!powerExists) {
 				playerPower->type.push_back(collisionPower->type.front());
 			}
+
+			//destroy powerup entity
+			m_manager->removeEntity(e2->getID());
 		}
 
 		for (int i = 0; i < playerPower->type.size(); i++) {
@@ -70,7 +78,7 @@ void PowerUpSystem::update(float dt) {
 }
 void PowerUpSystem::spawnPowerUp(){
 	//int totalWeight = 0;
-	//for (auto &w : powerWeights) {
+	//for (auto &w : m_powerWeights) {
 	//	totalWeight += w.second;
 	//}
 
