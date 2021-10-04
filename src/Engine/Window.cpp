@@ -221,6 +221,7 @@ bool Window::gameLoop(Game& game) {
         game.update((float) updateTimer);
         updateTimer = 0.0f;
     }
+    m_subtitles = game.getSubs();
     Rendering::getInstance().update((float) dt);
 
     // render
@@ -264,6 +265,27 @@ void Window::renderImgui() {
     ImGui::SetWindowPos(ImVec2(4, 4));
     ImGui::Text("Score: %d", m_playerScore);
     ImGui::End();
+
     // Rendering
     ImGui::Render();
+
+    ImGui::NewFrame();
+    
+    bool open2 = true; 
+    ImGui::Begin("Subtitles", &open2, ImGuiWindowFlags_NoTitleBar | 
+                                 ImGuiWindowFlags_NoResize   | 
+                                 ImGuiWindowFlags_NoMove     | 
+                                 ImGuiWindowFlags_NoBackground);
+    ImGui::SetWindowFontScale(2.0);
+    ImGui::SetWindowSize(ImVec2((float) SCR_WIDTH, 50));
+    ImGui::SetWindowPos(ImVec2(0, (float) (SCR_HEIGHT - 50)));
+    auto textWidth = ImGui::CalcTextSize(m_subtitles.c_str()).x;
+    ImGui::SetCursorPosX((SCR_WIDTH - textWidth) * 0.5f);
+    ImGui::Text(m_subtitles.c_str());
+    ImGui::End();
+
+    // Rendering
+    ImGui::Render();
+
+    
 }

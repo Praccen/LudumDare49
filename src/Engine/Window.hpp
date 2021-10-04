@@ -3,6 +3,8 @@
 static unsigned int SCR_WIDTH = 800;
 static unsigned int SCR_HEIGHT = 800;
 
+#include <string>
+
 class Game;
 class Window {
 public:
@@ -35,4 +37,5 @@ private:
 	int updatesSinceRender = 0;
 
 	unsigned int m_playerScore{0};
+	std::string m_subtitles;
 };

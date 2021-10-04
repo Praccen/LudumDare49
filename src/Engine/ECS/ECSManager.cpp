@@ -221,11 +221,9 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 const int ECSManager::createCameraEntity() {
 	Entity &cameraEntity = createEntity();
 
-	addComponent(cameraEntity, new PositionComponent());
+	addComponent(cameraEntity, new PositionComponent(8.0f, 3.0f));
 	addComponent(cameraEntity, new MovementComponent());
-	CameraFocusComponent* camFocComp = new CameraFocusComponent();
-	camFocComp->offset = {5.0f, 3.0f};
-	addComponent(cameraEntity, camFocComp);
+	addComponent(cameraEntity, new CameraFocusComponent());
 
 	return cameraEntity.getID();
 }
@@ -242,7 +240,7 @@ const int ECSManager::createBackgroundEntity() {
 	GraphicsComponent* graphComp = new GraphicsComponent();
 	graphComp->quad->setTextureIndex(1);
 	graphComp->quad->setNrOfSprites(1.0f, 1.0f);
-	graphComp->animate = true;
+	graphComp->animate = false;
 	graphComp->advanceBy = {0.00001f, 0.0f};
 	graphComp->startingTile = {0.0f, 0.0f};
 	graphComp->modAdvancement = {1.0f, 1.0f};
@@ -289,7 +287,8 @@ const int ECSManager::createStableEntity() {
 const int ECSManager::createFarmerEntity() {
 	Entity &farmerEntity = createEntity();
 	PositionComponent* posComp = new PositionComponent();
-	posComp->position.y = 6.0f;
+	posComp->position.x = 4.0f;
+	posComp->position.y = 2.4f;
 	posComp->scale = {1.0f, 2.0f, 1.0f};
 	addComponent(farmerEntity, posComp);
 	GraphicsComponent* graphComp = new GraphicsComponent();

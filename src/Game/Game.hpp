@@ -24,6 +24,7 @@ public:
 	void reset();
 
 	unsigned int getScore() { return m_score; };
+	std::string getSubs() { return m_subs; };
 
 private:
 	void init();
@@ -41,6 +42,6 @@ private:
 	int sunEntityId;
 	int farmerEntityId;
 	unsigned int m_score;
-
+	std::string m_subs;
 };
 
