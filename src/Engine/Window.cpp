@@ -116,8 +116,6 @@ bool Window::gameOverLoop(Game& game) {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    static float f = 0.0f;
-    static int counter = 0;
 
     bool open{true};
     ImGui::Begin("Game Over", &open, ImGuiWindowFlags_NoTitleBar | 

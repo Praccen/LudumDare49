@@ -18,7 +18,7 @@ InstancedShaderProgram::InstancedShaderProgram() :
 	for (unsigned int i = 0; i < 15; i++) {
 		texturesArray[i] = i;
 	}
-	glUniform1iv(m_uniformBindings["textures"], 31, texturesArray);
+	glUniform1iv(m_uniformBindings["textures"], 15, texturesArray);
 }
 
 InstancedShaderProgram::~InstancedShaderProgram() {
