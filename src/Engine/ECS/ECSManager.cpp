@@ -46,6 +46,7 @@ void ECSManager::initializeSystems() {
 	m_systems["MAP"] = std::make_shared<MapSystem>(MapSystem(this));
 	m_systems["ANIMATION"] = std::make_shared<AnimationSystem>(AnimationSystem(this));
 	m_systems["PLAYER"] = std::make_shared<PlayerSystem>(PlayerSystem(this));
+	m_systems["POWERUP"] = std::make_shared<PowerUpSystem>(PowerUpSystem(this));
 
 	m_systems["MAP"]->initialize();
 }
@@ -70,6 +71,7 @@ void ECSManager::update(float dt)
 	m_systems["CAMERAFOCUS"]->update(dt);
 	m_systems["MAP"]->update(dt);
 	m_systems["PLAYER"]->update(dt);
+	m_systems["POWERUP"]->update(dt);
 }
 
 void ECSManager::updateRenderingSystems(float dt) {
