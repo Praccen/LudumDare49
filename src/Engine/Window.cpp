@@ -122,9 +122,10 @@ bool Window::gameOverLoop(Game& game) {
                                      ImGuiWindowFlags_NoResize   | 
                                      ImGuiWindowFlags_NoMove     | 
                                      ImGuiWindowFlags_NoBackground);
-    ImGui::SetNextWindowSize(ImVec2(4, 5));
-    ImGui::Text("Game is over, the world is unstable. Press space to run again");
+
+    std::string endText = "You failed to un-stable. Try again? [SPACE]";
     ImGui::Text("Score: %d", m_playerScore);
+    ImGui::Text(endText.c_str());
     ImVec2 v = ImGui::GetWindowSize();
     ImGui::SetWindowPos(ImVec2(SCR_WIDTH/2 - v.x / 2, SCR_HEIGHT/2 - v.y / 2));
 
@@ -155,11 +156,12 @@ bool Window::menuLoop(Game& game) {
                                      ImGuiWindowFlags_NoResize   | 
                                      ImGuiWindowFlags_NoMove    | 
                                      ImGuiWindowFlags_NoBackground);
-
-    ImGui::Text("Welcome to Unstable Cowboy putting down very stable horse, escaping to a stable.");
-    ImGui::Text("Press SPACE to start running.");
-    ImVec2 v = ImGui::GetWindowSize();
-    ImGui::SetWindowPos(ImVec2(SCR_WIDTH/2 - v.x / 2, SCR_HEIGHT/2 - v.y / 2));
+    std::string startText = "    Press SPACE to start\nWASD to move, SPACE to dash\n";
+    ImGui::SetWindowSize(ImVec2((float) SCR_WIDTH, 50));
+    ImGui::SetWindowPos(ImVec2(0, (float) (SCR_HEIGHT/2)));
+    auto textWidth = ImGui::CalcTextSize(startText.c_str()).x;
+    ImGui::SetCursorPosX((SCR_WIDTH - textWidth) * 0.5f);
+    ImGui::Text(startText.c_str());
 
     ImGui::End();
     // Rendering
@@ -266,11 +268,6 @@ void Window::renderImgui() {
     ImGui::Text("Score: %d", m_playerScore);
     ImGui::End();
 
-    // Rendering
-    ImGui::Render();
-
-    ImGui::NewFrame();
-    
     bool open2 = true; 
     ImGui::Begin("Subtitles", &open2, ImGuiWindowFlags_NoTitleBar | 
                                  ImGuiWindowFlags_NoResize   | 
