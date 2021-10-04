@@ -12,7 +12,7 @@
 #include "Engine/ECS/Components/GraphicsComponent.hpp"
 
 Game::Game(GLFWwindow* window):
-	gameState(GameState::Menu), m_window(window), m_ECSManager(&ECSManager::getInstance()), introRunning(true), introTimer(0.0f) {
+	gameState(GameState::Menu), m_window(window), m_ECSManager(&ECSManager::getInstance()), introRunning(true), introTimer(0.0f), m_score(0) {
 
 	Rendering::getInstance().getQuadManager()->getTexture(0).loadFromFile("resources/Textures/Horse.png");
 	Rendering::getInstance().getQuadManager()->getTexture(1).loadFromFile("resources/Textures/bg-blurr.png");
@@ -38,6 +38,7 @@ void Game::reset() {
 
 	introRunning = true;
 	introTimer = 0.0f;
+	m_score = 0;
 
 	setupEntities();
 }	
