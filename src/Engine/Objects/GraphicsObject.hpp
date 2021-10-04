@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 
-#include "ShaderPrograms/ShaderProgram.hpp"
+#include "../ShaderPrograms/ShaderProgram.hpp"
 
 class GraphicsObject {
 public:

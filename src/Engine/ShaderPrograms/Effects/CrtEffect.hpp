@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ShaderPrograms/ShaderProgram.hpp"
+#include "../ShaderProgram.hpp"
 
 class CrtEffect : public ShaderProgram {
 public:

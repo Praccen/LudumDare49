@@ -71,7 +71,7 @@ void MapSystem::update(float dt) {
             }
             // Check for platform
             if(!m_isPlatform ) {
-                int platform = rand() % 100 + 1;
+                unsigned int platform = rand() % 100 + 1;
                 // check if to spawn platform
                 if(platform < m_platformChance && m_drawnTiles > 1) {
                     m_platformHeight = rand() % 3 + 3;
@@ -110,7 +110,7 @@ void MapSystem::update(float dt) {
             spawnObstacle();
 
             // Random spawning tile 
-            int spawn = rand() % 100 + 1;
+            unsigned int spawn = rand() % 100 + 1;
             if ((spawn < m_obstacleChance) && (m_drawnTiles > 1)) {
                 int gap = rand() % 4+2;
                 m_numTiles += gap;

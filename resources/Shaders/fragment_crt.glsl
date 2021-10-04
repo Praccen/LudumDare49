@@ -25,7 +25,7 @@ uniform float weight[5] = float[] (0.227027, 0.1945946, 0.1216216, 0.054054, 0.0
 uniform sampler2D screenTexture;
 
 //#define res (textureSize(screenTexture, 0).xy /6.0)
-#define res (vec2(3840.0/6.0,2160.0/6.0))
+#define res (vec2(640, 360))
 
 // Hardness of scanline.
 //  -8.0 = soft

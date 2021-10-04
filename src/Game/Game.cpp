@@ -16,7 +16,7 @@ Game::Game(GLFWwindow* window):
 	Rendering::getInstance().getQuadManager()->getTexture(2).loadFromFile("resources/Textures/platta2.png");
 	Rendering::getInstance().getQuadManager()->getTexture(3).loadFromFile("resources/Textures/sun.png");
 	Rendering::getInstance().getQuadManager()->getTexture(4).loadFromFile("resources/Textures/Stable.png");
-	Rendering::getInstance().getCamera()->setZoom(1.0f/(0.5f * 15.f, 15.f)); // Zoom out so that the whole map is visible
+	Rendering::getInstance().getCamera()->setZoom(1.0f/(0.5f * 15.f)); // Zoom out so that the whole map is visible
 	Rendering::getInstance().getCamera()->setPosition(0.5f * 15.f, 0.5f * 15.f);
 	
 	setupEntities(window);
