@@ -36,7 +36,7 @@ ECSManager::~ECSManager()
 
 void ECSManager::initializeSystems() {
 	m_systems["INPUT"] = std::make_shared<InputSystem>(InputSystem(this));
-	m_systems["MOVEMENT"] = std::make_shared<MovementSystem>(MovementSystem(this));;
+	m_systems["MOVEMENT"] = std::make_shared<MovementSystem>(MovementSystem(this));
 	m_systems["COLLISION"] = std::make_shared<CollisionSystem>(CollisionSystem(this));
 	m_systems["SEEING"] = std::make_shared<SeeingSystem>(SeeingSystem(this));
 	m_systems["HEALTH"] = std::make_shared<HealthSystem>(HealthSystem(this));
@@ -217,6 +217,7 @@ const int ECSManager::createPlayerEntity(float x, float y, GLFWwindow* window) {
 	addComponent(playerEntity, graphComp);
 	addComponent(playerEntity, new WeaponComponent());
 	addComponent(playerEntity, new PlayerComponent());
+	addComponent(playerEntity, new PowerUpComponent());
 	return playerEntity.getID();
 }
 

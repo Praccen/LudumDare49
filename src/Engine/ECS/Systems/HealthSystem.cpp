@@ -49,7 +49,6 @@ void HealthSystem::update(float dt) {
                 static_cast<MapTileComponent *>(e->getComponent(ComponentTypeEnum::MAPTILE))->destroyed = true;
                 healthComp->health = healthComp->maxHealth; //reset life of tile
             }
-            //m_manager->removeEntity(e->getID());
         }
         else {
             healthComp->health = std::min(healthComp->health, healthComp->maxHealth);

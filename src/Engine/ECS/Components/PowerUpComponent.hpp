@@ -7,8 +7,8 @@ enum class PowerUpType {
 };
 class PowerUpComponent : public Component {
 public:
-    PowerUpComponent();
     std::vector<PowerUpType> type;
 
+    PowerUpComponent();
 };
 
