@@ -10,6 +10,7 @@
 #include "Systems/CameraSystem.hpp"
 #include "Systems/AnimationSystem.hpp"
 #include "Systems/PlayerSystem.hpp"
+#include "Systems/PowerUpSystem.hpp"
 
 #include <map>
 #include <string>

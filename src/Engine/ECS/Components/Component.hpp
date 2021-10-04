@@ -18,7 +18,8 @@ enum class ComponentTypeEnum {
 	SEEING,
 	CAMERAFOCUS,
 	MAPTILE,
-	PLAYER
+	PLAYER,
+	POWERUP
 };
 
 //Basic component interface which all other components implement
