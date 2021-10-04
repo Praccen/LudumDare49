@@ -1,7 +1,7 @@
 #include "CrtEffect.hpp"
 #include <glad/glad.h>
 
-CrtEffect::CrtEffect() : ShaderProgram("resources/shaders/vertex_crt.glsl", "resources/shaders/fragment_crt.glsl") {
+CrtEffect::CrtEffect() : ShaderProgram("resources/Shaders/vertex_crt.glsl", "resources/Shaders/fragment_crt.glsl") {
 	glUniform1i(m_uniformBindings["screenTexture"], 0);
 }
 
