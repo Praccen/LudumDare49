@@ -76,6 +76,7 @@ void Game::introUpdate(float dt) {
 		m_subs = "YOU!";
 	}
 	else if (introTimer < 22.0f) {
+		cameraPosComp->position.y = farmerPosComp->position.y + (3.0f - farmerPosComp->position.y) * (introTimer - 20)/2.0f;
 		Rendering::getInstance().getCamera()->setZoom(1.0f/(15.f/(7.0f - (introTimer - 20.0f) * 3.0f)));
 	}
 	else if (introTimer < 24.0f) {
@@ -98,6 +99,11 @@ void Game::finishIntro() {
 	Entity* backgroundEntity = m_ECSManager->getEntity(backgroundEntityId);
 	GraphicsComponent* backgroundGraphComp = static_cast<GraphicsComponent*>(backgroundEntity->getComponent(ComponentTypeEnum::GRAPHICS));
 	backgroundGraphComp->animate = true;
+
+	PositionComponent* cameraPosComp = static_cast<PositionComponent*>(cameraEntity->getComponent(ComponentTypeEnum::POSITION));
+
+	Rendering::getInstance().getCamera()->setZoom(1.0f/15.f);
+	cameraPosComp->position.y = 3.0f;
 
 	introRunning = false;
 }
