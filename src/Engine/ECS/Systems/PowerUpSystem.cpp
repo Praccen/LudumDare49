@@ -98,7 +98,7 @@ void PowerUpSystem::update(float dt) {
 void PowerUpSystem::spawnPowerUp(){
 	Entity& powerup = m_manager->createEntity();
 	PowerUpComponent* powerComp = new PowerUpComponent();
-	//sätt type beroende på vad som randomats fram
+	//sï¿½tt type beroende pï¿½ vad som randomats fram
 	powerComp->type.push_back(PowerUpType::Hen);
 	m_manager->addComponent(powerup, powerComp);
 
@@ -112,9 +112,9 @@ void PowerUpSystem::spawnPowerUp(){
 	PositionComponent* posComp = new PositionComponent(pos.x+14.0f, pos.y+4.0f);
 	m_manager->addComponent(powerup, posComp);
 
-	m_manager->addComponent(powerup, new MovementComponent());
-
 	CollisionComponent* collisionComp = new CollisionComponent();
+	collisionComp->effectMovement = false;
 	collisionComp->isConstraint = true;
+
 	m_manager->addComponent(powerup, collisionComp);
 }
