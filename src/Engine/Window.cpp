@@ -32,7 +32,7 @@ bool Window::open() {
    glfwSetErrorCallback(errorCallback);
    SCR_WIDTH = 1000;
    SCR_HEIGHT = 1000;
-   window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+   window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Un-stabled", NULL, NULL);
    if (window == NULL)
    {
        std::cout << "Failed to create GLFW window" << std::endl;
@@ -198,7 +198,7 @@ bool Window::gameLoop(Game& game) {
         counter = 0;
         fpsUpdateTimer = 0.0f;
         //std::cout << fps;
-        glfwSetWindowTitle(window, ("OpenGL FPS: " + std::to_string((int)fps)).c_str());
+        glfwSetWindowTitle(window, ("Un-stabled: " + std::to_string((int)fps)).c_str());
     }
 
     updateTimer += dt;
