@@ -42,7 +42,7 @@ void MapSystem::update(float dt) {
         }
 
         //Check if tile should be move to the front
-        if((camX - p->position.x) > 14.f) {
+        if((camX - p->position.x) > 14.f - (m_unstableChance / 10.f)) {
             //if tile was destroyed, re-add components
             if (mt->wasDestroyed) {
                 mt->wasDestroyed = false;
