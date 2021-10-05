@@ -61,26 +61,18 @@ void PowerUpSystem::update(float dt) {
 				case PowerUpType::Hen:
 					//do hen stuff
 					if (playerPower->activated[i]) {
-
-						if (e->hasComponent(ComponentTypeEnum::MOVEMENT) && playerPower->henTimer < 0.0001f) {
+						if (e->hasComponent(ComponentTypeEnum::MOVEMENT)) {
 							//save the players life!
 							//add uppwards speed
 							MovementComponent* movComp = static_cast<MovementComponent*>(e->getComponent(ComponentTypeEnum::MOVEMENT));
 							movComp->velocity.y += 30.0f;
 							playerPower->henTimer = 0.0f;
+							playerPower->type.erase(playerPower->type.begin() + i);
+							playerPower->activated.erase(playerPower->activated.begin() + i);
 							//add damagecomponent
 							//start han saving timer
 						}
-						else if(playerPower->henTimer > playerPower->henTime){
-							//if hen saving timer is out remove damagecomponent and hen and activated on same index from players types
-							//reset hen powerup
-							playerPower->type.erase(playerPower->type.begin() + i);
-							playerPower->activated.erase(playerPower->activated.begin() + i);
-						}
-						playerPower->henTimer += dt;
 					}
-
-					
 					break;
 				default:
 					break;
