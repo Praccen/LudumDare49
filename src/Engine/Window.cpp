@@ -156,8 +156,8 @@ bool Window::menuLoop(Game& game) {
                                      ImGuiWindowFlags_NoResize   | 
                                      ImGuiWindowFlags_NoMove    | 
                                      ImGuiWindowFlags_NoBackground);
-    std::string startText = "    Press SPACE to start\nWASD to move, SPACE to dash\n";
-    ImGui::SetWindowSize(ImVec2((float) SCR_WIDTH, 50));
+    std::string startText = "Press [SPACE] to start\n      [W][A][S][D] to move\n      [SPACE] to dash\n      [ESCAPE] to skip intro";
+    ImGui::SetWindowSize(ImVec2((float) SCR_WIDTH, 70));
     ImGui::SetWindowPos(ImVec2(0, (float) (SCR_HEIGHT/2)));
     auto textWidth = ImGui::CalcTextSize(startText.c_str()).x;
     ImGui::SetCursorPosX((SCR_WIDTH - textWidth) * 0.5f);
@@ -237,9 +237,9 @@ bool Window::gameLoop(Game& game) {
 
 void processInput(GLFWwindow *theWindow)
 {
-    if(glfwGetKey(theWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-        glfwSetWindowShouldClose(theWindow, true);
-    }
+    // if(glfwGetKey(theWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+    //     glfwSetWindowShouldClose(theWindow, true);
+    // }
 }
 
 void framebuffer_size_callback(GLFWwindow* /*window*/, int width, int height)

@@ -86,6 +86,10 @@ void Game::introUpdate(float dt) {
 		m_subs = "";
 		finishIntro();
 	}
+
+	if (glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		finishIntro();
+	}
 }
 
 void Game::finishIntro() {
@@ -100,10 +104,14 @@ void Game::finishIntro() {
 	GraphicsComponent* backgroundGraphComp = static_cast<GraphicsComponent*>(backgroundEntity->getComponent(ComponentTypeEnum::GRAPHICS));
 	backgroundGraphComp->animate = true;
 
+	PositionComponent* playerPosComp = static_cast<PositionComponent*>(playerEntity->getComponent(ComponentTypeEnum::POSITION));
 	PositionComponent* cameraPosComp = static_cast<PositionComponent*>(cameraEntity->getComponent(ComponentTypeEnum::POSITION));
 
 	Rendering::getInstance().getCamera()->setZoom(1.0f/15.f);
+	cameraPosComp->position.x = playerPosComp->position.x;
 	cameraPosComp->position.y = 3.0f;
+
+	m_subs = "";
 
 	introRunning = false;
 }
